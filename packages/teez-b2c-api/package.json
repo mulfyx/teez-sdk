@@ -1,0 +1,32 @@
+{
+	"name": "@teez-sdk/teez-b2c-api",
+	"version": "1.0.0",
+	"type": "module",
+	"main": "./dist/index.mjs",
+	"types": "./dist/index.d.mts",
+	"module": "./dist/index.mjs",
+	"exports": {
+		".": "./dist/index.mjs",
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsdown",
+		"eslint": "eslint",
+		"eslint:fix": "eslint --fix",
+		"lint": "npm run eslint && npm run prettier",
+		"lint:fix": "npm run eslint:fix && npm run prettier:fix",
+		"prettier": "prettier --check \"./src/**/*.{ts,tsx}\"",
+		"prettier:fix": "prettier --write \"./src/**/*.{ts,tsx}\"",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"valibot": "^1.2.0"
+	},
+	"devDependencies": {
+		"tsdown": "^0.18.1"
+	},
+	"sideEffects": false
+}
