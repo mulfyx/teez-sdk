@@ -1,5 +1,14 @@
 {
 	"name": "teez-sdk",
+	"description": "Monorepo for Teez SDKs",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mulfyx/teez-sdk.git"
+	},
+	"homepage": "https://github.com/mulfyx/teez-sdk#readme",
+	"bugs": {
+		"url": "https://github.com/mulfyx/teez-sdk/issues"
+	},
 	"license": "MIT",
 	"private": true,
 	"workspaces": [

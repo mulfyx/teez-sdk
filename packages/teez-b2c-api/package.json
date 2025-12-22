@@ -2,6 +2,18 @@
 	"name": "@teez-sdk/teez-b2c-api",
 	"version": "1.0.0",
 	"type": "module",
+	"description": "TypeScript SDK for Teez B2C API",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mulfyx/teez-sdk.git",
+		"directory": "packages/teez-b2c-api"
+	},
+	"homepage": "https://github.com/mulfyx/teez-sdk/tree/main/packages/teez-b2c-api#readme",
+	"bugs": {
+		"url": "https://github.com/mulfyx/teez-sdk/issues"
+	},
+	"author": "mulfyx",
+	"license": "MIT",
 	"main": "./dist/index.mjs",
 	"types": "./dist/index.d.mts",
 	"module": "./dist/index.mjs",
@@ -11,6 +23,13 @@
 	},
 	"files": [
 		"dist"
+	],
+	"keywords": [
+		"teez",
+		"sdk",
+		"api",
+		"b2c",
+		"typescript"
 	],
 	"scripts": {
 		"build": "tsdown",
