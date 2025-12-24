@@ -1,8 +1,8 @@
 import { type HttpClient } from "../../http/client";
-import { FeatureFlagsApiGetAllResponseSchema } from "./schemas";
+import { FeatureFlagsApiListResponseSchema } from "./schemas";
 import {
-	type FeatureFlagsApiGetAllParams,
-	type FeatureFlagsApiGetAllResponse,
+	type FeatureFlagsApiListParams,
+	type FeatureFlagsApiListResponse,
 } from "./types";
 
 /**
@@ -14,13 +14,13 @@ export class FeatureFlagsApi {
 	/**
 	 * Retrieves all active feature flags.
 	 */
-	public async getAll(
-		params: FeatureFlagsApiGetAllParams = {},
-	): Promise<FeatureFlagsApiGetAllResponse> {
+	public async list(
+		params: FeatureFlagsApiListParams = {},
+	): Promise<FeatureFlagsApiListResponse> {
 		return await this.http.get({
 			path: "/api/v1/feature-flags",
 			params,
-			schema: FeatureFlagsApiGetAllResponseSchema,
+			schema: FeatureFlagsApiListResponseSchema,
 		});
 	}
 }

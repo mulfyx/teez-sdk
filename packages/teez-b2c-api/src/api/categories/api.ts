@@ -1,14 +1,14 @@
 import { type HttpClient } from "../../http/client";
 import {
-	CategoriesApiGetAllResponseSchema,
-	CategoriesApiGetByIdResponseSchema,
+	CategoriesApiListResponseSchema,
+	CategoriesApiGetResponseSchema,
 	CategoriesApiGetParentsResponseSchema,
 } from "./schemas";
 import {
-	type CategoriesApiGetAllParams,
-	type CategoriesApiGetAllResponse,
-	type CategoriesApiGetByIdParams,
-	type CategoriesApiGetByIdResponse,
+	type CategoriesApiListParams,
+	type CategoriesApiListResponse,
+	type CategoriesApiGetParams,
+	type CategoriesApiGetResponse,
 	type CategoriesApiGetParentsParams,
 	type CategoriesApiGetParentsResponse,
 } from "./types";
@@ -35,26 +35,26 @@ export class CategoriesApi {
 	/**
 	 * Retrieves a list of all categories.
 	 */
-	public async getAll(
-		params: CategoriesApiGetAllParams = {},
-	): Promise<CategoriesApiGetAllResponse> {
+	public async list(
+		params: CategoriesApiListParams = {},
+	): Promise<CategoriesApiListResponse> {
 		return await this.http.get({
 			path: "/categories",
 			params,
-			schema: CategoriesApiGetAllResponseSchema,
+			schema: CategoriesApiListResponseSchema,
 		});
 	}
 
 	/**
 	 * Retrieves detailed information about a specific category by its ID.
 	 */
-	public async getById(
-		params: CategoriesApiGetByIdParams,
-	): Promise<CategoriesApiGetByIdResponse> {
+	public async get(
+		params: CategoriesApiGetParams,
+	): Promise<CategoriesApiGetResponse> {
 		return await this.http.get({
 			path: `/categories/${params.categoryId}`,
 			params,
-			schema: CategoriesApiGetByIdResponseSchema,
+			schema: CategoriesApiGetResponseSchema,
 		});
 	}
 }

@@ -1,8 +1,8 @@
 import { type HttpClient } from "../../http/client";
-import { BannersApiGetAllResponseSchema } from "./schemas";
+import { BannersApiListResponseSchema } from "./schemas";
 import {
-	type BannersApiGetAllParams,
-	type BannersApiGetAllResponse,
+	type BannersApiListParams,
+	type BannersApiListResponse,
 } from "./types";
 
 /**
@@ -14,13 +14,13 @@ export class BannersApi {
 	/**
 	 * Retrieves a list of active banners.
 	 */
-	public async getAll(
-		params: BannersApiGetAllParams = {},
-	): Promise<BannersApiGetAllResponse> {
+	public async list(
+		params: BannersApiListParams = {},
+	): Promise<BannersApiListResponse> {
 		return await this.http.get({
 			path: "/api/v3/banners",
 			params,
-			schema: BannersApiGetAllResponseSchema,
+			schema: BannersApiListResponseSchema,
 		});
 	}
 }

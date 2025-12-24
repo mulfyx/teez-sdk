@@ -6,7 +6,7 @@ import type {
 	SkuApiBrandSchema,
 	SkuApiCategorySchema,
 	SkuApiCollectionItemSchema,
-	SkuApiGetByIdResponseSchema,
+	SkuApiGetResponseSchema,
 	SkuApiGetCollectionsResponseSchema,
 	SkuApiGetReviewAvailableResponseSchema,
 	SkuApiGetSimilarResponseSchema,
@@ -21,7 +21,7 @@ import type * as v from "valibot";
 /**
  * Parameters for fetching a specific SKU by ID.
  */
-export interface SkuApiGetByIdParams extends BaseParams {
+export interface SkuApiGetParams extends BaseParams {
 	/** Unique identifier of the SKU */
 	skuId: number;
 }
@@ -80,8 +80,8 @@ export type SkuApiStockAvailability = v.InferOutput<
 /**
  * Response for getting a specific SKU by ID.
  */
-export type SkuApiGetByIdResponse = v.InferOutput<
-	typeof SkuApiGetByIdResponseSchema
+export type SkuApiGetResponse = v.InferOutput<
+	typeof SkuApiGetResponseSchema
 >;
 
 /**

@@ -192,7 +192,7 @@ export const ProductsApiProductItemSchema = v.object({
 /**
  * Response schema for the product list.
  */
-export const ProductsApiGetProductsResponseSchema = v.object({
+export const ProductsApiListResponseSchema = v.object({
 	/** List of applicable filters */
 	filters: v.array(ProductsApiFilterSchema),
 

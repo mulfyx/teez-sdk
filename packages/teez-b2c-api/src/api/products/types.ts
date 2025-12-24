@@ -3,7 +3,7 @@ import type {
 	ProductsApiBadgeSchema,
 	ProductsApiFilterOptionSchema,
 	ProductsApiFilterSchema,
-	ProductsApiGetProductsResponseSchema,
+	ProductsApiListResponseSchema,
 	ProductsApiGetReviewsResponseSchema,
 	ProductsApiGetSortOptionsResponseSchema,
 	ProductsApiProductItemSchema,
@@ -41,7 +41,7 @@ export type ProductsApiGetSortOptionsResponse = v.InferOutput<
 /**
  * Parameters for fetching a filtered list of products.
  */
-export interface ProductsApiGetProductsParams extends BaseParams {
+export interface ProductsApiListParams extends BaseParams {
 	/** Random seed for consistent pagination */
 	seed?: number;
 
@@ -101,8 +101,8 @@ export type ProductsApiProductItem = v.InferOutput<
 /**
  * Response for the product list.
  */
-export type ProductsApiGetProductsResponse = v.InferOutput<
-	typeof ProductsApiGetProductsResponseSchema
+export type ProductsApiListResponse = v.InferOutput<
+	typeof ProductsApiListResponseSchema
 >;
 
 /**

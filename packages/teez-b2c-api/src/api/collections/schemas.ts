@@ -151,14 +151,14 @@ export const CollectionsApiListItemSchema = v.object({
 /**
  * Response schema for the list of collections.
  */
-export const CollectionsApiGetAllResponseSchema = v.array(
+export const CollectionsApiListResponseSchema = v.array(
 	CollectionsApiListItemSchema,
 );
 
 /**
  * Response schema for getting a specific collection by ID.
  */
-export const CollectionsApiGetByIdResponseSchema = v.object({
+export const CollectionsApiGetResponseSchema = v.object({
 	/** Unique identifier of the collection */
 	id: v.number(),
 

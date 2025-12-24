@@ -3,14 +3,14 @@ import type {
 	BannersApiActionSchema,
 	BannersApiBannerItemSchema,
 	BannersApiImageSchema,
-	BannersApiGetAllResponseSchema,
+	BannersApiListResponseSchema,
 } from "./schemas";
 import type * as v from "valibot";
 
 /**
  * Parameters for fetching banners.
  */
-export interface BannersApiGetAllParams extends BaseParams {
+export interface BannersApiListParams extends BaseParams {
 	/** Type of banners to filter by */
 	type?: string;
 }
@@ -35,6 +35,6 @@ export type BannersApiBannerItem = v.InferOutput<
 /**
  * Response for the list of banners.
  */
-export type BannersApiGetAllResponse = v.InferOutput<
-	typeof BannersApiGetAllResponseSchema
+export type BannersApiListResponse = v.InferOutput<
+	typeof BannersApiListResponseSchema
 >;

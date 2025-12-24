@@ -108,11 +108,11 @@ export const CategoriesApiGetParentsResponseSchema = v.array(
 /**
  * Response schema for the list of categories.
  */
-export const CategoriesApiGetAllResponseSchema = v.array(
+export const CategoriesApiListResponseSchema = v.array(
 	CategoriesApiListItemSchema,
 );
 
 /**
  * Response schema for getting a specific category by ID.
  */
-export const CategoriesApiGetByIdResponseSchema = CategoriesApiCategorySchema;
+export const CategoriesApiGetResponseSchema = CategoriesApiCategorySchema;

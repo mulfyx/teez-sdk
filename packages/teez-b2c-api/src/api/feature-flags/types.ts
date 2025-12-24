@@ -1,14 +1,14 @@
 import { type BaseParams } from "../../common/types";
 import type {
 	FeatureFlagsApiItemSchema,
-	FeatureFlagsApiGetAllResponseSchema,
+	FeatureFlagsApiListResponseSchema,
 } from "./schemas";
 import type * as v from "valibot";
 
 /**
  * Parameters for fetching feature flags.
  */
-export type FeatureFlagsApiGetAllParams = BaseParams;
+export type FeatureFlagsApiListParams = BaseParams;
 
 /**
  * Feature flag item.
@@ -20,6 +20,6 @@ export type FeatureFlagsApiItem = v.InferOutput<
 /**
  * Response for the list of feature flags.
  */
-export type FeatureFlagsApiGetAllResponse = v.InferOutput<
-	typeof FeatureFlagsApiGetAllResponseSchema
+export type FeatureFlagsApiListResponse = v.InferOutput<
+	typeof FeatureFlagsApiListResponseSchema
 >;

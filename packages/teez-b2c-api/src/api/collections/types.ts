@@ -2,10 +2,10 @@ import { type BaseParams, type SortOption } from "../../common/types";
 import type {
 	CollectionsApiFilterOptionSchema,
 	CollectionsApiFilterSchema,
-	CollectionsApiGetByIdResponseSchema,
+	CollectionsApiGetResponseSchema,
 	CollectionsApiGetSkusResponseSchema,
 	CollectionsApiListItemSchema,
-	CollectionsApiGetAllResponseSchema,
+	CollectionsApiListResponseSchema,
 	CollectionsApiSkuItemSchema,
 	CollectionsApiStockAvailabilitySchema,
 } from "./schemas";
@@ -66,7 +66,7 @@ export type CollectionsApiGetSkusResponse = v.InferOutput<
 /**
  * Parameters for fetching the list of collections.
  */
-export interface CollectionsApiGetAllParams extends BaseParams {
+export interface CollectionsApiListParams extends BaseParams {
 	/** Type of collections to filter by */
 	type?: string;
 
@@ -84,14 +84,14 @@ export type CollectionsApiListItem = v.InferOutput<
 /**
  * Response for the list of collections.
  */
-export type CollectionsApiGetAllResponse = v.InferOutput<
-	typeof CollectionsApiGetAllResponseSchema
+export type CollectionsApiListResponse = v.InferOutput<
+	typeof CollectionsApiListResponseSchema
 >;
 
 /**
  * Parameters for fetching a specific collection.
  */
-export interface CollectionsApiGetByIdParams extends BaseParams {
+export interface CollectionsApiGetParams extends BaseParams {
 	/** Unique identifier of the collection */
 	collectionId: number;
 }
@@ -99,6 +99,6 @@ export interface CollectionsApiGetByIdParams extends BaseParams {
 /**
  * Response for getting a specific collection by ID.
  */
-export type CollectionsApiGetByIdResponse = v.InferOutput<
-	typeof CollectionsApiGetByIdResponseSchema
+export type CollectionsApiGetResponse = v.InferOutput<
+	typeof CollectionsApiGetResponseSchema
 >;

@@ -1,9 +1,9 @@
 import { type BaseParams } from "../../common/types";
 import type {
-	CategoriesApiGetByIdResponseSchema,
+	CategoriesApiGetResponseSchema,
 	CategoriesApiGetParentsResponseSchema,
 	CategoriesApiListItemSchema,
-	CategoriesApiGetAllResponseSchema,
+	CategoriesApiListResponseSchema,
 	CategoriesApiParentItemSchema,
 } from "./schemas";
 import type * as v from "valibot";
@@ -36,7 +36,7 @@ export type CategoriesApiGetParentsResponse = v.InferOutput<
 /**
  * Parameters for fetching category list.
  */
-export type CategoriesApiGetAllParams = BaseParams;
+export type CategoriesApiListParams = BaseParams;
 
 /**
  * Category list item.
@@ -48,14 +48,14 @@ export type CategoriesApiListItem = v.InferOutput<
 /**
  * Response for the list of categories.
  */
-export type CategoriesApiGetAllResponse = v.InferOutput<
-	typeof CategoriesApiGetAllResponseSchema
+export type CategoriesApiListResponse = v.InferOutput<
+	typeof CategoriesApiListResponseSchema
 >;
 
 /**
  * Parameters for fetching a specific category.
  */
-export interface CategoriesApiGetByIdParams extends BaseParams {
+export interface CategoriesApiGetParams extends BaseParams {
 	/** Unique identifier of the category */
 	categoryId: number;
 }
@@ -63,6 +63,6 @@ export interface CategoriesApiGetByIdParams extends BaseParams {
 /**
  * Response for getting a specific category by ID.
  */
-export type CategoriesApiGetByIdResponse = v.InferOutput<
-	typeof CategoriesApiGetByIdResponseSchema
+export type CategoriesApiGetResponse = v.InferOutput<
+	typeof CategoriesApiGetResponseSchema
 >;

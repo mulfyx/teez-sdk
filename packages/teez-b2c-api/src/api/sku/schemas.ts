@@ -148,7 +148,7 @@ export const SkuApiStockAvailabilitySchema = v.object({
 /**
  * Response schema for getting a specific SKU by ID.
  */
-export const SkuApiGetByIdResponseSchema = v.object({
+export const SkuApiGetResponseSchema = v.object({
 	/** Unique stock keeping unit identifier */
 	skuId: v.number(),
 

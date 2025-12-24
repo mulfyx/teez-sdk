@@ -3,7 +3,7 @@ import type {
 	ShopsApiContactInfoSchema,
 	ShopsApiFilterOptionSchema,
 	ShopsApiFilterSchema,
-	ShopsApiGetByIdResponseSchema,
+	ShopsApiGetResponseSchema,
 	ShopsApiGetMonobrandResponseSchema,
 	ShopsApiGetProductsResponseSchema,
 	ShopsApiProductItemSchema,
@@ -16,7 +16,7 @@ import type * as v from "valibot";
 /**
  * Parameters for fetching a specific shop.
  */
-export interface ShopsApiGetByIdParams extends BaseParams {
+export interface ShopsApiGetParams extends BaseParams {
 	/** Unique identifier of the shop */
 	shopId: number;
 }
@@ -36,8 +36,8 @@ export type ShopsApiTag = v.InferOutput<typeof ShopsApiTagSchema>;
 /**
  * Response for getting a specific shop by ID.
  */
-export type ShopsApiGetByIdResponse = v.InferOutput<
-	typeof ShopsApiGetByIdResponseSchema
+export type ShopsApiGetResponse = v.InferOutput<
+	typeof ShopsApiGetResponseSchema
 >;
 
 /**

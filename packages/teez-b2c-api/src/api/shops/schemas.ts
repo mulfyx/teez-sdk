@@ -38,7 +38,7 @@ export const ShopsApiTagSchema = v.object({
 /**
  * Response schema for getting a specific shop by ID.
  */
-export const ShopsApiGetByIdResponseSchema = v.object({
+export const ShopsApiGetResponseSchema = v.object({
 	/** Unique identifier of the shop */
 	id: v.number(),
 

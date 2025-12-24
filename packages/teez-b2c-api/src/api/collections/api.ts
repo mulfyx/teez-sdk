@@ -1,16 +1,16 @@
 import { type HttpClient } from "../../http/client";
 import {
-	CollectionsApiGetByIdResponseSchema,
+	CollectionsApiGetResponseSchema,
 	CollectionsApiGetSkusResponseSchema,
-	CollectionsApiGetAllResponseSchema,
+	CollectionsApiListResponseSchema,
 } from "./schemas";
 import {
-	type CollectionsApiGetByIdParams,
-	type CollectionsApiGetByIdResponse,
+	type CollectionsApiGetParams,
+	type CollectionsApiGetResponse,
 	type CollectionsApiGetSkusParams,
 	type CollectionsApiGetSkusResponse,
-	type CollectionsApiGetAllParams,
-	type CollectionsApiGetAllResponse,
+	type CollectionsApiListParams,
+	type CollectionsApiListResponse,
 } from "./types";
 
 /**
@@ -35,26 +35,26 @@ export class CollectionsApi {
 	/**
 	 * Retrieves a list of all collections.
 	 */
-	public async getAll(
-		params: CollectionsApiGetAllParams = {},
-	): Promise<CollectionsApiGetAllResponse> {
+	public async list(
+		params: CollectionsApiListParams = {},
+	): Promise<CollectionsApiListResponse> {
 		return await this.http.get({
 			path: "/collections",
 			params,
-			schema: CollectionsApiGetAllResponseSchema,
+			schema: CollectionsApiListResponseSchema,
 		});
 	}
 
 	/**
 	 * Retrieves detailed information about a specific collection by its ID.
 	 */
-	public async getById(
-		params: CollectionsApiGetByIdParams,
-	): Promise<CollectionsApiGetByIdResponse> {
+	public async get(
+		params: CollectionsApiGetParams,
+	): Promise<CollectionsApiGetResponse> {
 		return await this.http.get({
 			path: `/collections/${params.collectionId}`,
 			params,
-			schema: CollectionsApiGetByIdResponseSchema,
+			schema: CollectionsApiGetResponseSchema,
 		});
 	}
 }

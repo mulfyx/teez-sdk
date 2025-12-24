@@ -27,4 +27,4 @@ export const PromoApiItemSchema = v.object({
 /**
  * Response schema for the list of promotions.
  */
-export const PromoApiGetAllResponseSchema = v.array(PromoApiItemSchema);
+export const PromoApiListResponseSchema = v.array(PromoApiItemSchema);

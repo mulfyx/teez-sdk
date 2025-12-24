@@ -14,6 +14,6 @@ export const FeatureFlagsApiItemSchema = v.object({
 /**
  * Response schema for the list of feature flags.
  */
-export const FeatureFlagsApiGetAllResponseSchema = v.array(
+export const FeatureFlagsApiListResponseSchema = v.array(
 	FeatureFlagsApiItemSchema,
 );

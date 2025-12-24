@@ -40,4 +40,4 @@ export const BannersApiBannerItemSchema = v.object({
 /**
  * Response schema for the list of banners.
  */
-export const BannersApiGetAllResponseSchema = v.array(BannersApiBannerItemSchema);
+export const BannersApiListResponseSchema = v.array(BannersApiBannerItemSchema);

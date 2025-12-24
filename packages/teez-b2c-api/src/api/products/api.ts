@@ -1,12 +1,12 @@
 import { type HttpClient } from "../../http/client";
 import {
-	ProductsApiGetProductsResponseSchema,
+	ProductsApiListResponseSchema,
 	ProductsApiGetReviewsResponseSchema,
 	ProductsApiGetSortOptionsResponseSchema,
 } from "./schemas";
 import {
-	type ProductsApiGetProductsParams,
-	type ProductsApiGetProductsResponse,
+	type ProductsApiListParams,
+	type ProductsApiListResponse,
 	type ProductsApiGetReviewsParams,
 	type ProductsApiGetReviewsResponse,
 	type ProductsApiGetSortOptionsParams,
@@ -35,13 +35,13 @@ export class ProductsApi {
 	/**
 	 * Retrieves a list of products with optional filtering and pagination.
 	 */
-	public async getProducts(
-		params: ProductsApiGetProductsParams = {},
-	): Promise<ProductsApiGetProductsResponse> {
+	public async list(
+		params: ProductsApiListParams = {},
+	): Promise<ProductsApiListResponse> {
 		return await this.http.get({
 			path: "/api/v2/product",
 			params,
-			schema: ProductsApiGetProductsResponseSchema,
+			schema: ProductsApiListResponseSchema,
 		});
 	}
 

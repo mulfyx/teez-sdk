@@ -1,13 +1,13 @@
 import { type HttpClient } from "../../http/client";
 import {
-	SkuApiGetByIdResponseSchema,
+	SkuApiGetResponseSchema,
 	SkuApiGetCollectionsResponseSchema,
 	SkuApiGetReviewAvailableResponseSchema,
 	SkuApiGetSimilarResponseSchema,
 } from "./schemas";
 import {
-	type SkuApiGetByIdParams,
-	type SkuApiGetByIdResponse,
+	type SkuApiGetParams,
+	type SkuApiGetResponse,
 	type SkuApiGetCollectionsParams,
 	type SkuApiGetCollectionsResponse,
 	type SkuApiGetReviewAvailableParams,
@@ -25,13 +25,13 @@ export class SkuApi {
 	/**
 	 * Retrieves details of a specific SKU.
 	 */
-	public async getById(
-		params: SkuApiGetByIdParams,
-	): Promise<SkuApiGetByIdResponse> {
+	public async get(
+		params: SkuApiGetParams,
+	): Promise<SkuApiGetResponse> {
 		return await this.http.get({
 			path: `/api/v2/sku/${params.skuId}`,
 			params,
-			schema: SkuApiGetByIdResponseSchema,
+			schema: SkuApiGetResponseSchema,
 		});
 	}
 

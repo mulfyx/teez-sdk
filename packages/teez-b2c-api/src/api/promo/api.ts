@@ -1,8 +1,8 @@
 import { type HttpClient } from "../../http/client";
-import { PromoApiGetAllResponseSchema } from "./schemas";
+import { PromoApiListResponseSchema } from "./schemas";
 import {
-	type PromoApiGetAllParams,
-	type PromoApiGetAllResponse,
+	type PromoApiListParams,
+	type PromoApiListResponse,
 } from "./types";
 
 /**
@@ -14,13 +14,13 @@ export class PromoApi {
 	/**
 	 * Retrieves a list of all active promotions.
 	 */
-	public async getAll(
-		params: PromoApiGetAllParams = {},
-	): Promise<PromoApiGetAllResponse> {
+	public async list(
+		params: PromoApiListParams = {},
+	): Promise<PromoApiListResponse> {
 		return await this.http.get({
 			path: "/api/promo",
 			params,
-			schema: PromoApiGetAllResponseSchema,
+			schema: PromoApiListResponseSchema,
 		});
 	}
 }
