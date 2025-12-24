@@ -4,16 +4,24 @@ import { TeezError } from "./teez-error";
  * Options for constructing a TeezApiError.
  */
 export interface TeezApiErrorOptions extends ErrorOptions {
-	/** URL of the request that failed. */
+	/**
+	 * URL of the request that failed.
+	 */
 	url: string;
 
-	/** HTTP status code. */
+	/**
+	 * HTTP status code.
+	 */
 	status: number;
 
-	/** HTTP status text. */
+	/**
+	 * HTTP status text.
+	 */
 	statusText: string;
 
-	/** Response body, if any. */
+	/**
+	 * Response body, if any.
+	 */
 	body?: unknown;
 }
 
@@ -23,16 +31,24 @@ export interface TeezApiErrorOptions extends ErrorOptions {
 export class TeezApiError extends TeezError {
 	public override name = "TeezApiError";
 
-	/** HTTP status code. */
+	/**
+	 * HTTP status code.
+	 */
 	public readonly status: number;
 
-	/** HTTP status text. */
+	/**
+	 * HTTP status text.
+	 */
 	public readonly statusText: string;
 
-	/** URL of the request that failed. */
+	/**
+	 * URL of the request that failed.
+	 */
 	public readonly url: string;
 
-	/** Response body, if available. */
+	/**
+	 * Response body, if available.
+	 */
 	public readonly body?: unknown;
 
 	public constructor(
@@ -47,17 +63,23 @@ export class TeezApiError extends TeezError {
 		this.body = body;
 	}
 
-	/** Checks if the status code is a client error (4xx). */
+	/**
+	 * Checks if the status code is a client error (4xx).
+	 */
 	public get isClientError(): boolean {
 		return this.status >= 400 && this.status < 500;
 	}
 
-	/** Checks if the status code is a server error (5xx). */
+	/**
+	 * Checks if the status code is a server error (5xx).
+	 */
 	public get isServerError(): boolean {
 		return this.status >= 500;
 	}
 
-	/** Checks if the status code indicates a Not Found error (404). */
+	/**
+	 * Checks if the status code indicates a Not Found error (404).
+	 */
 	public get isNotFound(): boolean {
 		return this.status === 404;
 	}

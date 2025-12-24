@@ -10,13 +10,19 @@ import type * as v from "valibot";
  * Internal HTTP client for making API requests.
  */
 export class HttpClient {
-	/** Base URL for all requests. */
+	/**
+	 * Base URL for all requests.
+	 */
 	private readonly baseUrl: string;
 
-	/** Headers to include in all requests. */
+	/**
+	 * Headers to include in all requests.
+	 */
 	private readonly headers: Record<string, string>;
 
-	/** Request timeout in milliseconds. */
+	/**
+	 * Request timeout in milliseconds.
+	 */
 	private readonly timeout: number;
 
 	public constructor(config: ResolvedTeezClientConfig) {

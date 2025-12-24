@@ -4,16 +4,24 @@ import { TeezError } from "./teez-error";
  * Abstract representation of a validation issue, independent of any validation library.
  */
 export interface TeezValidationIssue {
-	/** The error message. */
+	/**
+	 * The error message.
+	 */
 	message: string;
 
-	/** The path to the invalid field (flattened for simplicity). */
+	/**
+	 * The path to the invalid field (flattened for simplicity).
+	 */
 	path?: (string | number)[];
 
-	/** The expected value type (optional). */
+	/**
+	 * The expected value type (optional).
+	 */
 	expected?: string;
 
-	/** The received value (optional). */
+	/**
+	 * The received value (optional).
+	 */
 	received?: string;
 }
 
@@ -21,10 +29,14 @@ export interface TeezValidationIssue {
  * Options for constructing a TeezValidationError.
  */
 export interface TeezValidationErrorOptions extends ErrorOptions {
-	/** List of generic validation issues. */
+	/**
+	 * List of generic validation issues.
+	 */
 	issues: TeezValidationIssue[];
 
-	/** The full data object that failed validation. */
+	/**
+	 * The full data object that failed validation.
+	 */
 	data?: unknown;
 }
 
@@ -34,10 +46,14 @@ export interface TeezValidationErrorOptions extends ErrorOptions {
 export class TeezValidationError extends TeezError {
 	public override name = "TeezValidationError";
 
-	/** List of standardized validation issues. */
+	/**
+	 * List of standardized validation issues.
+	 */
 	public readonly issues: TeezValidationIssue[];
 
-	/** The raw data that failed validation. */
+	/**
+	 * The raw data that failed validation.
+	 */
 	public readonly data: unknown;
 
 	public constructor(

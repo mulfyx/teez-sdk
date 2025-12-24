@@ -17,34 +17,54 @@ import { HttpClient } from "./http/client";
  * Main client for interacting with the Teez B2C API.
  */
 export class TeezClient {
-	/** Configuration used by the client. */
+	/**
+	 * Configuration used by the client.
+	 */
 	private readonly config: ResolvedTeezClientConfig;
 
-	/** HTTP client for making requests. */
+	/**
+	 * HTTP client for making requests.
+	 */
 	private readonly http: HttpClient;
 
-	/** API for retrieving banners. */
+	/**
+	 * API for retrieving banners.
+	 */
 	public readonly banners: BannersApi;
 
-	/** API for retrieving categories. */
+	/**
+	 * API for retrieving categories.
+	 */
 	public readonly categories: CategoriesApi;
 
-	/** API for retrieving collections. */
+	/**
+	 * API for retrieving collections.
+	 */
 	public readonly collections: CollectionsApi;
 
-	/** API for retrieving feature flags. */
+	/**
+	 * API for retrieving feature flags.
+	 */
 	public readonly featureFlags: FeatureFlagsApi;
 
-	/** API for retrieving products. */
+	/**
+	 * API for retrieving products.
+	 */
 	public readonly products: ProductsApi;
 
-	/** API for retrieving promotions. */
+	/**
+	 * API for retrieving promotions.
+	 */
 	public readonly promo: PromoApi;
 
-	/** API for retrieving shops. */
+	/**
+	 * API for retrieving shops.
+	 */
 	public readonly shops: ShopsApi;
 
-	/** API for retrieving SKU details. */
+	/**
+	 * API for retrieving SKU details.
+	 */
 	public readonly sku: SkuApi;
 
 	public constructor(config?: TeezClientConfig) {

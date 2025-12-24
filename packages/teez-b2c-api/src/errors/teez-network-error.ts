@@ -4,7 +4,9 @@ import { TeezError } from "./teez-error";
  * Options for constructing a TeezNetworkError.
  */
 export interface TeezNetworkErrorOptions extends ErrorOptions {
-	/** URL of the request that failed. */
+	/**
+	 * URL of the request that failed.
+	 */
 	url: string;
 }
 
@@ -14,7 +16,9 @@ export interface TeezNetworkErrorOptions extends ErrorOptions {
 export class TeezNetworkError extends TeezError {
 	public override name = "TeezNetworkError";
 
-	/** URL of the request that failed. */
+	/**
+	 * URL of the request that failed.
+	 */
 	public readonly url: string;
 
 	public constructor(

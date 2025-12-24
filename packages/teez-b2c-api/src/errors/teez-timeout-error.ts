@@ -4,10 +4,14 @@ import { TeezError } from "./teez-error";
  * Options for constructing a TeezTimeoutError.
  */
 export interface TeezTimeoutErrorOptions extends ErrorOptions {
-	/** URL of the request that timed out. */
+	/**
+	 * URL of the request that timed out.
+	 */
 	url: string;
 
-	/** Timeout duration in milliseconds. */
+	/**
+	 * Timeout duration in milliseconds.
+	 */
 	timeout: number;
 }
 
@@ -17,10 +21,14 @@ export interface TeezTimeoutErrorOptions extends ErrorOptions {
 export class TeezTimeoutError extends TeezError {
 	public override name = "TeezTimeoutError";
 
-	/** URL of the request that timed out. */
+	/**
+	 * URL of the request that timed out.
+	 */
 	public readonly url: string;
 
-	/** Timeout duration in milliseconds. */
+	/**
+	 * Timeout duration in milliseconds.
+	 */
 	public readonly timeout: number;
 
 	public constructor(

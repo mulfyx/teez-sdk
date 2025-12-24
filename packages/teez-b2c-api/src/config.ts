@@ -45,22 +45,34 @@ export interface TeezClientConfig {
  * Fully resolved configuration with defaults applied.
  */
 export interface ResolvedTeezClientConfig {
-	/** Base URL for the API. */
+	/**
+	 * Base URL for the API.
+	 */
 	readonly baseUrl: string;
 
-	/** Request timeout in milliseconds. */
+	/**
+	 * Request timeout in milliseconds.
+	 */
 	readonly timeout: number;
 
-	/** User-Agent string. */
+	/**
+	 * User-Agent string.
+	 */
 	readonly userAgent: string;
 
-	/** Application version string. */
+	/**
+	 * Application version string.
+	 */
 	readonly appVersion: string;
 
-	/** Language for API responses. */
+	/**
+	 * Language for API responses.
+	 */
 	readonly language: Language;
 
-	/** Custom headers included in requests. */
+	/**
+	 * Custom headers included in requests.
+	 */
 	readonly headers: Readonly<Record<string, string>>;
 }
 
