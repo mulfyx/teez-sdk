@@ -44,6 +44,15 @@ export default defineConfig([
 					fixStyle: "inline-type-imports",
 				},
 			],
+			"@typescript-eslint/explicit-function-return-type": [
+				"error",
+				{
+					allowExpressions: true,
+					allowTypedFunctionExpressions: true,
+					allowHigherOrderFunctions: true,
+					allowDirectConstAssertionInArrowFunctions: true,
+				},
+			],
 			"@typescript-eslint/explicit-member-accessibility": "error",
 			"@typescript-eslint/no-dynamic-delete": "off",
 			"@typescript-eslint/return-await": ["error", "always"],
