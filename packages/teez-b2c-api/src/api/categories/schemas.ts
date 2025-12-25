@@ -2,25 +2,39 @@ import { nullable } from "../../common/schemas";
 import * as v from "valibot";
 
 interface CategoryItem {
-	/** Unique identifier of the category */
+	/**
+	 * Unique identifier of the category
+	 */
 	id: number;
 
-	/** Identifier of the parent category */
+	/**
+	 * Identifier of the parent category
+	 */
 	parentId: number;
 
-	/** Depth level in the category tree */
+	/**
+	 * Depth level in the category tree
+	 */
 	level: number;
 
-	/** Display name of the category */
+	/**
+	 * Localized display name of the category
+	 */
 	name: string;
 
-	/** Indicates if the category contains adult content */
+	/**
+	 * Indicates if the category contains adult content
+	 */
 	isAdult: boolean;
 
-	/** Indicates if there are nested subcategories */
+	/**
+	 * Indicates if there are nested subcategories
+	 */
 	hasSubcategories: boolean;
 
-	/** List of nested subcategories */
+	/**
+	 * List of nested subcategories
+	 */
 	subcategories?: CategoryItem[] | null | undefined;
 }
 
@@ -29,25 +43,39 @@ interface CategoryItem {
  */
 export const CategoriesApiCategorySchema: v.GenericSchema<CategoryItem> =
 	v.object({
-		/** Unique identifier of the category */
+		/**
+		 * Unique identifier of the category
+		 */
 		id: v.number(),
 
-		/** Identifier of the parent category */
+		/**
+		 * Identifier of the parent category
+		 */
 		parentId: v.number(),
 
-		/** Depth level in the category tree */
+		/**
+		 * Depth level in the category tree
+		 */
 		level: v.number(),
 
-		/** Display name of the category */
+		/**
+		 * Localized display name of the category
+		 */
 		name: v.string(),
 
-		/** Indicates if the category contains adult content */
+		/**
+		 * Indicates if the category contains adult content
+		 */
 		isAdult: v.boolean(),
 
-		/** Indicates if there are nested subcategories */
+		/**
+		 * Indicates if there are nested subcategories
+		 */
 		hasSubcategories: v.boolean(),
 
-		/** List of nested subcategories */
+		/**
+		 * List of nested subcategories
+		 */
 		subcategories: nullable(
 			v.array(v.lazy(() => CategoriesApiCategorySchema)),
 		),
@@ -57,19 +85,29 @@ export const CategoriesApiCategorySchema: v.GenericSchema<CategoryItem> =
  * Schema for a parent category item.
  */
 export const CategoriesApiParentItemSchema = v.object({
-	/** Unique identifier of the category */
+	/**
+	 * Unique identifier of the category
+	 */
 	id: v.number(),
 
-	/** Depth level in the category tree */
+	/**
+	 * Depth level in the category tree
+	 */
 	level: v.number(),
 
-	/** Display name of the category */
+	/**
+	 * Localized display name of the category
+	 */
 	name: v.string(),
 
-	/** Indicates if there are nested subcategories */
+	/**
+	 * Indicates if there are nested subcategories
+	 */
 	hasSubcategories: v.boolean(),
 
-	/** List of nested subcategories */
+	/**
+	 * List of nested subcategories
+	 */
 	subcategories: nullable(
 		v.array(v.lazy(() => CategoriesApiCategorySchema)),
 	),
@@ -79,22 +117,34 @@ export const CategoriesApiParentItemSchema = v.object({
  * Schema for a category list item.
  */
 export const CategoriesApiListItemSchema = v.object({
-	/** Unique identifier of the category */
+	/**
+	 * Unique identifier of the category
+	 */
 	id: v.number(),
 
-	/** Identifier of the parent category */
+	/**
+	 * Identifier of the parent category
+	 */
 	parentId: v.number(),
 
-	/** Depth level in the category tree */
+	/**
+	 * Depth level in the category tree
+	 */
 	level: v.number(),
 
-	/** Display name of the category */
+	/**
+	 * Localized display name of the category
+	 */
 	name: v.string(),
 
-	/** Indicates if the category contains adult content */
+	/**
+	 * Indicates if the category contains adult content
+	 */
 	isAdult: v.boolean(),
 
-	/** Indicates if there are nested subcategories */
+	/**
+	 * Indicates if there are nested subcategories
+	 */
 	hasSubcategories: v.boolean(),
 });
 

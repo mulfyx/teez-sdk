@@ -2,16 +2,42 @@ import { nullable } from "../../common/schemas";
 import * as v from "valibot";
 
 /**
+ * Enum for shop filter types.
+ * Known values: "category" (category selector), "alphabetic_search_list" (brand picker), "range" (price slider)
+ */
+export const ShopsApiFilterTypeEnum = v.union([
+	v.literal("category"),
+	v.literal("alphabetic_search_list"),
+	v.literal("range"),
+	v.string(),
+]);
+
+/**
+ * Enum for stock availability types.
+ * Known values: "stock" (in stock with quantity info)
+ */
+export const ShopsApiStockAvailabilityTypeEnum = v.union([
+	v.literal("stock"),
+	v.string(),
+]);
+
+/**
  * Schema for shop contact information.
  */
 export const ShopsApiContactInfoSchema = v.object({
-	/** Legal entity type code */
+	/**
+	 * Legal entity type code
+	 */
 	legalType: v.number(),
 
-	/** Business Identification Number */
+	/**
+	 * Business Identification Number
+	 */
 	bin: v.string(),
 
-	/** Number of days since the shop was registered */
+	/**
+	 * Number of days since the shop was registered
+	 */
 	daysSinceRegistration: v.number(),
 });
 
@@ -19,19 +45,29 @@ export const ShopsApiContactInfoSchema = v.object({
  * Schema for a shop tag.
  */
 export const ShopsApiTagSchema = v.object({
-	/** Display name of the tag */
+	/**
+	 * Display name of the tag
+	 */
 	name: v.string(),
 
-	/** URL to the SVG icon for the tag */
+	/**
+	 * URL to the SVG icon for the tag
+	 */
 	svg: v.string(),
 
-	/** Unique code for the tag */
+	/**
+	 * Unique code for the tag
+	 */
 	code: v.string(),
 
-	/** Description of the tag */
+	/**
+	 * Description of the tag
+	 */
 	description: v.string(),
 
-	/** URL to the raster icon for the tag */
+	/**
+	 * URL to the raster icon for the tag
+	 */
 	icon: v.string(),
 });
 
@@ -39,37 +75,59 @@ export const ShopsApiTagSchema = v.object({
  * Response schema for getting a specific shop by ID.
  */
 export const ShopsApiGetResponseSchema = v.object({
-	/** Unique identifier of the shop */
+	/**
+	 * Unique identifier of the shop
+	 */
 	id: v.number(),
 
-	/** Name of the shop */
+	/**
+	 * Name of the shop
+	 */
 	name: v.string(),
 
-	/** Description of the shop */
+	/**
+	 * Description of the shop
+	 */
 	description: v.string(),
 
-	/** URL to the shop's logo */
+	/**
+	 * URL to the shop's logo
+	 */
 	logo: nullable(v.string()),
 
-	/** URL to the shop's banner image */
+	/**
+	 * URL to the shop's banner image
+	 */
 	banner: nullable(v.string()),
 
-	/** Indicates if the shop represents a single brand */
+	/**
+	 * Indicates if the shop represents a single brand
+	 */
 	isMonobrand: v.boolean(),
 
-	/** Contact information for the shop */
+	/**
+	 * Contact information for the shop
+	 */
 	contactInfo: ShopsApiContactInfoSchema,
 
-	/** Tag associated with the shop */
+	/**
+	 * Tag associated with the shop
+	 */
 	tag: ShopsApiTagSchema,
 
-	/** Average rating of the shop */
+	/**
+	 * Average rating of the shop
+	 */
 	rating: nullable(v.number()),
 
-	/** Information about total orders/purchases */
+	/**
+	 * Text about total orders/purchases (e.g., "11 заказов", "930 заказов")
+	 */
 	qtyPurchasedInfo: nullable(v.string()),
 
-	/** Total number of reviews received */
+	/**
+	 * Total number of reviews received
+	 */
 	totalReviews: nullable(v.number()),
 });
 
@@ -77,10 +135,14 @@ export const ShopsApiGetResponseSchema = v.object({
  * Schema for a shop item in a list.
  */
 export const ShopsApiShopItemSchema = v.object({
-	/** Unique identifier of the shop */
+	/**
+	 * Unique identifier of the shop
+	 */
 	id: v.number(),
 
-	/** URL to the shop's icon */
+	/**
+	 * URL to the shop's icon
+	 */
 	icon: v.string(),
 });
 
@@ -88,22 +150,34 @@ export const ShopsApiShopItemSchema = v.object({
  * Response schema for the monobrand shop list.
  */
 export const ShopsApiGetMonobrandResponseSchema = v.object({
-	/** List of monobrand shops */
+	/**
+	 * List of monobrand shops
+	 */
 	items: v.array(ShopsApiShopItemSchema),
 
-	/** Current page number */
+	/**
+	 * Current page number
+	 */
 	pageNumber: v.number(),
 
-	/** Total number of pages available */
+	/**
+	 * Total number of pages available
+	 */
 	totalPages: v.number(),
 
-	/** Total number of shops found */
+	/**
+	 * Total number of shops found
+	 */
 	totalCount: v.number(),
 
-	/** Indicates if there is a previous page */
+	/**
+	 * Indicates if there is a previous page
+	 */
 	hasPreviousPage: v.boolean(),
 
-	/** Indicates if there is a next page */
+	/**
+	 * Indicates if there is a next page
+	 */
 	hasNextPage: v.boolean(),
 });
 
@@ -111,16 +185,24 @@ export const ShopsApiGetMonobrandResponseSchema = v.object({
  * Schema for a filter option.
  */
 export const ShopsApiFilterOptionSchema = v.object({
-	/** Display label for the filter option */
+	/**
+	 * Display label for the filter option
+	 */
 	label: nullable(v.string()),
 
-	/** Value for the filter option */
+	/**
+	 * Value for the filter option
+	 */
 	value: nullable(v.number()),
 
-	/** Minimum value for range filters */
+	/**
+	 * Minimum value for range filters
+	 */
 	min: nullable(v.number()),
 
-	/** Maximum value for range filters */
+	/**
+	 * Maximum value for range filters
+	 */
 	max: nullable(v.number()),
 });
 
@@ -128,16 +210,24 @@ export const ShopsApiFilterOptionSchema = v.object({
  * Schema for a shop product filter.
  */
 export const ShopsApiFilterSchema = v.object({
-	/** Unique code identifying the filter type */
+	/**
+	 * Unique code identifying the filter type
+	 */
 	code: v.string(),
 
-	/** Display name of the filter */
+	/**
+	 * Localized display name of the filter
+	 */
 	name: v.string(),
 
-	/** Type of the filter UI element */
-	type: v.string(),
+	/**
+	 * Filter UI type - "category" for category selector, "alphabetic_search_list" for brand picker, "range" for price slider
+	 */
+	type: ShopsApiFilterTypeEnum,
 
-	/** List of available options for this filter */
+	/**
+	 * List of available options for this filter
+	 */
 	options: v.array(ShopsApiFilterOptionSchema),
 });
 
@@ -145,19 +235,29 @@ export const ShopsApiFilterSchema = v.object({
  * Schema for stock availability information.
  */
 export const ShopsApiStockAvailabilitySchema = v.object({
-	/** Text describing stock status */
+	/**
+	 * Localized text describing stock status (e.g., "В наличии - осталось всего 16 штук")
+	 */
 	text: v.string(),
 
-	/** SVG icon representing stock status */
+	/**
+	 * SVG icon representing stock status
+	 */
 	svg: nullable(v.string()),
 
-	/** Type of stock status */
-	type: v.string(),
+	/**
+	 * Type of stock status (known value: "stock")
+	 */
+	type: ShopsApiStockAvailabilityTypeEnum,
 
-	/** Maximum quantity available */
+	/**
+	 * Maximum quantity available
+	 */
 	maxQty: v.number(),
 
-	/** Reason for the maximum quantity limit */
+	/**
+	 * Localized reason text for quantity limit (e.g., "В наличии только 16 штук")
+	 */
 	maxQtyReason: v.string(),
 });
 
@@ -165,55 +265,89 @@ export const ShopsApiStockAvailabilitySchema = v.object({
  * Schema for a product item in a shop.
  */
 export const ShopsApiProductItemSchema = v.object({
-	/** Unique stock keeping unit identifier */
+	/**
+	 * Unique stock keeping unit identifier
+	 */
 	skuId: v.number(),
 
-	/** Unique product identifier */
+	/**
+	 * Unique product identifier
+	 */
 	productId: v.number(),
 
-	/** Full display name of the product */
+	/**
+	 * Full display name of the product
+	 */
 	name: v.string(),
 
-	/** Brief description of the product */
+	/**
+	 * Brief description of the product
+	 */
 	shortDescription: v.string(),
 
-	/** URL for the small preview image */
+	/**
+	 * URL for the small preview image
+	 */
 	thumbnailUrl: v.string(),
 
-	/** URL for the full-size image */
+	/**
+	 * URL for the full-size image
+	 */
 	imageUrl: v.string(),
 
-	/** Current selling price */
+	/**
+	 * Current selling price
+	 */
 	price: v.number(),
 
-	/** Original price before discounts */
+	/**
+	 * Original price before discounts
+	 */
 	originalPrice: v.number(),
 
-	/** Indicates if the product is on promotion */
+	/**
+	 * Indicates if the product is on promotion
+	 */
 	isPromo: v.boolean(),
 
-	/** Name of the promotion */
+	/**
+	 * Name of the promotion
+	 */
 	promoName: v.string(),
 
-	/** Moderation status code */
+	/**
+	 * Moderation status code
+	 */
 	moderationStatus: v.number(),
 
-	/** Quantity available in stock */
+	/**
+	 * Quantity available in stock
+	 */
 	qty: v.number(),
 
-	/** Indicates if the item is in stock */
+	/**
+	 * Indicates if the item is in stock
+	 */
 	inStock: v.boolean(),
 
-	/** Information about purchase quantity popularity */
+	/**
+	 * Popularity text indicating purchase frequency (e.g., "Часто покупают")
+	 */
 	qtyPurchasedInfo: nullable(v.string()),
 
-	/** Average rating score */
+	/**
+	 * Average rating score
+	 */
 	rating: nullable(v.number()),
 
-	/** Total number of ratings */
+	/**
+	 * Total number of ratings
+	 */
 	scoreQuantity: nullable(v.number()),
 
-	/** Stock availability details */
+	/**
+	 * Stock availability details
+	 */
 	stockAvailability: nullable(ShopsApiStockAvailabilitySchema),
 });
 
@@ -221,24 +355,38 @@ export const ShopsApiProductItemSchema = v.object({
  * Response schema for products from a specific shop.
  */
 export const ShopsApiGetProductsResponseSchema = v.object({
-	/** List of applicable filters */
+	/**
+	 * List of applicable filters
+	 */
 	filters: v.array(ShopsApiFilterSchema),
 
-	/** List of product items */
+	/**
+	 * List of product items
+	 */
 	items: v.array(ShopsApiProductItemSchema),
 
-	/** Current page number */
+	/**
+	 * Current page number
+	 */
 	pageNumber: v.number(),
 
-	/** Total number of pages available */
+	/**
+	 * Total number of pages available
+	 */
 	totalPages: v.number(),
 
-	/** Total number of products found */
+	/**
+	 * Total number of products found
+	 */
 	totalCount: v.number(),
 
-	/** Indicates if there is a previous page */
+	/**
+	 * Indicates if there is a previous page
+	 */
 	hasPreviousPage: v.boolean(),
 
-	/** Indicates if there is a next page */
+	/**
+	 * Indicates if there is a next page
+	 */
 	hasNextPage: v.boolean(),
 });

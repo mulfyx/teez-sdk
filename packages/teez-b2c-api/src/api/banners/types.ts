@@ -11,7 +11,9 @@ import type * as v from "valibot";
  * Parameters for fetching banners.
  */
 export interface BannersApiListParams extends BaseParams {
-	/** Type of banners to filter by */
+	/**
+	 * Type of banners to filter by
+	 */
 	type?: string;
 }
 

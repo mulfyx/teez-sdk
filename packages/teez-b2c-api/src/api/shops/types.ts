@@ -17,7 +17,9 @@ import type * as v from "valibot";
  * Parameters for fetching a specific shop.
  */
 export interface ShopsApiGetParams extends BaseParams {
-	/** Unique identifier of the shop */
+	/**
+	 * Unique identifier of the shop
+	 */
 	shopId: number;
 }
 
@@ -44,13 +46,19 @@ export type ShopsApiGetResponse = v.InferOutput<
  * Parameters for fetching monobrand shops.
  */
 export interface ShopsApiGetMonobrandParams extends BaseParams {
-	/** Random seed for consistent pagination */
+	/**
+	 * Random seed for consistent pagination
+	 */
 	seed?: number;
 
-	/** Number of the page to retrieve */
+	/**
+	 * Number of the page to retrieve
+	 */
 	pageNumber?: number;
 
-	/** Number of items per page */
+	/**
+	 * Number of items per page
+	 */
 	pageSize?: number;
 }
 
@@ -70,28 +78,44 @@ export type ShopsApiGetMonobrandResponse = v.InferOutput<
  * Parameters for fetching products from a shop.
  */
 export interface ShopsApiGetProductsParams extends BaseParams {
-	/** Unique identifier of the shop */
+	/**
+	 * Unique identifier of the shop
+	 */
 	shopId: number;
 
-	/** Number of the page to retrieve */
+	/**
+	 * Number of the page to retrieve
+	 */
 	pageNumber?: number;
 
-	/** Number of items per page */
+	/**
+	 * Number of items per page
+	 */
 	pageSize?: number;
 
-	/** Sorting option for the results */
+	/**
+	 * Sorting option for the results
+	 */
 	sortBy?: SortOption;
 
-	/** Filter by category ID */
+	/**
+	 * Filter by category ID
+	 */
 	categoryId?: number;
 
-	/** Filter by brand IDs */
+	/**
+	 * Filter by brand IDs
+	 */
 	brandIds?: number[];
 
-	/** Minimum price filter */
+	/**
+	 * Minimum price filter
+	 */
 	minPrice?: number;
 
-	/** Maximum price filter */
+	/**
+	 * Maximum price filter
+	 */
 	maxPrice?: number;
 }
 

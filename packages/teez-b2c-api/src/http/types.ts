@@ -12,10 +12,14 @@ export interface HttpRequestOptions extends Omit<
 	RequestInit,
 	"headers" | "signal"
 > {
-	/** Full URL for the request. */
+	/**
+	 * Full URL for the request.
+	 */
 	url: string;
 
-	/** Additional headers for this specific request. */
+	/**
+	 * Additional headers for this specific request.
+	 */
 	headers?: Record<string, string>;
 }
 
@@ -26,12 +30,18 @@ export interface HttpGetOptions<T extends GenericSchema> extends Omit<
 	HttpRequestOptions,
 	"url" | "method" | "body"
 > {
-	/** Relative path to the resource. */
+	/**
+	 * Relative path to the resource.
+	 */
 	path: string;
 
-	/** Query parameters to append to the URL. */
+	/**
+	 * Query parameters to append to the URL.
+	 */
 	params?: QueryParams;
 
-	/** Valibot schema to validate the response. */
+	/**
+	 * Valibot schema to validate the response.
+	 */
 	schema: T;
 }

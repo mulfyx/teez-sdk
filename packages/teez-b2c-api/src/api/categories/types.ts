@@ -12,10 +12,14 @@ import type * as v from "valibot";
  * Parameters for fetching parent categories.
  */
 export interface CategoriesApiGetParentsParams extends BaseParams {
-	/** List of category IDs to find parents for */
+	/**
+	 * List of category IDs to find parents for
+	 */
 	categoryId: number[];
 
-	/** Hierarchy level to filter by */
+	/**
+	 * Hierarchy level to filter by
+	 */
 	level?: number;
 }
 
@@ -56,7 +60,9 @@ export type CategoriesApiListResponse = v.InferOutput<
  * Parameters for fetching a specific category.
  */
 export interface CategoriesApiGetParams extends BaseParams {
-	/** Unique identifier of the category */
+	/**
+	 * Unique identifier of the category
+	 */
 	categoryId: number;
 }
 

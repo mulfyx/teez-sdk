@@ -5,22 +5,34 @@ import * as v from "valibot";
  * Schema for a promotion item.
  */
 export const PromoApiItemSchema = v.object({
-	/** Unique identifier of the promotion */
+	/**
+	 * Unique identifier of the promotion
+	 */
 	id: v.number(),
 
-	/** Name of the promotion */
+	/**
+	 * Localized name of the promotion
+	 */
 	name: v.string(),
 
-	/** Detailed description of the promotion */
+	/**
+	 * Localized detailed description of the promotion
+	 */
 	description: nullable(v.string()),
 
-	/** URL to the SVG icon for the promotion */
+	/**
+	 * URL to the SVG icon for the promotion
+	 */
 	svgUrl: nullable(v.string()),
 
-	/** Start date of the promotion */
+	/**
+	 * Start date of the promotion
+	 */
 	startDate: v.string(),
 
-	/** End date of the promotion */
+	/**
+	 * End date of the promotion
+	 */
 	endDate: v.string(),
 });
 
