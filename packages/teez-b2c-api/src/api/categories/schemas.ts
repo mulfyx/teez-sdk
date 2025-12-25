@@ -76,9 +76,7 @@ export const CategoriesApiCategorySchema: v.GenericSchema<CategoryItem> =
 		/**
 		 * List of nested subcategories
 		 */
-		subcategories: nullable(
-			v.array(v.lazy(() => CategoriesApiCategorySchema)),
-		),
+		subcategories: nullable(v.array(v.lazy(() => CategoriesApiCategorySchema))),
 	});
 
 /**
@@ -108,9 +106,7 @@ export const CategoriesApiParentItemSchema = v.object({
 	/**
 	 * List of nested subcategories
 	 */
-	subcategories: nullable(
-		v.array(v.lazy(() => CategoriesApiCategorySchema)),
-	),
+	subcategories: nullable(v.array(v.lazy(() => CategoriesApiCategorySchema))),
 });
 
 /**

@@ -6,8 +6,8 @@ import type {
 	SkuApiBrandSchema,
 	SkuApiCategorySchema,
 	SkuApiCollectionItemSchema,
-	SkuApiGetResponseSchema,
 	SkuApiGetCollectionsResponseSchema,
+	SkuApiGetResponseSchema,
 	SkuApiGetReviewAvailableResponseSchema,
 	SkuApiGetSimilarResponseSchema,
 	SkuApiInstallmentSchema,
@@ -82,9 +82,7 @@ export type SkuApiStockAvailability = v.InferOutput<
 /**
  * Response for getting a specific SKU by ID.
  */
-export type SkuApiGetResponse = v.InferOutput<
-	typeof SkuApiGetResponseSchema
->;
+export type SkuApiGetResponse = v.InferOutput<typeof SkuApiGetResponseSchema>;
 
 /**
  * Parameters for fetching similar SKUs.

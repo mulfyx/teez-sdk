@@ -1,16 +1,16 @@
 import { type HttpClient } from "../../http/client";
 import {
-	ShopsApiGetResponseSchema,
 	ShopsApiGetMonobrandResponseSchema,
 	ShopsApiGetProductsResponseSchema,
+	ShopsApiGetResponseSchema,
 } from "./schemas";
 import {
-	type ShopsApiGetParams,
-	type ShopsApiGetResponse,
 	type ShopsApiGetMonobrandParams,
 	type ShopsApiGetMonobrandResponse,
+	type ShopsApiGetParams,
 	type ShopsApiGetProductsParams,
 	type ShopsApiGetProductsResponse,
+	type ShopsApiGetResponse,
 } from "./types";
 
 /**
@@ -22,9 +22,7 @@ export class ShopsApi {
 	/**
 	 * Retrieves details of a specific shop.
 	 */
-	public async get(
-		params: ShopsApiGetParams,
-	): Promise<ShopsApiGetResponse> {
+	public async get(params: ShopsApiGetParams): Promise<ShopsApiGetResponse> {
 		return await this.http.get({
 			path: `/api/v1/shops/${params.shopId}`,
 			params,

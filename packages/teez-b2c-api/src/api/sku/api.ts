@@ -1,15 +1,15 @@
 import { type HttpClient } from "../../http/client";
 import {
-	SkuApiGetResponseSchema,
 	SkuApiGetCollectionsResponseSchema,
+	SkuApiGetResponseSchema,
 	SkuApiGetReviewAvailableResponseSchema,
 	SkuApiGetSimilarResponseSchema,
 } from "./schemas";
 import {
-	type SkuApiGetParams,
-	type SkuApiGetResponse,
 	type SkuApiGetCollectionsParams,
 	type SkuApiGetCollectionsResponse,
+	type SkuApiGetParams,
+	type SkuApiGetResponse,
 	type SkuApiGetReviewAvailableParams,
 	type SkuApiGetReviewAvailableResponse,
 	type SkuApiGetSimilarParams,
@@ -25,9 +25,7 @@ export class SkuApi {
 	/**
 	 * Retrieves details of a specific SKU.
 	 */
-	public async get(
-		params: SkuApiGetParams,
-	): Promise<SkuApiGetResponse> {
+	public async get(params: SkuApiGetParams): Promise<SkuApiGetResponse> {
 		return await this.http.get({
 			path: `/api/v2/sku/${params.skuId}`,
 			params,

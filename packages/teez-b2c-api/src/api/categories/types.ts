@@ -1,7 +1,7 @@
 import { type BaseParams } from "../../common/types";
 import type {
-	CategoriesApiGetResponseSchema,
 	CategoriesApiGetParentsResponseSchema,
+	CategoriesApiGetResponseSchema,
 	CategoriesApiListItemSchema,
 	CategoriesApiListResponseSchema,
 	CategoriesApiParentItemSchema,
