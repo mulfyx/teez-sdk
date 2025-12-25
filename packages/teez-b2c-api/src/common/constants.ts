@@ -54,16 +54,6 @@ export const SORT_OPTIONS = {
 } as const;
 
 /**
- * Default HTTP headers sent with API requests.
+ * Default application version code.
  */
-export const DEFAULT_HEADERS = {
-	/**
-	 * Standard User-Agent for Android client
-	 */
-	"user-agent": "android;kz.teez.customer;193",
-
-	/**
-	 * Application version code
-	 */
-	"x-app-version": "193",
-} as const;
+export const DEFAULT_APP_VERSION = "193";

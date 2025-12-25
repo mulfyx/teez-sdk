@@ -1,4 +1,4 @@
-import { BASE_URL, DEFAULT_HEADERS } from "./common/constants";
+import { BASE_URL, DEFAULT_APP_VERSION } from "./common/constants";
 import { type Language } from "./common/types";
 
 /**
@@ -12,18 +12,6 @@ export interface TeezClientConfig {
 	baseUrl?: string;
 
 	/**
-	 * Request timeout in milliseconds.
-	 * @default 30000
-	 */
-	timeout?: number;
-
-	/**
-	 * User-Agent string to identify the client.
-	 * @default "android;kz.teez.customer;193"
-	 */
-	userAgent?: string;
-
-	/**
 	 * Application version string.
 	 * @default "193"
 	 */
@@ -34,6 +22,12 @@ export interface TeezClientConfig {
 	 * @default "ru"
 	 */
 	language?: Language;
+
+	/**
+	 * Request timeout in milliseconds.
+	 * @default 30000
+	 */
+	timeout?: number;
 
 	/**
 	 * Custom headers to include in all requests.
@@ -51,16 +45,6 @@ export interface ResolvedTeezClientConfig {
 	readonly baseUrl: string;
 
 	/**
-	 * Request timeout in milliseconds.
-	 */
-	readonly timeout: number;
-
-	/**
-	 * User-Agent string.
-	 */
-	readonly userAgent: string;
-
-	/**
 	 * Application version string.
 	 */
 	readonly appVersion: string;
@@ -69,6 +53,11 @@ export interface ResolvedTeezClientConfig {
 	 * Language for API responses.
 	 */
 	readonly language: Language;
+
+	/**
+	 * Request timeout in milliseconds.
+	 */
+	readonly timeout: number;
 
 	/**
 	 * Custom headers included in requests.
@@ -81,10 +70,9 @@ export interface ResolvedTeezClientConfig {
  */
 export const DEFAULT_CONFIG: ResolvedTeezClientConfig = {
 	baseUrl: BASE_URL,
-	timeout: 30_000,
-	userAgent: DEFAULT_HEADERS["user-agent"],
-	appVersion: DEFAULT_HEADERS["x-app-version"],
+	appVersion: DEFAULT_APP_VERSION,
 	language: "ru",
+	timeout: 30_000,
 	headers: {},
 };
 
@@ -96,15 +84,21 @@ export function resolveConfig(
 ): ResolvedTeezClientConfig {
 	return {
 		baseUrl: config?.baseUrl ?? DEFAULT_CONFIG.baseUrl,
-		timeout: config?.timeout ?? DEFAULT_CONFIG.timeout,
-		userAgent: config?.userAgent ?? DEFAULT_CONFIG.userAgent,
 		appVersion: config?.appVersion ?? DEFAULT_CONFIG.appVersion,
 		language: config?.language ?? DEFAULT_CONFIG.language,
+		timeout: config?.timeout ?? DEFAULT_CONFIG.timeout,
 		headers: {
 			...DEFAULT_CONFIG.headers,
 			...config?.headers,
 		},
 	};
+}
+
+/**
+ * Builds a standard user-agent string for the Teez client.
+ */
+export function buildUserAgent(appVersion: string): string {
+	return `android;kz.teez.customer;${appVersion}`;
 }
 
 /**
@@ -114,9 +108,9 @@ export function buildHeaders(
 	config: ResolvedTeezClientConfig,
 ): Record<string, string> {
 	return {
-		"user-agent": config.userAgent,
-		"x-app-version": config.appVersion,
 		"accept-language": config.language,
+		"user-agent": buildUserAgent(config.appVersion),
+		"x-app-version": config.appVersion,
 		...config.headers,
 	};
 }
