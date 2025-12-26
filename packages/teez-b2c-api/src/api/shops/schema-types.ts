@@ -40,14 +40,6 @@ export type ShopsApiGetMonobrandResponse = v.InferOutput<
 >;
 
 /**
- * Enum for stock availability types.
- * Known values: "stock" (in stock with quantity info)
- */
-export type ShopsApiStockAvailabilityType = v.InferOutput<
-	typeof schemas.ShopsApiStockAvailabilityTypeEnum
->;
-
-/**
  * Schema for stock availability information.
  */
 export type ShopsApiStockAvailability = v.InferOutput<
@@ -60,26 +52,6 @@ export type ShopsApiStockAvailability = v.InferOutput<
 export type ShopsApiProductItem = v.InferOutput<
 	typeof schemas.ShopsApiProductItemSchema
 >;
-
-/**
- * Schema for range filter options (price slider).
- */
-export type ShopsApiRangeFilterOption = v.InferOutput<
-	typeof schemas.ShopsApiRangeFilterOptionSchema
->;
-
-/**
- * Schema for category/brand filter options.
- */
-export type ShopsApiCategoryFilterOption = v.InferOutput<
-	typeof schemas.ShopsApiCategoryFilterOptionSchema
->;
-
-/**
- * Schema for a shop product filter.
- * Uses variant to select the correct schema based on filter type.
- */
-export type ShopsApiFilter = v.InferOutput<typeof schemas.ShopsApiFilterSchema>;
 
 /**
  * Response schema for products from a specific shop.

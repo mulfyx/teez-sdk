@@ -1,14 +1,5 @@
-import { nullable } from "../../common/schemas";
+import { FilterSchema, nullable } from "../../common/schemas";
 import * as v from "valibot";
-
-/**
- * Enum for stock availability types.
- * Known values: "stock" (in stock with quantity info)
- */
-export const CollectionsApiStockAvailabilityTypeEnum = v.union([
-	v.literal("stock"),
-	v.string(),
-]);
 
 /**
  * Schema for stock availability information.
@@ -17,7 +8,7 @@ export const CollectionsApiStockAvailabilitySchema = v.object({
 	/**
 	 * Type of stock status (known value: "stock")
 	 */
-	type: CollectionsApiStockAvailabilityTypeEnum,
+	type: v.literal("stock"),
 
 	/**
 	 * SVG icon representing stock status
@@ -121,102 +112,13 @@ export const CollectionsApiSkuItemSchema = v.object({
 });
 
 /**
- * Schema for range filter options (price slider).
- */
-export const CollectionsApiRangeFilterOptionSchema = v.object({
-	/**
-	 * Minimum value for range filters
-	 */
-	min: v.number(),
-
-	/**
-	 * Maximum value for range filters
-	 */
-	max: v.number(),
-});
-
-/**
- * Schema for range filters (e.g., price slider).
- */
-const CollectionsApiRangeFilterSchema = v.object({
-	/**
-	 * Filter UI type - range for price slider
-	 */
-	type: v.literal("range"),
-
-	/**
-	 * Localized display name of the filter
-	 */
-	name: v.string(),
-
-	/**
-	 * Unique code identifying the filter type
-	 */
-	code: v.string(),
-
-	/**
-	 * List of available options for this filter
-	 */
-	options: v.array(CollectionsApiRangeFilterOptionSchema),
-});
-
-/**
- * Schema for category/brand filter options.
- */
-export const CollectionsApiCategoryFilterOptionSchema = v.object({
-	/**
-	 * Display label for the filter option
-	 */
-	label: v.string(),
-
-	/**
-	 * Value for the filter option
-	 */
-	value: v.number(),
-});
-
-/**
- * Schema for category/brand filters.
- */
-const CollectionsApiCategoryFilterSchema = v.object({
-	/**
-	 * Filter UI type - category or alphabetic_search_list
-	 */
-	type: v.union([v.literal("category"), v.literal("alphabetic_search_list")]),
-
-	/**
-	 * Localized display name of the filter
-	 */
-	name: v.string(),
-
-	/**
-	 * Unique code identifying the filter type
-	 */
-	code: v.string(),
-
-	/**
-	 * List of available options for this filter
-	 */
-	options: v.array(CollectionsApiCategoryFilterOptionSchema),
-});
-
-/**
- * Schema for a product filter.
- * Uses variant to select the correct schema based on filter type.
- */
-export const CollectionsApiFilterSchema = v.variant("type", [
-	CollectionsApiRangeFilterSchema,
-	CollectionsApiCategoryFilterSchema,
-]);
-
-/**
  * Response schema for getting SKUs from a collection.
  */
 export const CollectionsApiGetSkusResponseSchema = v.object({
 	/**
 	 * List of applicable filters for the collection
 	 */
-	filters: v.array(CollectionsApiFilterSchema),
+	filters: v.array(FilterSchema),
 
 	/**
 	 * List of SKU items in the collection
@@ -282,22 +184,13 @@ export const CollectionsApiListResponseSchema = v.array(
 );
 
 /**
- * Enum for collection types.
- * Known values: "Collection"
- */
-export const CollectionsApiCollectionTypeEnum = v.union([
-	v.literal("Collection"),
-	v.string(),
-]);
-
-/**
  * Response schema for getting a specific collection by ID.
  */
 export const CollectionsApiGetResponseSchema = v.object({
 	/**
 	 * Type of the collection (known value: "Collection")
 	 */
-	type: CollectionsApiCollectionTypeEnum,
+	type: v.literal("Collection"),
 
 	/**
 	 * Unique identifier of the collection

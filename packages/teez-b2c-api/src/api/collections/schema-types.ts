@@ -7,14 +7,6 @@ import type * as schemas from "./schemas";
 import type * as v from "valibot";
 
 /**
- * Enum for stock availability types.
- * Known values: "stock" (in stock with quantity info)
- */
-export type CollectionsApiStockAvailabilityType = v.InferOutput<
-	typeof schemas.CollectionsApiStockAvailabilityTypeEnum
->;
-
-/**
  * Schema for stock availability information.
  */
 export type CollectionsApiStockAvailability = v.InferOutput<
@@ -26,28 +18,6 @@ export type CollectionsApiStockAvailability = v.InferOutput<
  */
 export type CollectionsApiSkuItem = v.InferOutput<
 	typeof schemas.CollectionsApiSkuItemSchema
->;
-
-/**
- * Schema for range filter options (price slider).
- */
-export type CollectionsApiRangeFilterOption = v.InferOutput<
-	typeof schemas.CollectionsApiRangeFilterOptionSchema
->;
-
-/**
- * Schema for category/brand filter options.
- */
-export type CollectionsApiCategoryFilterOption = v.InferOutput<
-	typeof schemas.CollectionsApiCategoryFilterOptionSchema
->;
-
-/**
- * Schema for a product filter.
- * Uses variant to select the correct schema based on filter type.
- */
-export type CollectionsApiFilter = v.InferOutput<
-	typeof schemas.CollectionsApiFilterSchema
 >;
 
 /**
@@ -69,14 +39,6 @@ export type CollectionsApiListItem = v.InferOutput<
  */
 export type CollectionsApiListResponse = v.InferOutput<
 	typeof schemas.CollectionsApiListResponseSchema
->;
-
-/**
- * Enum for collection types.
- * Known values: "Collection"
- */
-export type CollectionsApiCollectionType = v.InferOutput<
-	typeof schemas.CollectionsApiCollectionTypeEnum
 >;
 
 /**

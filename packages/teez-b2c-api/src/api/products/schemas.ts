@@ -1,17 +1,16 @@
-import { nullable } from "../../common/schemas";
+import { FilterSchema, looseEnum, nullable } from "../../common/schemas";
 import * as v from "valibot";
 
 /**
  * Enum for product sort option keys.
  * Known values: "popularity", "highestRated", "new", "price", "priceDesc"
  */
-export const ProductsApiSortKeyEnum = v.union([
-	v.literal("popularity"),
-	v.literal("highestRated"),
-	v.literal("new"),
-	v.literal("price"),
-	v.literal("priceDesc"),
-	v.string(),
+export const ProductsApiSortKeyEnum = looseEnum([
+	"popularity",
+	"highestRated",
+	"new",
+	"price",
+	"priceDesc",
 ]);
 
 /**
@@ -19,14 +18,14 @@ export const ProductsApiSortKeyEnum = v.union([
  */
 export const ProductsApiSortOptionSchema = v.object({
 	/**
-	 * Localized display name of the sort option
-	 */
-	name: v.string(),
-
-	/**
 	 * Sort key - "popularity", "highestRated", "new", "price", or "priceDesc"
 	 */
 	key: ProductsApiSortKeyEnum,
+
+	/**
+	 * Localized display name of the sort option
+	 */
+	name: v.string(),
 });
 
 /**
@@ -102,67 +101,6 @@ export const ProductsApiGetReviewsResponseSchema = v.object({
 });
 
 /**
- * Schema for a filter option.
- */
-export const ProductsApiFilterOptionSchema = v.object({
-	/**
-	 * Display label for the filter option
-	 */
-	label: nullable(v.string()),
-
-	/**
-	 * Minimum value for range filters
-	 */
-	min: nullable(v.number()),
-
-	/**
-	 * Maximum value for range filters
-	 */
-	max: nullable(v.number()),
-
-	/**
-	 * Value for the filter option
-	 */
-	value: nullable(v.number()),
-});
-
-/**
- * Enum for product filter types.
- * Known values: "category" (category selector), "alphabetic_search_list" (brand picker), "range" (price slider)
- */
-export const ProductsApiFilterTypeEnum = v.union([
-	v.literal("category"),
-	v.literal("alphabetic_search_list"),
-	v.literal("range"),
-	v.string(),
-]);
-
-/**
- * Schema for a product filter.
- */
-export const ProductsApiFilterSchema = v.object({
-	/**
-	 * Localized display name of the filter
-	 */
-	name: v.string(),
-
-	/**
-	 * Unique code identifying the filter type
-	 */
-	code: v.string(),
-
-	/**
-	 * List of available options for this filter
-	 */
-	options: v.array(ProductsApiFilterOptionSchema),
-
-	/**
-	 * Filter UI type - "category" for category selector, "alphabetic_search_list" for brand picker, "range" for price slider
-	 */
-	type: ProductsApiFilterTypeEnum,
-});
-
-/**
  * Schema for a product badge.
  */
 export const ProductsApiBadgeSchema = v.object({
@@ -183,18 +121,14 @@ export const ProductsApiBadgeSchema = v.object({
 });
 
 /**
- * Enum for stock availability types.
- * Known values: "stock" (in stock with quantity info)
- */
-export const ProductsApiStockAvailabilityTypeEnum = v.union([
-	v.literal("stock"),
-	v.string(),
-]);
-
-/**
  * Schema for stock availability information.
  */
 export const ProductsApiStockAvailabilitySchema = v.object({
+	/**
+	 * Type of stock status (known value: "stock")
+	 */
+	type: v.literal("stock"),
+
 	/**
 	 * SVG icon representing stock status
 	 */
@@ -214,11 +148,6 @@ export const ProductsApiStockAvailabilitySchema = v.object({
 	 * Localized reason text for quantity limit (e.g., "В наличии только 16 штук")
 	 */
 	maxQtyReason: v.string(),
-
-	/**
-	 * Type of stock status (known value: "stock")
-	 */
-	type: ProductsApiStockAvailabilityTypeEnum,
 });
 
 /**
@@ -323,7 +252,7 @@ export const ProductsApiListResponseSchema = v.object({
 	/**
 	 * List of applicable filters
 	 */
-	filters: v.array(ProductsApiFilterSchema),
+	filters: v.array(FilterSchema),
 
 	/**
 	 * List of product items

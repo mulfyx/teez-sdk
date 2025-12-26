@@ -43,40 +43,10 @@ export type ProductsApiGetReviewsResponse = v.InferOutput<
 >;
 
 /**
- * Schema for a filter option.
- */
-export type ProductsApiFilterOption = v.InferOutput<
-	typeof schemas.ProductsApiFilterOptionSchema
->;
-
-/**
- * Enum for product filter types.
- * Known values: "category" (category selector), "alphabetic_search_list" (brand picker), "range" (price slider)
- */
-export type ProductsApiFilterType = v.InferOutput<
-	typeof schemas.ProductsApiFilterTypeEnum
->;
-
-/**
- * Schema for a product filter.
- */
-export type ProductsApiFilter = v.InferOutput<
-	typeof schemas.ProductsApiFilterSchema
->;
-
-/**
  * Schema for a product badge.
  */
 export type ProductsApiBadge = v.InferOutput<
 	typeof schemas.ProductsApiBadgeSchema
->;
-
-/**
- * Enum for stock availability types.
- * Known values: "stock" (in stock with quantity info)
- */
-export type ProductsApiStockAvailabilityType = v.InferOutput<
-	typeof schemas.ProductsApiStockAvailabilityTypeEnum
 >;
 
 /**

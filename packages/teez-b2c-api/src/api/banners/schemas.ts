@@ -2,22 +2,13 @@ import { nullable } from "../../common/schemas";
 import * as v from "valibot";
 
 /**
- * Enum for banner image types.
- * Known values: "network" (remote image URL)
- */
-export const BannersApiImageTypeEnum = v.union([
-	v.literal("network"),
-	v.string(),
-]);
-
-/**
  * Schema for a banner image.
  */
 export const BannersApiImageSchema = v.object({
 	/**
 	 * Type of image resource (e.g., "network" for remote URLs)
 	 */
-	type: BannersApiImageTypeEnum,
+	type: v.literal("network"),
 
 	/**
 	 * Direct URL to the image
@@ -26,24 +17,13 @@ export const BannersApiImageSchema = v.object({
 });
 
 /**
- * Enum for banner action types.
- * Known values: "url" (external link), "path" (internal navigation), "key" (app action)
- */
-export const BannersApiActionTypeEnum = v.union([
-	v.literal("url"),
-	v.literal("path"),
-	v.literal("key"),
-	v.string() as v.GenericSchema<string & {}>,
-]);
-
-/**
  * Schema for a banner action.
  */
 export const BannersApiActionSchema = v.object({
 	/**
 	 * Type of action - "url" for external links, "path" for app navigation, "key" for special actions
 	 */
-	type: BannersApiActionTypeEnum,
+	type: v.union([v.literal("url"), v.literal("path"), v.literal("key")]),
 
 	/**
 	 * Target value - full URL for "url" type, app path for "path" type (e.g., "/collection/393"), or action key for "key" type

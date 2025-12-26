@@ -7,26 +7,10 @@ import type * as schemas from "./schemas";
 import type * as v from "valibot";
 
 /**
- * Enum for banner image types.
- * Known values: "network" (remote image URL)
- */
-export type BannersApiImageType = v.InferOutput<
-	typeof schemas.BannersApiImageTypeEnum
->;
-
-/**
  * Schema for a banner image.
  */
 export type BannersApiImage = v.InferOutput<
 	typeof schemas.BannersApiImageSchema
->;
-
-/**
- * Enum for banner action types.
- * Known values: "url" (external link), "path" (internal navigation), "key" (app action)
- */
-export type BannersApiActionType = v.InferOutput<
-	typeof schemas.BannersApiActionTypeEnum
 >;
 
 /**

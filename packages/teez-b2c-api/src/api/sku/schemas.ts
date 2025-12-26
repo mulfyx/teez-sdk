@@ -182,22 +182,13 @@ export const SkuApiTagSchema = v.object({
 });
 
 /**
- * Enum for stock availability types.
- * Known values: "stock" (in stock with quantity info)
- */
-export const SkuApiStockAvailabilityTypeEnum = v.union([
-	v.literal("stock"),
-	v.string(),
-]);
-
-/**
  * Schema for stock availability information.
  */
 export const SkuApiStockAvailabilitySchema = v.object({
 	/**
 	 * Type of stock status (known value: "stock")
 	 */
-	type: SkuApiStockAvailabilityTypeEnum,
+	type: v.literal("stock"),
 
 	/**
 	 * SVG icon representing stock status

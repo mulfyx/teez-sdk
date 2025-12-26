@@ -55,14 +55,6 @@ export type SkuApiAttribute = v.InferOutput<
 export type SkuApiTag = v.InferOutput<typeof schemas.SkuApiTagSchema>;
 
 /**
- * Enum for stock availability types.
- * Known values: "stock" (in stock with quantity info)
- */
-export type SkuApiStockAvailabilityType = v.InferOutput<
-	typeof schemas.SkuApiStockAvailabilityTypeEnum
->;
-
-/**
  * Schema for stock availability information.
  */
 export type SkuApiStockAvailability = v.InferOutput<

@@ -1,4 +1,4 @@
-import { nullable } from "../../common/schemas";
+import { FilterSchema, nullable } from "../../common/schemas";
 import * as v from "valibot";
 
 /**
@@ -162,22 +162,13 @@ export const ShopsApiGetMonobrandResponseSchema = v.object({
 });
 
 /**
- * Enum for stock availability types.
- * Known values: "stock" (in stock with quantity info)
- */
-export const ShopsApiStockAvailabilityTypeEnum = v.union([
-	v.literal("stock"),
-	v.string(),
-]);
-
-/**
  * Schema for stock availability information.
  */
 export const ShopsApiStockAvailabilitySchema = v.object({
 	/**
 	 * Type of stock status (known value: "stock")
 	 */
-	type: ShopsApiStockAvailabilityTypeEnum,
+	type: v.literal("stock"),
 
 	/**
 	 * SVG icon representing stock status
@@ -291,102 +282,13 @@ export const ShopsApiProductItemSchema = v.object({
 });
 
 /**
- * Schema for range filter options (price slider).
- */
-export const ShopsApiRangeFilterOptionSchema = v.object({
-	/**
-	 * Minimum value for range filters
-	 */
-	min: v.number(),
-
-	/**
-	 * Maximum value for range filters
-	 */
-	max: v.number(),
-});
-
-/**
- * Schema for range filters (e.g., price slider).
- */
-const ShopsApiRangeFilterSchema = v.object({
-	/**
-	 * Filter type: range for price slider
-	 */
-	type: v.literal("range"),
-
-	/**
-	 * Localized display name of the filter
-	 */
-	name: v.string(),
-
-	/**
-	 * Unique code identifying the filter type
-	 */
-	code: v.string(),
-
-	/**
-	 * List of available options for this filter
-	 */
-	options: v.array(ShopsApiRangeFilterOptionSchema),
-});
-
-/**
- * Schema for category/brand filter options.
- */
-export const ShopsApiCategoryFilterOptionSchema = v.object({
-	/**
-	 * Display label for the filter option
-	 */
-	label: v.string(),
-
-	/**
-	 * Value for the filter option
-	 */
-	value: v.number(),
-});
-
-/**
- * Schema for category/brand filters.
- */
-const ShopsApiCategoryFilterSchema = v.object({
-	/**
-	 * Filter type: category or alphabetic_search_list
-	 */
-	type: v.union([v.literal("category"), v.literal("alphabetic_search_list")]),
-
-	/**
-	 * Localized display name of the filter
-	 */
-	name: v.string(),
-
-	/**
-	 * Unique code identifying the filter type
-	 */
-	code: v.string(),
-
-	/**
-	 * List of available options for this filter
-	 */
-	options: v.array(ShopsApiCategoryFilterOptionSchema),
-});
-
-/**
- * Schema for a shop product filter.
- * Uses variant to select the correct schema based on filter type.
- */
-export const ShopsApiFilterSchema = v.variant("type", [
-	ShopsApiRangeFilterSchema,
-	ShopsApiCategoryFilterSchema,
-]);
-
-/**
  * Response schema for products from a specific shop.
  */
 export const ShopsApiGetProductsResponseSchema = v.object({
 	/**
 	 * List of applicable filters
 	 */
-	filters: v.array(ShopsApiFilterSchema),
+	filters: v.array(FilterSchema),
 
 	/**
 	 * List of product items
