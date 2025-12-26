@@ -2,7 +2,7 @@ import js from "@eslint/js";
 import * as tsParser from "@typescript-eslint/parser";
 import gitignore from "eslint-config-flat-gitignore";
 import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript";
-import { createNodeResolver, importX } from "eslint-plugin-import-x";
+import { importX } from "eslint-plugin-import-x";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
 import { defineConfig } from "eslint/config";
 import * as tseslint from "typescript-eslint";
@@ -29,10 +29,7 @@ export default defineConfig([
 			},
 		},
 		settings: {
-			"import-x/resolver-next": [
-				createTypeScriptImportResolver(),
-				createNodeResolver(),
-			],
+			"import-x/resolver-next": [createTypeScriptImportResolver()],
 		},
 	},
 	eslintPluginUnicorn.configs.all,
@@ -47,10 +44,10 @@ export default defineConfig([
 			"@typescript-eslint/explicit-function-return-type": [
 				"error",
 				{
-					allowExpressions: true,
-					allowTypedFunctionExpressions: true,
-					allowHigherOrderFunctions: true,
 					allowDirectConstAssertionInArrowFunctions: true,
+					allowExpressions: true,
+					allowHigherOrderFunctions: true,
+					allowTypedFunctionExpressions: true,
 				},
 			],
 			"@typescript-eslint/explicit-member-accessibility": "error",
@@ -79,10 +76,12 @@ export default defineConfig([
 					},
 				},
 			],
+			"unicorn/no-immediate-mutation": "off",
 			"unicorn/no-keyword-prefix": "off",
 			"unicorn/no-negated-condition": "off",
 			"unicorn/no-useless-undefined": "off",
 			"unicorn/prefer-native-coercion-functions": "off",
+			"unicorn/prefer-single-call": "off",
 			"unicorn/prefer-switch": "off",
 			"unicorn/prefer-ternary": "off",
 			"unicorn/prevent-abbreviations": "off",
