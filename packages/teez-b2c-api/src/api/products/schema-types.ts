@@ -7,6 +7,11 @@ import type * as schemas from "./schemas";
 import type * as v from "valibot";
 
 /**
+ * Type union for product sort keys
+ */
+export type ProductSortKey = v.InferOutput<typeof schemas.ProductSortKeySchema>;
+
+/**
  * Schema for a sort option.
  */
 export type ProductsApiSortOption = v.InferOutput<
@@ -39,6 +44,13 @@ export type ProductsApiGetReviewsResponse = v.InferOutput<
  */
 export type ProductsApiBadge = v.InferOutput<
 	typeof schemas.ProductsApiBadgeSchema
+>;
+
+/**
+ * Type literal for products stock availability type
+ */
+export type ProductsStockAvailabilityType = v.InferOutput<
+	typeof schemas.ProductsStockAvailabilityTypeSchema
 >;
 
 /**

@@ -3,13 +3,18 @@ import { FilterSchema } from "../../common/schemas";
 import * as v from "valibot";
 
 /**
+ * Type literal for collections stock availability type
+ */
+export const CollectionsStockAvailabilityTypeSchema = v.literal("stock");
+
+/**
  * Schema for stock availability information.
  */
 export const CollectionsApiStockAvailabilitySchema = v.object({
 	/**
 	 * Type of stock status (known value: "stock")
 	 */
-	type: v.literal("stock"),
+	type: CollectionsStockAvailabilityTypeSchema,
 
 	/**
 	 * SVG icon representing stock status
@@ -185,13 +190,18 @@ export const CollectionsApiListResponseSchema = v.array(
 );
 
 /**
+ * Type literal for collection type identifier
+ */
+export const CollectionTypeSchema = v.literal("Collection");
+
+/**
  * Response schema for getting a specific collection by ID.
  */
 export const CollectionsApiGetResponseSchema = v.object({
 	/**
 	 * Type of the collection (known value: "Collection")
 	 */
-	type: v.literal("Collection"),
+	type: CollectionTypeSchema,
 
 	/**
 	 * Unique identifier of the collection

@@ -40,6 +40,13 @@ export type ShopsApiGetMonobrandResponse = v.InferOutput<
 >;
 
 /**
+ * Type literal for shops stock availability type
+ */
+export type ShopsStockAvailabilityType = v.InferOutput<
+	typeof schemas.ShopsStockAvailabilityTypeSchema
+>;
+
+/**
  * Schema for stock availability information.
  */
 export type ShopsApiStockAvailability = v.InferOutput<

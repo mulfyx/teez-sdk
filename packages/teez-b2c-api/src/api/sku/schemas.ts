@@ -182,13 +182,18 @@ export const SkuApiTagSchema = v.object({
 });
 
 /**
+ * Type literal for SKU stock availability type
+ */
+export const SkuStockAvailabilityTypeSchema = v.literal("stock");
+
+/**
  * Schema for stock availability information.
  */
 export const SkuApiStockAvailabilitySchema = v.object({
 	/**
 	 * Type of stock status (known value: "stock")
 	 */
-	type: v.literal("stock"),
+	type: SkuStockAvailabilityTypeSchema,
 
 	/**
 	 * SVG icon representing stock status

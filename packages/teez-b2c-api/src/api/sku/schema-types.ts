@@ -55,6 +55,13 @@ export type SkuApiAttribute = v.InferOutput<
 export type SkuApiTag = v.InferOutput<typeof schemas.SkuApiTagSchema>;
 
 /**
+ * Type literal for SKU stock availability type
+ */
+export type SkuStockAvailabilityType = v.InferOutput<
+	typeof schemas.SkuStockAvailabilityTypeSchema
+>;
+
+/**
  * Schema for stock availability information.
  */
 export type SkuApiStockAvailability = v.InferOutput<

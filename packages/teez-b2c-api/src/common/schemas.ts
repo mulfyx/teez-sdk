@@ -17,6 +17,11 @@ export const RangeFilterOptionSchema = v.object({
 });
 
 /**
+ * Type literal for range-based filters
+ */
+export const RangeTypeSchema = v.literal("range");
+
+/**
  * Schema for range filters (e.g., price slider).
  * Use this in variant-based filter schemas.
  */
@@ -24,7 +29,7 @@ export const RangeFilterSchema = v.object({
 	/**
 	 * Filter type: range for price slider
 	 */
-	type: v.literal("range"),
+	type: RangeTypeSchema,
 
 	/**
 	 * Localized display name of the filter
@@ -59,6 +64,14 @@ export const CategoryFilterOptionSchema = v.object({
 });
 
 /**
+ * Type union for category filter types
+ */
+export const CategoryFilterTypesSchema = v.union([
+	v.literal("category"),
+	v.literal("alphabetic_search_list"),
+]);
+
+/**
  * Schema for category/brand filters.
  * Use this in variant-based filter schemas.
  */
@@ -66,7 +79,7 @@ export const CategoryFilterSchema = v.object({
 	/**
 	 * Filter type: category or alphabetic_search_list
 	 */
-	type: v.union([v.literal("category"), v.literal("alphabetic_search_list")]),
+	type: CategoryFilterTypesSchema,
 
 	/**
 	 * Localized display name of the filter

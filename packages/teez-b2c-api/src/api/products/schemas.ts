@@ -3,19 +3,24 @@ import { FilterSchema } from "../../common/schemas";
 import * as v from "valibot";
 
 /**
+ * Type union for product sort keys
+ */
+export const ProductSortKeySchema = v.union([
+	v.literal("popularity"),
+	v.literal("highestRated"),
+	v.literal("new"),
+	v.literal("price"),
+	v.literal("priceDesc"),
+]);
+
+/**
  * Schema for a sort option.
  */
 export const ProductsApiSortOptionSchema = v.object({
 	/**
 	 * Sort key - "popularity", "highestRated", "new", "price", or "priceDesc"
 	 */
-	key: v.union([
-		v.literal("popularity"),
-		v.literal("highestRated"),
-		v.literal("new"),
-		v.literal("price"),
-		v.literal("priceDesc"),
-	]),
+	key: ProductSortKeySchema,
 
 	/**
 	 * Localized display name of the sort option
@@ -116,13 +121,18 @@ export const ProductsApiBadgeSchema = v.object({
 });
 
 /**
+ * Type literal for products stock availability type
+ */
+export const ProductsStockAvailabilityTypeSchema = v.literal("stock");
+
+/**
  * Schema for stock availability information.
  */
 export const ProductsApiStockAvailabilitySchema = v.object({
 	/**
 	 * Type of stock status (known value: "stock")
 	 */
-	type: v.literal("stock"),
+	type: ProductsStockAvailabilityTypeSchema,
 
 	/**
 	 * SVG icon representing stock status

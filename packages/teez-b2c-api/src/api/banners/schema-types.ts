@@ -7,10 +7,24 @@ import type * as schemas from "./schemas";
 import type * as v from "valibot";
 
 /**
+ * Type literal for banner image resource type
+ */
+export type BannerImageType = v.InferOutput<
+	typeof schemas.BannerImageTypeSchema
+>;
+
+/**
  * Schema for a banner image.
  */
 export type BannersApiImage = v.InferOutput<
 	typeof schemas.BannersApiImageSchema
+>;
+
+/**
+ * Type union for banner action types
+ */
+export type BannerActionTypes = v.InferOutput<
+	typeof schemas.BannerActionTypesSchema
 >;
 
 /**

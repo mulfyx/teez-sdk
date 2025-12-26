@@ -7,6 +7,13 @@ import type * as schemas from "./schemas";
 import type * as v from "valibot";
 
 /**
+ * Type literal for collections stock availability type
+ */
+export type CollectionsStockAvailabilityType = v.InferOutput<
+	typeof schemas.CollectionsStockAvailabilityTypeSchema
+>;
+
+/**
  * Schema for stock availability information.
  */
 export type CollectionsApiStockAvailability = v.InferOutput<
@@ -40,6 +47,11 @@ export type CollectionsApiListItem = v.InferOutput<
 export type CollectionsApiListResponse = v.InferOutput<
 	typeof schemas.CollectionsApiListResponseSchema
 >;
+
+/**
+ * Type literal for collection type identifier
+ */
+export type CollectionType = v.InferOutput<typeof schemas.CollectionTypeSchema>;
 
 /**
  * Response schema for getting a specific collection by ID.

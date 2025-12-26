@@ -163,13 +163,18 @@ export const ShopsApiGetMonobrandResponseSchema = v.object({
 });
 
 /**
+ * Type literal for shops stock availability type
+ */
+export const ShopsStockAvailabilityTypeSchema = v.literal("stock");
+
+/**
  * Schema for stock availability information.
  */
 export const ShopsApiStockAvailabilitySchema = v.object({
 	/**
 	 * Type of stock status (known value: "stock")
 	 */
-	type: v.literal("stock"),
+	type: ShopsStockAvailabilityTypeSchema,
 
 	/**
 	 * SVG icon representing stock status

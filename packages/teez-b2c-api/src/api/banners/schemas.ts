@@ -2,13 +2,18 @@ import { optionalNullish } from "../../common/helpers";
 import * as v from "valibot";
 
 /**
+ * Type literal for banner image resource type
+ */
+export const BannerImageTypeSchema = v.literal("network");
+
+/**
  * Schema for a banner image.
  */
 export const BannersApiImageSchema = v.object({
 	/**
 	 * Type of image resource (e.g., "network" for remote URLs)
 	 */
-	type: v.literal("network"),
+	type: BannerImageTypeSchema,
 
 	/**
 	 * Direct URL to the image
@@ -17,13 +22,22 @@ export const BannersApiImageSchema = v.object({
 });
 
 /**
+ * Type union for banner action types
+ */
+export const BannerActionTypesSchema = v.union([
+	v.literal("url"),
+	v.literal("path"),
+	v.literal("key"),
+]);
+
+/**
  * Schema for a banner action.
  */
 export const BannersApiActionSchema = v.object({
 	/**
 	 * Type of action - "url" for external links, "path" for app navigation, "key" for special actions
 	 */
-	type: v.union([v.literal("url"), v.literal("path"), v.literal("key")]),
+	type: BannerActionTypesSchema,
 
 	/**
 	 * Target value - full URL for "url" type, app path for "path" type (e.g., "/collection/393"), or action key for "key" type
