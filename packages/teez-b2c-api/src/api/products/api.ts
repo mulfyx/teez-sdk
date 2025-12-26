@@ -1,16 +1,18 @@
 import { type HttpClient } from "../../http/client";
 import {
+	type ProductsApiGetReviewsResponse,
+	type ProductsApiGetSortOptionsResponse,
+	type ProductsApiListResponse,
+} from "./schema-types";
+import {
 	ProductsApiGetReviewsResponseSchema,
 	ProductsApiGetSortOptionsResponseSchema,
 	ProductsApiListResponseSchema,
 } from "./schemas";
 import {
 	type ProductsApiGetReviewsParams,
-	type ProductsApiGetReviewsResponse,
 	type ProductsApiGetSortOptionsParams,
-	type ProductsApiGetSortOptionsResponse,
 	type ProductsApiListParams,
-	type ProductsApiListResponse,
 } from "./types";
 
 /**

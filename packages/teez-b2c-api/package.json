@@ -35,6 +35,8 @@
 		"build": "tsdown",
 		"eslint": "eslint",
 		"eslint:fix": "eslint --fix",
+		"generate:schema-types": "npx tsx src/scripts/generate-schema-types.ts",
+		"generate:schema-types:dry": "npx tsx src/scripts/generate-schema-types.ts --dry-run",
 		"lint": "npm run eslint && npm run prettier",
 		"lint:fix": "npm run eslint:fix && npm run prettier:fix",
 		"prettier": "prettier --check \"./src/**/*.{ts,tsx}\"",
@@ -45,7 +47,9 @@
 		"valibot": "^1.2.0"
 	},
 	"devDependencies": {
-		"tsdown": "^0.18.1"
+		"ts-morph": "^27.0.2",
+		"tsdown": "^0.18.1",
+		"tsx": "^4.21.0"
 	},
 	"sideEffects": false
 }

@@ -1,16 +1,18 @@
 import { type HttpClient } from "../../http/client";
 import {
+	type CollectionsApiGetResponse,
+	type CollectionsApiGetSkusResponse,
+	type CollectionsApiListResponse,
+} from "./schema-types";
+import {
 	CollectionsApiGetResponseSchema,
 	CollectionsApiGetSkusResponseSchema,
 	CollectionsApiListResponseSchema,
 } from "./schemas";
 import {
 	type CollectionsApiGetParams,
-	type CollectionsApiGetResponse,
 	type CollectionsApiGetSkusParams,
-	type CollectionsApiGetSkusResponse,
 	type CollectionsApiListParams,
-	type CollectionsApiListResponse,
 } from "./types";
 
 /**

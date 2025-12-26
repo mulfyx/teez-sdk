@@ -1,9 +1,7 @@
 import { type HttpClient } from "../../http/client";
+import { type FeatureFlagsApiListResponse } from "./schema-types";
 import { FeatureFlagsApiListResponseSchema } from "./schemas";
-import {
-	type FeatureFlagsApiListParams,
-	type FeatureFlagsApiListResponse,
-} from "./types";
+import { type FeatureFlagsApiListParams } from "./types";
 
 /**
  * API for retrieving feature flags configuration.

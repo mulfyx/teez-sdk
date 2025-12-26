@@ -13,23 +13,9 @@ export const ShopsApiFilterTypeEnum = v.union([
 ]);
 
 /**
- * Enum for stock availability types.
- * Known values: "stock" (in stock with quantity info)
- */
-export const ShopsApiStockAvailabilityTypeEnum = v.union([
-	v.literal("stock"),
-	v.string(),
-]);
-
-/**
  * Schema for shop contact information.
  */
 export const ShopsApiContactInfoSchema = v.object({
-	/**
-	 * Legal entity type code
-	 */
-	legalType: v.number(),
-
 	/**
 	 * Business Identification Number
 	 */
@@ -39,12 +25,27 @@ export const ShopsApiContactInfoSchema = v.object({
 	 * Number of days since the shop was registered
 	 */
 	daysSinceRegistration: v.number(),
+
+	/**
+	 * Legal entity type code
+	 */
+	legalType: v.number(),
 });
 
 /**
  * Schema for a shop tag.
  */
 export const ShopsApiTagSchema = v.object({
+	/**
+	 * Description of the tag
+	 */
+	description: v.string(),
+
+	/**
+	 * URL to the raster icon for the tag
+	 */
+	icon: v.string(),
+
 	/**
 	 * Display name of the tag
 	 */
@@ -59,16 +60,6 @@ export const ShopsApiTagSchema = v.object({
 	 * Unique code for the tag
 	 */
 	code: v.string(),
-
-	/**
-	 * Description of the tag
-	 */
-	description: v.string(),
-
-	/**
-	 * URL to the raster icon for the tag
-	 */
-	icon: v.string(),
 });
 
 /**
@@ -81,9 +72,9 @@ export const ShopsApiGetResponseSchema = v.object({
 	id: v.number(),
 
 	/**
-	 * Name of the shop
+	 * URL to the shop's banner image
 	 */
-	name: v.string(),
+	banner: nullable(v.string()),
 
 	/**
 	 * Description of the shop
@@ -96,29 +87,9 @@ export const ShopsApiGetResponseSchema = v.object({
 	logo: nullable(v.string()),
 
 	/**
-	 * URL to the shop's banner image
+	 * Name of the shop
 	 */
-	banner: nullable(v.string()),
-
-	/**
-	 * Indicates if the shop represents a single brand
-	 */
-	isMonobrand: v.boolean(),
-
-	/**
-	 * Contact information for the shop
-	 */
-	contactInfo: ShopsApiContactInfoSchema,
-
-	/**
-	 * Tag associated with the shop
-	 */
-	tag: ShopsApiTagSchema,
-
-	/**
-	 * Average rating of the shop
-	 */
-	rating: nullable(v.number()),
+	name: v.string(),
 
 	/**
 	 * Text about total orders/purchases (e.g., "11 заказов", "930 заказов")
@@ -126,9 +97,29 @@ export const ShopsApiGetResponseSchema = v.object({
 	qtyPurchasedInfo: nullable(v.string()),
 
 	/**
+	 * Average rating of the shop
+	 */
+	rating: nullable(v.number()),
+
+	/**
 	 * Total number of reviews received
 	 */
 	totalReviews: nullable(v.number()),
+
+	/**
+	 * Contact information for the shop
+	 */
+	contactInfo: ShopsApiContactInfoSchema,
+
+	/**
+	 * Indicates if the shop represents a single brand
+	 */
+	isMonobrand: v.boolean(),
+
+	/**
+	 * Tag associated with the shop
+	 */
+	tag: ShopsApiTagSchema,
 });
 
 /**
@@ -191,11 +182,6 @@ export const ShopsApiFilterOptionSchema = v.object({
 	label: nullable(v.string()),
 
 	/**
-	 * Value for the filter option
-	 */
-	value: nullable(v.number()),
-
-	/**
 	 * Minimum value for range filters
 	 */
 	min: nullable(v.number()),
@@ -204,6 +190,11 @@ export const ShopsApiFilterOptionSchema = v.object({
 	 * Maximum value for range filters
 	 */
 	max: nullable(v.number()),
+
+	/**
+	 * Value for the filter option
+	 */
+	value: nullable(v.number()),
 });
 
 /**
@@ -211,44 +202,48 @@ export const ShopsApiFilterOptionSchema = v.object({
  */
 export const ShopsApiFilterSchema = v.object({
 	/**
-	 * Unique code identifying the filter type
-	 */
-	code: v.string(),
-
-	/**
 	 * Localized display name of the filter
 	 */
 	name: v.string(),
 
 	/**
-	 * Filter UI type - "category" for category selector, "alphabetic_search_list" for brand picker, "range" for price slider
+	 * Unique code identifying the filter type
 	 */
-	type: ShopsApiFilterTypeEnum,
+	code: v.string(),
 
 	/**
 	 * List of available options for this filter
 	 */
 	options: v.array(ShopsApiFilterOptionSchema),
+
+	/**
+	 * Filter UI type - "category" for category selector, "alphabetic_search_list" for brand picker, "range" for price slider
+	 */
+	type: ShopsApiFilterTypeEnum,
 });
+
+/**
+ * Enum for stock availability types.
+ * Known values: "stock" (in stock with quantity info)
+ */
+export const ShopsApiStockAvailabilityTypeEnum = v.union([
+	v.literal("stock"),
+	v.string(),
+]);
 
 /**
  * Schema for stock availability information.
  */
 export const ShopsApiStockAvailabilitySchema = v.object({
 	/**
-	 * Localized text describing stock status (e.g., "В наличии - осталось всего 16 штук")
-	 */
-	text: v.string(),
-
-	/**
 	 * SVG icon representing stock status
 	 */
 	svg: nullable(v.string()),
 
 	/**
-	 * Type of stock status (known value: "stock")
+	 * Localized text describing stock status (e.g., "В наличии - осталось всего 16 штук")
 	 */
-	type: ShopsApiStockAvailabilityTypeEnum,
+	text: v.string(),
 
 	/**
 	 * Maximum quantity available
@@ -259,6 +254,11 @@ export const ShopsApiStockAvailabilitySchema = v.object({
 	 * Localized reason text for quantity limit (e.g., "В наличии только 16 штук")
 	 */
 	maxQtyReason: v.string(),
+
+	/**
+	 * Type of stock status (known value: "stock")
+	 */
+	type: ShopsApiStockAvailabilityTypeEnum,
 });
 
 /**
@@ -266,14 +266,19 @@ export const ShopsApiStockAvailabilitySchema = v.object({
  */
 export const ShopsApiProductItemSchema = v.object({
 	/**
+	 * Unique product identifier
+	 */
+	productId: v.number(),
+
+	/**
 	 * Unique stock keeping unit identifier
 	 */
 	skuId: v.number(),
 
 	/**
-	 * Unique product identifier
+	 * URL for the full-size image
 	 */
-	productId: v.number(),
+	imageUrl: v.string(),
 
 	/**
 	 * Full display name of the product
@@ -291,9 +296,9 @@ export const ShopsApiProductItemSchema = v.object({
 	thumbnailUrl: v.string(),
 
 	/**
-	 * URL for the full-size image
+	 * Original price before discounts
 	 */
-	imageUrl: v.string(),
+	originalPrice: v.number(),
 
 	/**
 	 * Current selling price
@@ -301,9 +306,19 @@ export const ShopsApiProductItemSchema = v.object({
 	price: v.number(),
 
 	/**
-	 * Original price before discounts
+	 * Indicates if the item is in stock
 	 */
-	originalPrice: v.number(),
+	inStock: v.boolean(),
+
+	/**
+	 * Quantity available in stock
+	 */
+	qty: v.number(),
+
+	/**
+	 * Stock availability details
+	 */
+	stockAvailability: nullable(ShopsApiStockAvailabilitySchema),
 
 	/**
 	 * Indicates if the product is on promotion
@@ -314,21 +329,6 @@ export const ShopsApiProductItemSchema = v.object({
 	 * Name of the promotion
 	 */
 	promoName: v.string(),
-
-	/**
-	 * Moderation status code
-	 */
-	moderationStatus: v.number(),
-
-	/**
-	 * Quantity available in stock
-	 */
-	qty: v.number(),
-
-	/**
-	 * Indicates if the item is in stock
-	 */
-	inStock: v.boolean(),
 
 	/**
 	 * Popularity text indicating purchase frequency (e.g., "Часто покупают")
@@ -346,9 +346,9 @@ export const ShopsApiProductItemSchema = v.object({
 	scoreQuantity: nullable(v.number()),
 
 	/**
-	 * Stock availability details
+	 * Moderation status code
 	 */
-	stockAvailability: nullable(ShopsApiStockAvailabilitySchema),
+	moderationStatus: v.number(),
 });
 
 /**

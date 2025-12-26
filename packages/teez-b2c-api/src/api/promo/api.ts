@@ -1,6 +1,7 @@
 import { type HttpClient } from "../../http/client";
+import { type PromoApiListResponse } from "./schema-types";
 import { PromoApiListResponseSchema } from "./schemas";
-import { type PromoApiListParams, type PromoApiListResponse } from "./types";
+import { type PromoApiListParams } from "./types";
 
 /**
  * API for retrieving active promotions.

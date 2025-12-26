@@ -1,17 +1,4 @@
 import { type BaseParams, type SortOption } from "../../common/types";
-import type {
-	ShopsApiContactInfoSchema,
-	ShopsApiFilterOptionSchema,
-	ShopsApiFilterSchema,
-	ShopsApiGetMonobrandResponseSchema,
-	ShopsApiGetProductsResponseSchema,
-	ShopsApiGetResponseSchema,
-	ShopsApiProductItemSchema,
-	ShopsApiShopItemSchema,
-	ShopsApiStockAvailabilitySchema,
-	ShopsApiTagSchema,
-} from "./schemas";
-import type * as v from "valibot";
 
 /**
  * Parameters for fetching a specific shop.
@@ -22,25 +9,6 @@ export interface ShopsApiGetParams extends BaseParams {
 	 */
 	shopId: number;
 }
-
-/**
- * Shop contact information.
- */
-export type ShopsApiContactInfo = v.InferOutput<
-	typeof ShopsApiContactInfoSchema
->;
-
-/**
- * Shop tag.
- */
-export type ShopsApiTag = v.InferOutput<typeof ShopsApiTagSchema>;
-
-/**
- * Response for getting a specific shop by ID.
- */
-export type ShopsApiGetResponse = v.InferOutput<
-	typeof ShopsApiGetResponseSchema
->;
 
 /**
  * Parameters for fetching monobrand shops.
@@ -61,18 +29,6 @@ export interface ShopsApiGetMonobrandParams extends BaseParams {
 	 */
 	pageSize?: number;
 }
-
-/**
- * Shop item in a list.
- */
-export type ShopsApiShopItem = v.InferOutput<typeof ShopsApiShopItemSchema>;
-
-/**
- * Response for the monobrand shop list.
- */
-export type ShopsApiGetMonobrandResponse = v.InferOutput<
-	typeof ShopsApiGetMonobrandResponseSchema
->;
 
 /**
  * Parameters for fetching products from a shop.
@@ -118,36 +74,3 @@ export interface ShopsApiGetProductsParams extends BaseParams {
 	 */
 	maxPrice?: number;
 }
-
-/**
- * Filter option.
- */
-export type ShopsApiFilterOption = v.InferOutput<
-	typeof ShopsApiFilterOptionSchema
->;
-
-/**
- * Shop product filter.
- */
-export type ShopsApiFilter = v.InferOutput<typeof ShopsApiFilterSchema>;
-
-/**
- * Stock availability information.
- */
-export type ShopsApiStockAvailability = v.InferOutput<
-	typeof ShopsApiStockAvailabilitySchema
->;
-
-/**
- * Product item in a shop.
- */
-export type ShopsApiProductItem = v.InferOutput<
-	typeof ShopsApiProductItemSchema
->;
-
-/**
- * Response for products from a specific shop.
- */
-export type ShopsApiGetProductsResponse = v.InferOutput<
-	typeof ShopsApiGetProductsResponseSchema
->;

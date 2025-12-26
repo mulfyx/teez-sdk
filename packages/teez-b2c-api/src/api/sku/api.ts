@@ -1,5 +1,11 @@
 import { type HttpClient } from "../../http/client";
 import {
+	type SkuApiGetCollectionsResponse,
+	type SkuApiGetResponse,
+	type SkuApiGetReviewAvailableResponse,
+	type SkuApiGetSimilarResponse,
+} from "./schema-types";
+import {
 	SkuApiGetCollectionsResponseSchema,
 	SkuApiGetResponseSchema,
 	SkuApiGetReviewAvailableResponseSchema,
@@ -7,13 +13,9 @@ import {
 } from "./schemas";
 import {
 	type SkuApiGetCollectionsParams,
-	type SkuApiGetCollectionsResponse,
 	type SkuApiGetParams,
-	type SkuApiGetResponse,
 	type SkuApiGetReviewAvailableParams,
-	type SkuApiGetReviewAvailableResponse,
 	type SkuApiGetSimilarParams,
-	type SkuApiGetSimilarResponse,
 } from "./types";
 
 /**

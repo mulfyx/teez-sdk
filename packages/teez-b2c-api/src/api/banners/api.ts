@@ -1,9 +1,7 @@
 import { type HttpClient } from "../../http/client";
+import { type BannersApiListResponse } from "./schema-types";
 import { BannersApiListResponseSchema } from "./schemas";
-import {
-	type BannersApiListParams,
-	type BannersApiListResponse,
-} from "./types";
+import { type BannersApiListParams } from "./types";
 
 /**
  * API for retrieving promotional and informational banners.

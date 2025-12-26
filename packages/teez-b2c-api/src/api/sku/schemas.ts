@@ -2,27 +2,18 @@ import { nullable } from "../../common/schemas";
 import * as v from "valibot";
 
 /**
- * Enum for stock availability types.
- * Known values: "stock" (in stock with quantity info)
- */
-export const SkuApiStockAvailabilityTypeEnum = v.union([
-	v.literal("stock"),
-	v.string(),
-]);
-
-/**
  * Schema for installment payment information.
  */
 export const SkuApiInstallmentSchema = v.object({
 	/**
-	 * Description of the installment term
-	 */
-	installmentTerm: v.string(),
-
-	/**
 	 * URL to the installment SVG icon
 	 */
 	installmentSvg: v.string(),
+
+	/**
+	 * Description of the installment term
+	 */
+	installmentTerm: v.string(),
 });
 
 /**
@@ -35,14 +26,14 @@ export const SkuApiShopSchema = v.object({
 	id: v.number(),
 
 	/**
+	 * URL to the shop's logo
+	 */
+	logo: nullable(v.string()),
+
+	/**
 	 * Name of the shop
 	 */
 	name: v.string(),
-
-	/**
-	 * URL to the shop's page or resource
-	 */
-	url: v.string(),
 
 	/**
 	 * URL to the shop's photo
@@ -50,24 +41,19 @@ export const SkuApiShopSchema = v.object({
 	photo: v.string(),
 
 	/**
+	 * URL to the shop's page or resource
+	 */
+	url: v.string(),
+
+	/**
 	 * Indicates if installment payment is available
 	 */
 	isInstallment: v.boolean(),
 
 	/**
-	 * Number of days since the shop was registered
+	 * Popularity text for the shop (e.g., "Часто покупают", "11 заказов")
 	 */
-	daysSinceRegistration: v.number(),
-
-	/**
-	 * URL to the shop's logo
-	 */
-	logo: nullable(v.string()),
-
-	/**
-	 * Indicates if the shop represents a single brand
-	 */
-	isMonobrand: v.boolean(),
+	qtyPurchasedInfo: nullable(v.string()),
 
 	/**
 	 * Average rating of the shop
@@ -75,9 +61,14 @@ export const SkuApiShopSchema = v.object({
 	rating: nullable(v.number()),
 
 	/**
-	 * Popularity text for the shop (e.g., "Часто покупают", "11 заказов")
+	 * Number of days since the shop was registered
 	 */
-	qtyPurchasedInfo: nullable(v.string()),
+	daysSinceRegistration: v.number(),
+
+	/**
+	 * Indicates if the shop represents a single brand
+	 */
+	isMonobrand: v.boolean(),
 });
 
 /**
@@ -170,14 +161,14 @@ export const SkuApiAttributeSchema = v.object({
  */
 export const SkuApiTagSchema = v.object({
 	/**
-	 * Display name of the tag
-	 */
-	name: v.string(),
-
-	/**
 	 * Type of the tag
 	 */
 	type: v.string(),
+
+	/**
+	 * Display name of the tag
+	 */
+	name: v.string(),
 
 	/**
 	 * URL to the SVG icon for the tag
@@ -191,13 +182,22 @@ export const SkuApiTagSchema = v.object({
 });
 
 /**
+ * Enum for stock availability types.
+ * Known values: "stock" (in stock with quantity info)
+ */
+export const SkuApiStockAvailabilityTypeEnum = v.union([
+	v.literal("stock"),
+	v.string(),
+]);
+
+/**
  * Schema for stock availability information.
  */
 export const SkuApiStockAvailabilitySchema = v.object({
 	/**
-	 * Localized text describing stock status (e.g., "В наличии - осталось всего 16 штук")
+	 * Type of stock status (known value: "stock")
 	 */
-	text: v.string(),
+	type: SkuApiStockAvailabilityTypeEnum,
 
 	/**
 	 * SVG icon representing stock status
@@ -205,9 +205,9 @@ export const SkuApiStockAvailabilitySchema = v.object({
 	svg: nullable(v.string()),
 
 	/**
-	 * Type of stock status (known value: "stock")
+	 * Localized text describing stock status (e.g., "В наличии - осталось всего 16 штук")
 	 */
-	type: SkuApiStockAvailabilityTypeEnum,
+	text: v.string(),
 
 	/**
 	 * Maximum quantity available
@@ -225,14 +225,19 @@ export const SkuApiStockAvailabilitySchema = v.object({
  */
 export const SkuApiGetResponseSchema = v.object({
 	/**
+	 * Unique product identifier
+	 */
+	productId: v.number(),
+
+	/**
 	 * Unique stock keeping unit identifier
 	 */
 	skuId: v.number(),
 
 	/**
-	 * Unique product identifier
+	 * Detailed product description in HTML format
 	 */
-	productId: v.number(),
+	description: v.string(),
 
 	/**
 	 * Full display name of the product
@@ -245,24 +250,9 @@ export const SkuApiGetResponseSchema = v.object({
 	photos: v.array(v.string()),
 
 	/**
-	 * Detailed product description in HTML format
-	 */
-	description: v.string(),
-
-	/**
 	 * Brief summary of the product
 	 */
 	shortDescription: v.string(),
-
-	/**
-	 * Current selling price
-	 */
-	price: v.number(),
-
-	/**
-	 * Original price before discounts
-	 */
-	originalPrice: v.number(),
 
 	/**
 	 * Discount amount
@@ -270,9 +260,34 @@ export const SkuApiGetResponseSchema = v.object({
 	discount: v.number(),
 
 	/**
+	 * Original price before discounts
+	 */
+	originalPrice: v.number(),
+
+	/**
+	 * Discount percentage
+	 */
+	percentDiscount: v.number(),
+
+	/**
+	 * Current selling price
+	 */
+	price: v.number(),
+
+	/**
 	 * Quantity available in stock
 	 */
 	qty: v.number(),
+
+	/**
+	 * Stock availability details
+	 */
+	stockAvailability: nullable(SkuApiStockAvailabilitySchema),
+
+	/**
+	 * Installment payment options
+	 */
+	installment: nullable(SkuApiInstallmentSchema),
 
 	/**
 	 * Indicates if the product is on promotion
@@ -285,44 +300,9 @@ export const SkuApiGetResponseSchema = v.object({
 	promoName: v.string(),
 
 	/**
-	 * Installment payment options
+	 * List of applicable promocodes
 	 */
-	installment: nullable(SkuApiInstallmentSchema),
-
-	/**
-	 * Dictionary of additional product information
-	 */
-	additionalInfo: v.record(v.string(), v.string()),
-
-	/**
-	 * Details of the shop selling the product
-	 */
-	shop: SkuApiShopSchema,
-
-	/**
-	 * List of categories the product belongs to
-	 */
-	categories: v.array(SkuApiCategorySchema),
-
-	/**
-	 * List of available attribute variants
-	 */
-	attributes: v.array(SkuApiAttributeSchema),
-
-	/**
-	 * Brand information
-	 */
-	brand: nullable(SkuApiBrandSchema),
-
-	/**
-	 * List of tags associated with the product
-	 */
-	tags: v.array(SkuApiTagSchema),
-
-	/**
-	 * Discount percentage
-	 */
-	percentDiscount: v.number(),
+	promocodes: v.array(v.string()),
 
 	/**
 	 * Popularity text indicating purchase frequency (e.g., "Часто покупают", "11 заказов", "930 заказов")
@@ -345,14 +325,34 @@ export const SkuApiGetResponseSchema = v.object({
 	textReviewQuantity: nullable(v.number()),
 
 	/**
-	 * List of applicable promocodes
+	 * Brand information
 	 */
-	promocodes: v.array(v.string()),
+	brand: nullable(SkuApiBrandSchema),
 
 	/**
-	 * Stock availability details
+	 * List of categories the product belongs to
 	 */
-	stockAvailability: nullable(SkuApiStockAvailabilitySchema),
+	categories: v.array(SkuApiCategorySchema),
+
+	/**
+	 * Details of the shop selling the product
+	 */
+	shop: SkuApiShopSchema,
+
+	/**
+	 * Dictionary of additional product information
+	 */
+	additionalInfo: v.record(v.string(), v.string()),
+
+	/**
+	 * List of available attribute variants
+	 */
+	attributes: v.array(SkuApiAttributeSchema),
+
+	/**
+	 * List of tags associated with the product
+	 */
+	tags: v.array(SkuApiTagSchema),
 });
 
 /**
@@ -360,14 +360,19 @@ export const SkuApiGetResponseSchema = v.object({
  */
 export const SkuApiSimilarItemSchema = v.object({
 	/**
+	 * Unique product identifier
+	 */
+	productId: v.number(),
+
+	/**
 	 * Unique stock keeping unit identifier
 	 */
 	skuId: v.number(),
 
 	/**
-	 * Unique product identifier
+	 * URL for the full-size image
 	 */
-	productId: v.number(),
+	imageUrl: v.string(),
 
 	/**
 	 * Display name of the similar product
@@ -385,9 +390,9 @@ export const SkuApiSimilarItemSchema = v.object({
 	thumbnailUrl: v.string(),
 
 	/**
-	 * URL for the full-size image
+	 * Original price before discounts
 	 */
-	imageUrl: v.string(),
+	originalPrice: v.number(),
 
 	/**
 	 * Current selling price
@@ -395,19 +400,9 @@ export const SkuApiSimilarItemSchema = v.object({
 	price: v.number(),
 
 	/**
-	 * Original price before discounts
-	 */
-	originalPrice: v.number(),
-
-	/**
 	 * Quantity available in stock
 	 */
 	qty: v.number(),
-
-	/**
-	 * Moderation status code
-	 */
-	moderationStatus: v.number(),
 
 	/**
 	 * Indicates if the product is on promotion
@@ -433,6 +428,11 @@ export const SkuApiSimilarItemSchema = v.object({
 	 * Total number of ratings
 	 */
 	scoreQuantity: nullable(v.number()),
+
+	/**
+	 * Moderation status code
+	 */
+	moderationStatus: v.number(),
 });
 
 /**
@@ -480,9 +480,9 @@ export const SkuApiCollectionItemSchema = v.object({
 	id: v.number(),
 
 	/**
-	 * Name of the collection
+	 * URL for the collection's cover image
 	 */
-	name: v.string(),
+	cover: v.string(),
 
 	/**
 	 * URL to the collection's icon
@@ -490,19 +490,19 @@ export const SkuApiCollectionItemSchema = v.object({
 	icon: v.string(),
 
 	/**
-	 * Priority for sorting or display order
+	 * Name of the collection
 	 */
-	priority: v.number(),
-
-	/**
-	 * URL for the collection's cover image
-	 */
-	cover: v.string(),
+	name: v.string(),
 
 	/**
 	 * Number of items in the collection
 	 */
 	quantity: v.number(),
+
+	/**
+	 * Priority for sorting or display order
+	 */
+	priority: v.number(),
 });
 
 /**

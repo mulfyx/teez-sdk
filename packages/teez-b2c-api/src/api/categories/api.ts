@@ -1,5 +1,10 @@
 import { type HttpClient } from "../../http/client";
 import {
+	type CategoriesApiGetParentsResponse,
+	type CategoriesApiGetResponse,
+	type CategoriesApiListResponse,
+} from "./schema-types";
+import {
 	CategoriesApiGetParentsResponseSchema,
 	CategoriesApiGetResponseSchema,
 	CategoriesApiListResponseSchema,
@@ -7,10 +12,7 @@ import {
 import {
 	type CategoriesApiGetParams,
 	type CategoriesApiGetParentsParams,
-	type CategoriesApiGetParentsResponse,
-	type CategoriesApiGetResponse,
 	type CategoriesApiListParams,
-	type CategoriesApiListResponse,
 } from "./types";
 
 /**

@@ -1,17 +1,4 @@
 import { type BaseParams, type SortOption } from "../../common/types";
-import type {
-	ProductsApiBadgeSchema,
-	ProductsApiFilterOptionSchema,
-	ProductsApiFilterSchema,
-	ProductsApiGetReviewsResponseSchema,
-	ProductsApiGetSortOptionsResponseSchema,
-	ProductsApiListResponseSchema,
-	ProductsApiProductItemSchema,
-	ProductsApiReviewItemSchema,
-	ProductsApiSortOptionSchema,
-	ProductsApiStockAvailabilitySchema,
-} from "./schemas";
-import type * as v from "valibot";
 
 /**
  * Parameters for fetching product sort options.
@@ -29,18 +16,24 @@ export interface ProductsApiGetSortOptionsParams extends BaseParams {
 }
 
 /**
- * Sort option.
+ * Parameters for fetching product reviews.
  */
-export type ProductsApiSortOption = v.InferOutput<
-	typeof ProductsApiSortOptionSchema
->;
+export interface ProductsApiGetReviewsParams extends BaseParams {
+	/**
+	 * Unique identifier of the product
+	 */
+	productId: number;
 
-/**
- * Response for available sort options.
- */
-export type ProductsApiGetSortOptionsResponse = v.InferOutput<
-	typeof ProductsApiGetSortOptionsResponseSchema
->;
+	/**
+	 * Number of the page to retrieve
+	 */
+	pageNumber?: number;
+
+	/**
+	 * Number of reviews per page
+	 */
+	pageSize?: number;
+}
 
 /**
  * Parameters for fetching a filtered list of products.
@@ -86,75 +79,3 @@ export interface ProductsApiListParams extends BaseParams {
 	 */
 	maxPrice?: number;
 }
-
-/**
- * Filter option.
- */
-export type ProductsApiFilterOption = v.InferOutput<
-	typeof ProductsApiFilterOptionSchema
->;
-
-/**
- * Product filter.
- */
-export type ProductsApiFilter = v.InferOutput<typeof ProductsApiFilterSchema>;
-
-/**
- * Product badge.
- */
-export type ProductsApiBadge = v.InferOutput<typeof ProductsApiBadgeSchema>;
-
-/**
- * Stock availability information.
- */
-export type ProductsApiStockAvailability = v.InferOutput<
-	typeof ProductsApiStockAvailabilitySchema
->;
-
-/**
- * Product item.
- */
-export type ProductsApiProductItem = v.InferOutput<
-	typeof ProductsApiProductItemSchema
->;
-
-/**
- * Response for the product list.
- */
-export type ProductsApiListResponse = v.InferOutput<
-	typeof ProductsApiListResponseSchema
->;
-
-/**
- * Parameters for fetching product reviews.
- */
-export interface ProductsApiGetReviewsParams extends BaseParams {
-	/**
-	 * Unique identifier of the product
-	 */
-	productId: number;
-
-	/**
-	 * Number of the page to retrieve
-	 */
-	pageNumber?: number;
-
-	/**
-	 * Number of reviews per page
-	 */
-	pageSize?: number;
-}
-
-/**
- * Product review item.
- */
-export type ProductsApiReviewItem = v.InferOutput<
-	typeof ProductsApiReviewItemSchema
->;
-
-/**
- * Response for product reviews.
- */
-export type ProductsApiGetReviewsResponse = v.InferOutput<
-	typeof ProductsApiGetReviewsResponseSchema
->;

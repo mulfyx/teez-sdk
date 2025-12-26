@@ -11,17 +11,6 @@ export const BannersApiImageTypeEnum = v.union([
 ]);
 
 /**
- * Enum for banner action types.
- * Known values: "url" (external link), "path" (internal navigation), "key" (app action)
- */
-export const BannersApiActionTypeEnum = v.union([
-	v.literal("url"),
-	v.literal("path"),
-	v.literal("key"),
-	v.string(),
-]);
-
-/**
  * Schema for a banner image.
  */
 export const BannersApiImageSchema = v.object({
@@ -35,6 +24,17 @@ export const BannersApiImageSchema = v.object({
 	 */
 	url: v.string(),
 });
+
+/**
+ * Enum for banner action types.
+ * Known values: "url" (external link), "path" (internal navigation), "key" (app action)
+ */
+export const BannersApiActionTypeEnum = v.union([
+	v.literal("url"),
+	v.literal("path"),
+	v.literal("key"),
+	v.string() as v.GenericSchema<string & {}>,
+]);
 
 /**
  * Schema for a banner action.

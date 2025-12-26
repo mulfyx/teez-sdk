@@ -1,7 +1,7 @@
 import { nullable } from "../../common/schemas";
 import * as v from "valibot";
 
-interface CategoryItem {
+interface CategoriesApiCategoryItem {
 	/**
 	 * Unique identifier of the category
 	 */
@@ -35,13 +35,13 @@ interface CategoryItem {
 	/**
 	 * List of nested subcategories
 	 */
-	subcategories?: CategoryItem[] | null | undefined;
+	subcategories?: CategoriesApiCategoryItem[] | null | undefined;
 }
 
 /**
  * Recursive schema for a category hierarchy.
  */
-export const CategoriesApiCategorySchema: v.GenericSchema<CategoryItem> =
+export const CategoriesApiCategorySchema: v.GenericSchema<CategoriesApiCategoryItem> =
 	v.object({
 		/**
 		 * Unique identifier of the category

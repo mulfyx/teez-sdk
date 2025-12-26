@@ -1,16 +1,18 @@
 import { type HttpClient } from "../../http/client";
 import {
+	type ShopsApiGetMonobrandResponse,
+	type ShopsApiGetProductsResponse,
+	type ShopsApiGetResponse,
+} from "./schema-types";
+import {
 	ShopsApiGetMonobrandResponseSchema,
 	ShopsApiGetProductsResponseSchema,
 	ShopsApiGetResponseSchema,
 } from "./schemas";
 import {
 	type ShopsApiGetMonobrandParams,
-	type ShopsApiGetMonobrandResponse,
 	type ShopsApiGetParams,
 	type ShopsApiGetProductsParams,
-	type ShopsApiGetProductsResponse,
-	type ShopsApiGetResponse,
 } from "./types";
 
 /**
