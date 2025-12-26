@@ -1,88 +1,10 @@
 import { nullable } from "../../common/schemas";
 import * as v from "valibot";
 
-interface CategoriesApiCategoryItem {
-	/**
-	 * Unique identifier of the category
-	 */
-	id: number;
-
-	/**
-	 * Identifier of the parent category
-	 */
-	parentId: number;
-
-	/**
-	 * Depth level in the category tree
-	 */
-	level: number;
-
-	/**
-	 * Localized display name of the category
-	 */
-	name: string;
-
-	/**
-	 * Indicates if the category contains adult content
-	 */
-	isAdult: boolean;
-
-	/**
-	 * Indicates if there are nested subcategories
-	 */
-	hasSubcategories: boolean;
-
-	/**
-	 * List of nested subcategories
-	 */
-	subcategories?: CategoriesApiCategoryItem[] | null | undefined;
-}
-
 /**
- * Recursive schema for a category hierarchy.
+ * Base fields present in all category types.
  */
-export const CategoriesApiCategorySchema: v.GenericSchema<CategoriesApiCategoryItem> =
-	v.object({
-		/**
-		 * Unique identifier of the category
-		 */
-		id: v.number(),
-
-		/**
-		 * Identifier of the parent category
-		 */
-		parentId: v.number(),
-
-		/**
-		 * Depth level in the category tree
-		 */
-		level: v.number(),
-
-		/**
-		 * Localized display name of the category
-		 */
-		name: v.string(),
-
-		/**
-		 * Indicates if the category contains adult content
-		 */
-		isAdult: v.boolean(),
-
-		/**
-		 * Indicates if there are nested subcategories
-		 */
-		hasSubcategories: v.boolean(),
-
-		/**
-		 * List of nested subcategories
-		 */
-		subcategories: nullable(v.array(v.lazy(() => CategoriesApiCategorySchema))),
-	});
-
-/**
- * Schema for a parent category item.
- */
-export const CategoriesApiParentItemSchema = v.object({
+const BaseCategoryFields = {
 	/**
 	 * Unique identifier of the category
 	 */
@@ -102,63 +24,106 @@ export const CategoriesApiParentItemSchema = v.object({
 	 * Indicates if there are nested subcategories
 	 */
 	hasSubcategories: v.boolean(),
-
-	/**
-	 * List of nested subcategories
-	 */
-	subcategories: nullable(v.array(v.lazy(() => CategoriesApiCategorySchema))),
-});
+};
 
 /**
- * Schema for a category list item.
+ * Additional fields for full category objects.
  */
-export const CategoriesApiListItemSchema = v.object({
-	/**
-	 * Unique identifier of the category
-	 */
-	id: v.number(),
-
+const FullCategoryFields = {
 	/**
 	 * Identifier of the parent category
 	 */
 	parentId: v.number(),
 
 	/**
-	 * Depth level in the category tree
-	 */
-	level: v.number(),
-
-	/**
-	 * Localized display name of the category
-	 */
-	name: v.string(),
-
-	/**
 	 * Indicates if the category contains adult content
 	 */
 	isAdult: v.boolean(),
+};
 
-	/**
-	 * Indicates if there are nested subcategories
-	 */
-	hasSubcategories: v.boolean(),
-});
+// Helper types for interface inference
+type BaseCategory = v.InferOutput<
+	v.ObjectSchema<typeof BaseCategoryFields, undefined>
+>;
+
+type FullCategory = v.InferOutput<
+	v.ObjectSchema<typeof FullCategoryFields, undefined>
+>;
 
 /**
- * Response schema for getting parent categories.
+ * Schema for a category list item.
+ * Flat structure without subcategories.
  */
-export const CategoriesApiGetParentsResponseSchema = v.array(
-	CategoriesApiParentItemSchema,
-);
+export const CategoriesApiListResponseItemSchema = v.object({
+	...BaseCategoryFields,
+	...FullCategoryFields,
+});
 
 /**
  * Response schema for the list of categories.
  */
 export const CategoriesApiListResponseSchema = v.array(
-	CategoriesApiListItemSchema,
+	CategoriesApiListResponseItemSchema,
 );
+
+/**
+ * Interface for detailed category information.
+ * Includes full fields and nested subcategories.
+ */
+interface CategoriesApiGetResponse extends BaseCategory, FullCategory {
+	/**
+	 * List of nested subcategories
+	 */
+	subcategories?: CategoriesApiGetResponse[] | null;
+}
 
 /**
  * Response schema for getting a specific category by ID.
  */
-export const CategoriesApiGetResponseSchema = CategoriesApiCategorySchema;
+export const CategoriesApiGetResponseSchema: v.GenericSchema<CategoriesApiGetResponse> =
+	v.object({
+		...BaseCategoryFields,
+		...FullCategoryFields,
+
+		/**
+		 * List of nested subcategories.
+		 * v.lazy is used inside v.array to handle recursion correctly.
+		 */
+		subcategories: nullable(
+			v.array(v.lazy(() => CategoriesApiGetResponseSchema)),
+		),
+	});
+
+/**
+ * Interface for a parent category item.
+ * Contains only base fields and hierarchy structure.
+ */
+interface CategoriesApiGetParentsResponseItem extends BaseCategory {
+	/**
+	 * List of nested subcategories
+	 */
+	subcategories?: CategoriesApiGetParentsResponseItem[] | null;
+}
+
+/**
+ * Schema for a parent category item with nesting.
+ */
+export const CategoriesApiGetParentsResponseItemSchema: v.GenericSchema<CategoriesApiGetParentsResponseItem> =
+	v.object({
+		...BaseCategoryFields,
+
+		/**
+		 * List of nested subcategories.
+		 * v.lazy is used inside v.array to handle recursion correctly.
+		 */
+		subcategories: nullable(
+			v.array(v.lazy(() => CategoriesApiGetParentsResponseItemSchema)),
+		),
+	});
+
+/**
+ * Response schema for getting parent categories.
+ */
+export const CategoriesApiGetParentsResponseSchema = v.array(
+	CategoriesApiGetParentsResponseItemSchema,
+);

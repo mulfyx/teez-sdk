@@ -22,19 +22,6 @@ export class CategoriesApi {
 	public constructor(private http: HttpClient) {}
 
 	/**
-	 * Retrieves parent categories for specific category IDs.
-	 */
-	public async getParents(
-		params: CategoriesApiGetParentsParams,
-	): Promise<CategoriesApiGetParentsResponse> {
-		return await this.http.get({
-			path: "/api/v1/categories/parents",
-			params,
-			schema: CategoriesApiGetParentsResponseSchema,
-		});
-	}
-
-	/**
 	 * Retrieves a list of all categories.
 	 */
 	public async list(
@@ -57,6 +44,19 @@ export class CategoriesApi {
 			path: `/categories/${params.categoryId}`,
 			params,
 			schema: CategoriesApiGetResponseSchema,
+		});
+	}
+
+	/**
+	 * Retrieves parent categories for specific category IDs.
+	 */
+	public async getParents(
+		params: CategoriesApiGetParentsParams,
+	): Promise<CategoriesApiGetParentsResponse> {
+		return await this.http.get({
+			path: "/api/v1/categories/parents",
+			params,
+			schema: CategoriesApiGetParentsResponseSchema,
 		});
 	}
 }
