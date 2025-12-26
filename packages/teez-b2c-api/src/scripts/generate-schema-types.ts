@@ -99,6 +99,17 @@ function getTypeName(schemaName: string): string {
 function generateSchemaTypes(exports: SchemaExport[]): string {
 	const lines: string[] = [];
 
+	lines.push(
+		"// -----------------------------------------------------------------------------",
+	);
+	lines.push(
+		"// 🚫 THIS FILE IS GENERATED AUTOMATICALLY. DO NOT MODIFY IT MANUALLY.",
+	);
+	lines.push("//    Run `npm run generate:schema-types` to update this file.");
+	lines.push(
+		"// -----------------------------------------------------------------------------",
+	);
+	lines.push("");
 	lines.push("import type * as schemas from './schemas';");
 	lines.push("import type * as v from 'valibot';");
 	lines.push("");
