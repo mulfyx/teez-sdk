@@ -2,67 +2,6 @@ import { nullable } from "../../common/schemas";
 import * as v from "valibot";
 
 /**
- * Schema for a filter option.
- */
-export const CollectionsApiFilterOptionSchema = v.object({
-	/**
-	 * Display label for the filter option
-	 */
-	label: nullable(v.string()),
-
-	/**
-	 * Minimum value for range filters
-	 */
-	min: nullable(v.number()),
-
-	/**
-	 * Maximum value for range filters
-	 */
-	max: nullable(v.number()),
-
-	/**
-	 * Value for the filter option
-	 */
-	value: nullable(v.number()),
-});
-
-/**
- * Enum for collection filter types.
- * Known values: "category" (category selector), "alphabetic_search_list" (brand picker), "range" (price slider)
- */
-export const CollectionsApiFilterTypeEnum = v.union([
-	v.literal("category"),
-	v.literal("alphabetic_search_list"),
-	v.literal("range"),
-	v.string(),
-]);
-
-/**
- * Schema for a product filter.
- */
-export const CollectionsApiFilterSchema = v.object({
-	/**
-	 * Filter UI type - "category" for category selector, "alphabetic_search_list" for brand picker, "range" for price slider
-	 */
-	type: CollectionsApiFilterTypeEnum,
-
-	/**
-	 * Localized display name of the filter
-	 */
-	name: v.string(),
-
-	/**
-	 * Unique code identifying the filter type
-	 */
-	code: v.string(),
-
-	/**
-	 * List of available options for this filter
-	 */
-	options: v.array(CollectionsApiFilterOptionSchema),
-});
-
-/**
  * Enum for stock availability types.
  * Known values: "stock" (in stock with quantity info)
  */
@@ -182,6 +121,95 @@ export const CollectionsApiSkuItemSchema = v.object({
 });
 
 /**
+ * Schema for range filter options (price slider).
+ */
+export const CollectionsApiRangeFilterOptionSchema = v.object({
+	/**
+	 * Minimum value for range filters
+	 */
+	min: v.number(),
+
+	/**
+	 * Maximum value for range filters
+	 */
+	max: v.number(),
+});
+
+/**
+ * Schema for range filters (e.g., price slider).
+ */
+const CollectionsApiRangeFilterSchema = v.object({
+	/**
+	 * Filter UI type - range for price slider
+	 */
+	type: v.literal("range"),
+
+	/**
+	 * Localized display name of the filter
+	 */
+	name: v.string(),
+
+	/**
+	 * Unique code identifying the filter type
+	 */
+	code: v.string(),
+
+	/**
+	 * List of available options for this filter
+	 */
+	options: v.array(CollectionsApiRangeFilterOptionSchema),
+});
+
+/**
+ * Schema for category/brand filter options.
+ */
+export const CollectionsApiCategoryFilterOptionSchema = v.object({
+	/**
+	 * Display label for the filter option
+	 */
+	label: v.string(),
+
+	/**
+	 * Value for the filter option
+	 */
+	value: v.number(),
+});
+
+/**
+ * Schema for category/brand filters.
+ */
+const CollectionsApiCategoryFilterSchema = v.object({
+	/**
+	 * Filter UI type - category or alphabetic_search_list
+	 */
+	type: v.union([v.literal("category"), v.literal("alphabetic_search_list")]),
+
+	/**
+	 * Localized display name of the filter
+	 */
+	name: v.string(),
+
+	/**
+	 * Unique code identifying the filter type
+	 */
+	code: v.string(),
+
+	/**
+	 * List of available options for this filter
+	 */
+	options: v.array(CollectionsApiCategoryFilterOptionSchema),
+});
+
+/**
+ * Schema for a product filter.
+ * Uses variant to select the correct schema based on filter type.
+ */
+export const CollectionsApiFilterSchema = v.variant("type", [
+	CollectionsApiRangeFilterSchema,
+	CollectionsApiCategoryFilterSchema,
+]);
+
+/**
  * Response schema for getting SKUs from a collection.
  */
 export const CollectionsApiGetSkusResponseSchema = v.object({
@@ -267,6 +295,11 @@ export const CollectionsApiCollectionTypeEnum = v.union([
  */
 export const CollectionsApiGetResponseSchema = v.object({
 	/**
+	 * Type of the collection (known value: "Collection")
+	 */
+	type: CollectionsApiCollectionTypeEnum,
+
+	/**
 	 * Unique identifier of the collection
 	 */
 	id: v.number(),
@@ -290,9 +323,4 @@ export const CollectionsApiGetResponseSchema = v.object({
 	 * Priority for sorting or display order
 	 */
 	priority: v.number(),
-
-	/**
-	 * Type of the collection (known value: "Collection")
-	 */
-	type: CollectionsApiCollectionTypeEnum,
 });

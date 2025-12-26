@@ -2,17 +2,6 @@ import { nullable } from "../../common/schemas";
 import * as v from "valibot";
 
 /**
- * Enum for shop filter types.
- * Known values: "category" (category selector), "alphabetic_search_list" (brand picker), "range" (price slider)
- */
-export const ShopsApiFilterTypeEnum = v.union([
-	v.literal("category"),
-	v.literal("alphabetic_search_list"),
-	v.literal("range"),
-	v.string(),
-]);
-
-/**
  * Schema for shop contact information.
  */
 export const ShopsApiContactInfoSchema = v.object({
@@ -173,56 +162,6 @@ export const ShopsApiGetMonobrandResponseSchema = v.object({
 });
 
 /**
- * Schema for a filter option.
- */
-export const ShopsApiFilterOptionSchema = v.object({
-	/**
-	 * Display label for the filter option
-	 */
-	label: nullable(v.string()),
-
-	/**
-	 * Minimum value for range filters
-	 */
-	min: nullable(v.number()),
-
-	/**
-	 * Maximum value for range filters
-	 */
-	max: nullable(v.number()),
-
-	/**
-	 * Value for the filter option
-	 */
-	value: nullable(v.number()),
-});
-
-/**
- * Schema for a shop product filter.
- */
-export const ShopsApiFilterSchema = v.object({
-	/**
-	 * Localized display name of the filter
-	 */
-	name: v.string(),
-
-	/**
-	 * Unique code identifying the filter type
-	 */
-	code: v.string(),
-
-	/**
-	 * List of available options for this filter
-	 */
-	options: v.array(ShopsApiFilterOptionSchema),
-
-	/**
-	 * Filter UI type - "category" for category selector, "alphabetic_search_list" for brand picker, "range" for price slider
-	 */
-	type: ShopsApiFilterTypeEnum,
-});
-
-/**
  * Enum for stock availability types.
  * Known values: "stock" (in stock with quantity info)
  */
@@ -235,6 +174,11 @@ export const ShopsApiStockAvailabilityTypeEnum = v.union([
  * Schema for stock availability information.
  */
 export const ShopsApiStockAvailabilitySchema = v.object({
+	/**
+	 * Type of stock status (known value: "stock")
+	 */
+	type: ShopsApiStockAvailabilityTypeEnum,
+
 	/**
 	 * SVG icon representing stock status
 	 */
@@ -254,11 +198,6 @@ export const ShopsApiStockAvailabilitySchema = v.object({
 	 * Localized reason text for quantity limit (e.g., "В наличии только 16 штук")
 	 */
 	maxQtyReason: v.string(),
-
-	/**
-	 * Type of stock status (known value: "stock")
-	 */
-	type: ShopsApiStockAvailabilityTypeEnum,
 });
 
 /**
@@ -350,6 +289,95 @@ export const ShopsApiProductItemSchema = v.object({
 	 */
 	moderationStatus: v.number(),
 });
+
+/**
+ * Schema for range filter options (price slider).
+ */
+export const ShopsApiRangeFilterOptionSchema = v.object({
+	/**
+	 * Minimum value for range filters
+	 */
+	min: v.number(),
+
+	/**
+	 * Maximum value for range filters
+	 */
+	max: v.number(),
+});
+
+/**
+ * Schema for range filters (e.g., price slider).
+ */
+const ShopsApiRangeFilterSchema = v.object({
+	/**
+	 * Filter type: range for price slider
+	 */
+	type: v.literal("range"),
+
+	/**
+	 * Localized display name of the filter
+	 */
+	name: v.string(),
+
+	/**
+	 * Unique code identifying the filter type
+	 */
+	code: v.string(),
+
+	/**
+	 * List of available options for this filter
+	 */
+	options: v.array(ShopsApiRangeFilterOptionSchema),
+});
+
+/**
+ * Schema for category/brand filter options.
+ */
+export const ShopsApiCategoryFilterOptionSchema = v.object({
+	/**
+	 * Display label for the filter option
+	 */
+	label: v.string(),
+
+	/**
+	 * Value for the filter option
+	 */
+	value: v.number(),
+});
+
+/**
+ * Schema for category/brand filters.
+ */
+const ShopsApiCategoryFilterSchema = v.object({
+	/**
+	 * Filter type: category or alphabetic_search_list
+	 */
+	type: v.union([v.literal("category"), v.literal("alphabetic_search_list")]),
+
+	/**
+	 * Localized display name of the filter
+	 */
+	name: v.string(),
+
+	/**
+	 * Unique code identifying the filter type
+	 */
+	code: v.string(),
+
+	/**
+	 * List of available options for this filter
+	 */
+	options: v.array(ShopsApiCategoryFilterOptionSchema),
+});
+
+/**
+ * Schema for a shop product filter.
+ * Uses variant to select the correct schema based on filter type.
+ */
+export const ShopsApiFilterSchema = v.variant("type", [
+	ShopsApiRangeFilterSchema,
+	ShopsApiCategoryFilterSchema,
+]);
 
 /**
  * Response schema for products from a specific shop.

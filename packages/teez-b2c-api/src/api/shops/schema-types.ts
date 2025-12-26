@@ -2,14 +2,6 @@ import type * as schemas from "./schemas";
 import type * as v from "valibot";
 
 /**
- * Enum for shop filter types.
- * Known values: "category" (category selector), "alphabetic_search_list" (brand picker), "range" (price slider)
- */
-export type ShopsApiFilterType = v.InferOutput<
-	typeof schemas.ShopsApiFilterTypeEnum
->;
-
-/**
  * Schema for shop contact information.
  */
 export type ShopsApiContactInfo = v.InferOutput<
@@ -43,18 +35,6 @@ export type ShopsApiGetMonobrandResponse = v.InferOutput<
 >;
 
 /**
- * Schema for a filter option.
- */
-export type ShopsApiFilterOption = v.InferOutput<
-	typeof schemas.ShopsApiFilterOptionSchema
->;
-
-/**
- * Schema for a shop product filter.
- */
-export type ShopsApiFilter = v.InferOutput<typeof schemas.ShopsApiFilterSchema>;
-
-/**
  * Enum for stock availability types.
  * Known values: "stock" (in stock with quantity info)
  */
@@ -75,6 +55,26 @@ export type ShopsApiStockAvailability = v.InferOutput<
 export type ShopsApiProductItem = v.InferOutput<
 	typeof schemas.ShopsApiProductItemSchema
 >;
+
+/**
+ * Schema for range filter options (price slider).
+ */
+export type ShopsApiRangeFilterOption = v.InferOutput<
+	typeof schemas.ShopsApiRangeFilterOptionSchema
+>;
+
+/**
+ * Schema for category/brand filter options.
+ */
+export type ShopsApiCategoryFilterOption = v.InferOutput<
+	typeof schemas.ShopsApiCategoryFilterOptionSchema
+>;
+
+/**
+ * Schema for a shop product filter.
+ * Uses variant to select the correct schema based on filter type.
+ */
+export type ShopsApiFilter = v.InferOutput<typeof schemas.ShopsApiFilterSchema>;
 
 /**
  * Response schema for products from a specific shop.
