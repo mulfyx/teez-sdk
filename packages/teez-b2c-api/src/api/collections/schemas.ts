@@ -1,4 +1,5 @@
-import { FilterSchema, nullable } from "../../common/schemas";
+import { optionalNullish } from "../../common/helpers";
+import { FilterSchema } from "../../common/schemas";
 import * as v from "valibot";
 
 /**
@@ -13,7 +14,7 @@ export const CollectionsApiStockAvailabilitySchema = v.object({
 	/**
 	 * SVG icon representing stock status
 	 */
-	svg: nullable(v.string()),
+	svg: optionalNullish(v.string()),
 
 	/**
 	 * Localized text describing stock status (e.g., "В наличии - осталось всего 16 штук")
@@ -83,7 +84,7 @@ export const CollectionsApiSkuItemSchema = v.object({
 	/**
 	 * Stock availability details
 	 */
-	stockAvailability: nullable(CollectionsApiStockAvailabilitySchema),
+	stockAvailability: optionalNullish(CollectionsApiStockAvailabilitySchema),
 
 	/**
 	 * Indicates if the item is on promotion
@@ -98,17 +99,17 @@ export const CollectionsApiSkuItemSchema = v.object({
 	/**
 	 * Popularity text indicating purchase frequency (e.g., "Часто покупают")
 	 */
-	qtyPurchasedInfo: nullable(v.string()),
+	qtyPurchasedInfo: optionalNullish(v.string()),
 
 	/**
 	 * Average rating score
 	 */
-	rating: nullable(v.number()),
+	rating: optionalNullish(v.number()),
 
 	/**
 	 * Total number of ratings
 	 */
-	scoreQuantity: nullable(v.number()),
+	scoreQuantity: optionalNullish(v.number()),
 });
 
 /**
@@ -163,7 +164,7 @@ export const CollectionsApiListItemSchema = v.object({
 	/**
 	 * URL or path to the collection's icon
 	 */
-	icon: nullable(v.string()),
+	icon: optionalNullish(v.string()),
 
 	/**
 	 * Name of the collection

@@ -1,4 +1,4 @@
-import { nullable } from "../../common/schemas";
+import { optionalNullish } from "../../common/helpers";
 import * as v from "valibot";
 
 /**
@@ -89,7 +89,7 @@ export const CategoriesApiGetResponseSchema: v.GenericSchema<CategoriesApiGetRes
 		 * List of nested subcategories.
 		 * v.lazy is used inside v.array to handle recursion correctly.
 		 */
-		subcategories: nullable(
+		subcategories: optionalNullish(
 			v.array(v.lazy(() => CategoriesApiGetResponseSchema)),
 		),
 	});
@@ -116,7 +116,7 @@ export const CategoriesApiGetParentsResponseItemSchema: v.GenericSchema<Categori
 		 * List of nested subcategories.
 		 * v.lazy is used inside v.array to handle recursion correctly.
 		 */
-		subcategories: nullable(
+		subcategories: optionalNullish(
 			v.array(v.lazy(() => CategoriesApiGetParentsResponseItemSchema)),
 		),
 	});

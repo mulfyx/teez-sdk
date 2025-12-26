@@ -1,4 +1,4 @@
-import { nullable } from "../../common/schemas";
+import { optionalNullish } from "../../common/helpers";
 import * as v from "valibot";
 
 /**
@@ -33,7 +33,7 @@ export const BannersApiActionSchema = v.object({
 	/**
 	 * Key for analytics tracking
 	 */
-	analyticsKey: nullable(v.string()),
+	analyticsKey: optionalNullish(v.string()),
 });
 
 /**

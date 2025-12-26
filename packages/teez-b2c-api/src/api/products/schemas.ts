@@ -1,17 +1,6 @@
-import { FilterSchema, looseEnum, nullable } from "../../common/schemas";
+import { optionalNullish } from "../../common/helpers";
+import { FilterSchema } from "../../common/schemas";
 import * as v from "valibot";
-
-/**
- * Enum for product sort option keys.
- * Known values: "popularity", "highestRated", "new", "price", "priceDesc"
- */
-export const ProductsApiSortKeyEnum = looseEnum([
-	"popularity",
-	"highestRated",
-	"new",
-	"price",
-	"priceDesc",
-]);
 
 /**
  * Schema for a sort option.
@@ -20,7 +9,13 @@ export const ProductsApiSortOptionSchema = v.object({
 	/**
 	 * Sort key - "popularity", "highestRated", "new", "price", or "priceDesc"
 	 */
-	key: ProductsApiSortKeyEnum,
+	key: v.union([
+		v.literal("popularity"),
+		v.literal("highestRated"),
+		v.literal("new"),
+		v.literal("price"),
+		v.literal("priceDesc"),
+	]),
 
 	/**
 	 * Localized display name of the sort option
@@ -132,7 +127,7 @@ export const ProductsApiStockAvailabilitySchema = v.object({
 	/**
 	 * SVG icon representing stock status
 	 */
-	svg: nullable(v.string()),
+	svg: optionalNullish(v.string()),
 
 	/**
 	 * Localized text describing stock status (e.g., "В наличии - осталось всего 16 штук")
@@ -202,7 +197,7 @@ export const ProductsApiProductItemSchema = v.object({
 	/**
 	 * Stock availability details
 	 */
-	stockAvailability: nullable(ProductsApiStockAvailabilitySchema),
+	stockAvailability: optionalNullish(ProductsApiStockAvailabilitySchema),
 
 	/**
 	 * Indicates if the product is on promotion
@@ -222,17 +217,17 @@ export const ProductsApiProductItemSchema = v.object({
 	/**
 	 * Popularity text indicating purchase frequency (e.g., "Часто покупают", "11 заказов", "930 заказов")
 	 */
-	qtyPurchasedInfo: nullable(v.string()),
+	qtyPurchasedInfo: optionalNullish(v.string()),
 
 	/**
 	 * Average rating score
 	 */
-	rating: nullable(v.number()),
+	rating: optionalNullish(v.number()),
 
 	/**
 	 * Total number of ratings
 	 */
-	scoreQuantity: nullable(v.number()),
+	scoreQuantity: optionalNullish(v.number()),
 
 	/**
 	 * Badge information for the product

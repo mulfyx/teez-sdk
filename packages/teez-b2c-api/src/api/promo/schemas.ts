@@ -1,4 +1,4 @@
-import { nullable } from "../../common/schemas";
+import { optionalNullish } from "../../common/helpers";
 import * as v from "valibot";
 
 /**
@@ -18,12 +18,12 @@ export const PromoApiItemSchema = v.object({
 	/**
 	 * Localized detailed description of the promotion
 	 */
-	description: nullable(v.string()),
+	description: optionalNullish(v.string()),
 
 	/**
 	 * URL to the SVG icon for the promotion
 	 */
-	svgUrl: nullable(v.string()),
+	svgUrl: optionalNullish(v.string()),
 
 	/**
 	 * Start date of the promotion

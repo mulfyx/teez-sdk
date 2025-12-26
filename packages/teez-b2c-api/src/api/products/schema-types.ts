@@ -7,14 +7,6 @@ import type * as schemas from "./schemas";
 import type * as v from "valibot";
 
 /**
- * Enum for product sort option keys.
- * Known values: "popularity", "highestRated", "new", "price", "priceDesc"
- */
-export type ProductsApiSortKey = v.InferOutput<
-	typeof schemas.ProductsApiSortKeyEnum
->;
-
-/**
  * Schema for a sort option.
  */
 export type ProductsApiSortOption = v.InferOutput<

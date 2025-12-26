@@ -1,4 +1,5 @@
-import { FilterSchema, nullable } from "../../common/schemas";
+import { optionalNullish } from "../../common/helpers";
+import { FilterSchema } from "../../common/schemas";
 import * as v from "valibot";
 
 /**
@@ -63,7 +64,7 @@ export const ShopsApiGetResponseSchema = v.object({
 	/**
 	 * URL to the shop's banner image
 	 */
-	banner: nullable(v.string()),
+	banner: optionalNullish(v.string()),
 
 	/**
 	 * Description of the shop
@@ -73,7 +74,7 @@ export const ShopsApiGetResponseSchema = v.object({
 	/**
 	 * URL to the shop's logo
 	 */
-	logo: nullable(v.string()),
+	logo: optionalNullish(v.string()),
 
 	/**
 	 * Name of the shop
@@ -83,17 +84,17 @@ export const ShopsApiGetResponseSchema = v.object({
 	/**
 	 * Text about total orders/purchases (e.g., "11 заказов", "930 заказов")
 	 */
-	qtyPurchasedInfo: nullable(v.string()),
+	qtyPurchasedInfo: optionalNullish(v.string()),
 
 	/**
 	 * Average rating of the shop
 	 */
-	rating: nullable(v.number()),
+	rating: optionalNullish(v.number()),
 
 	/**
 	 * Total number of reviews received
 	 */
-	totalReviews: nullable(v.number()),
+	totalReviews: optionalNullish(v.number()),
 
 	/**
 	 * Contact information for the shop
@@ -173,7 +174,7 @@ export const ShopsApiStockAvailabilitySchema = v.object({
 	/**
 	 * SVG icon representing stock status
 	 */
-	svg: nullable(v.string()),
+	svg: optionalNullish(v.string()),
 
 	/**
 	 * Localized text describing stock status (e.g., "В наличии - осталось всего 16 штук")
@@ -248,7 +249,7 @@ export const ShopsApiProductItemSchema = v.object({
 	/**
 	 * Stock availability details
 	 */
-	stockAvailability: nullable(ShopsApiStockAvailabilitySchema),
+	stockAvailability: optionalNullish(ShopsApiStockAvailabilitySchema),
 
 	/**
 	 * Indicates if the product is on promotion
@@ -263,17 +264,17 @@ export const ShopsApiProductItemSchema = v.object({
 	/**
 	 * Popularity text indicating purchase frequency (e.g., "Часто покупают")
 	 */
-	qtyPurchasedInfo: nullable(v.string()),
+	qtyPurchasedInfo: optionalNullish(v.string()),
 
 	/**
 	 * Average rating score
 	 */
-	rating: nullable(v.number()),
+	rating: optionalNullish(v.number()),
 
 	/**
 	 * Total number of ratings
 	 */
-	scoreQuantity: nullable(v.number()),
+	scoreQuantity: optionalNullish(v.number()),
 
 	/**
 	 * Moderation status code

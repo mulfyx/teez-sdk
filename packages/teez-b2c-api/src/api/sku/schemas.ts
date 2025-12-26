@@ -1,4 +1,4 @@
-import { nullable } from "../../common/schemas";
+import { optionalNullish } from "../../common/helpers";
 import * as v from "valibot";
 
 /**
@@ -28,7 +28,7 @@ export const SkuApiShopSchema = v.object({
 	/**
 	 * URL to the shop's logo
 	 */
-	logo: nullable(v.string()),
+	logo: optionalNullish(v.string()),
 
 	/**
 	 * Name of the shop
@@ -53,12 +53,12 @@ export const SkuApiShopSchema = v.object({
 	/**
 	 * Popularity text for the shop (e.g., "Часто покупают", "11 заказов")
 	 */
-	qtyPurchasedInfo: nullable(v.string()),
+	qtyPurchasedInfo: optionalNullish(v.string()),
 
 	/**
 	 * Average rating of the shop
 	 */
-	rating: nullable(v.number()),
+	rating: optionalNullish(v.number()),
 
 	/**
 	 * Number of days since the shop was registered
@@ -178,7 +178,7 @@ export const SkuApiTagSchema = v.object({
 	/**
 	 * Value associated with the tag
 	 */
-	value: nullable(v.string()),
+	value: optionalNullish(v.string()),
 });
 
 /**
@@ -193,7 +193,7 @@ export const SkuApiStockAvailabilitySchema = v.object({
 	/**
 	 * SVG icon representing stock status
 	 */
-	svg: nullable(v.string()),
+	svg: optionalNullish(v.string()),
 
 	/**
 	 * Localized text describing stock status (e.g., "В наличии - осталось всего 16 штук")
@@ -273,12 +273,12 @@ export const SkuApiGetResponseSchema = v.object({
 	/**
 	 * Stock availability details
 	 */
-	stockAvailability: nullable(SkuApiStockAvailabilitySchema),
+	stockAvailability: optionalNullish(SkuApiStockAvailabilitySchema),
 
 	/**
 	 * Installment payment options
 	 */
-	installment: nullable(SkuApiInstallmentSchema),
+	installment: optionalNullish(SkuApiInstallmentSchema),
 
 	/**
 	 * Indicates if the product is on promotion
@@ -298,27 +298,27 @@ export const SkuApiGetResponseSchema = v.object({
 	/**
 	 * Popularity text indicating purchase frequency (e.g., "Часто покупают", "11 заказов", "930 заказов")
 	 */
-	qtyPurchasedInfo: nullable(v.string()),
+	qtyPurchasedInfo: optionalNullish(v.string()),
 
 	/**
 	 * Average rating score
 	 */
-	rating: nullable(v.number()),
+	rating: optionalNullish(v.number()),
 
 	/**
 	 * Total number of ratings
 	 */
-	scoreQuantity: nullable(v.number()),
+	scoreQuantity: optionalNullish(v.number()),
 
 	/**
 	 * Total number of text reviews
 	 */
-	textReviewQuantity: nullable(v.number()),
+	textReviewQuantity: optionalNullish(v.number()),
 
 	/**
 	 * Brand information
 	 */
-	brand: nullable(SkuApiBrandSchema),
+	brand: optionalNullish(SkuApiBrandSchema),
 
 	/**
 	 * List of categories the product belongs to
@@ -408,17 +408,17 @@ export const SkuApiSimilarItemSchema = v.object({
 	/**
 	 * Popularity text indicating purchase frequency (e.g., "Часто покупают")
 	 */
-	qtyPurchasedInfo: nullable(v.string()),
+	qtyPurchasedInfo: optionalNullish(v.string()),
 
 	/**
 	 * Average rating score
 	 */
-	rating: nullable(v.number()),
+	rating: optionalNullish(v.number()),
 
 	/**
 	 * Total number of ratings
 	 */
-	scoreQuantity: nullable(v.number()),
+	scoreQuantity: optionalNullish(v.number()),
 
 	/**
 	 * Moderation status code
