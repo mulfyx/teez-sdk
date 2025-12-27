@@ -1,7 +1,5 @@
 # @teez-sdk/teez-b2c-api
 
-[← Back to root](../../README.md)
-
 A typed TypeScript client for the Teez B2C API.
 
 ## Features
