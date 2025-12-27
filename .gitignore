@@ -1,32 +1,24 @@
-# ═══════════════════════════════════════════════════════════════════════════════
-# DEPENDENCIES
-# Package manager directories
-# ═══════════════════════════════════════════════════════════════════════════════
-
-# Node.js dependencies directory
+# Dependencies
 node_modules/
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# BUILD OUTPUT
-# Compiled and generated files from build process
-# ═══════════════════════════════════════════════════════════════════════════════
-
-# TypeScript/tsdown build output directory
+# Build & Generated
 dist/
+*.tsbuildinfo
 
-# TypeScript incremental compilation cache
-tsconfig.tsbuildinfo
+# IDE & Editors
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
+*.njsproj
+*.ntvs*
+*.sln
+*.suo
+*.sw?
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# OPERATING SYSTEM
-# OS-generated files
-# ═══════════════════════════════════════════════════════════════════════════════
-
-# macOS Finder metadata
+# System & Logs
 .DS_Store
-
-# Windows thumbnail cache
-Thumbs.db
-
-# Linux trash folder
 .Trash-*
+Thumbs.db
+*.log
