@@ -7,7 +7,7 @@ A typed TypeScript client for the Teez B2C API.
 ## Features
 
 - **Fully Typed:** Written in TypeScript with complete type definitions.
-- **Runtime Validation:** Uses [Valibot](https://github.com/fabian-hiller/valibot) to validate API responses.
+- **Runtime Validation:** Uses [Zod](https://zod.dev) to validate API responses.
 - **Modular:** API endpoints are organized into logical modules (Products, Banners, etc.).
 - **Error Handling:** Custom error classes for fine-grained control over API, network, and validation errors.
 
@@ -166,7 +166,7 @@ The SDK throws specific error types to help you handle failures gracefully:
 - `TeezApiError`: The server returned a non-2xx status code. Contains status, status text, and response body.
 - `TeezNetworkError`: Network failure (e.g., DNS resolution, offline).
 - `TeezTimeoutError`: The request exceeded the configured timeout.
-- `TeezValidationError`: The API response did not match the expected schema (Valibot validation failed).
+- `TeezValidationError`: The API response did not match the expected schema (Zod validation failed).
 
 ```typescript
 import { TeezApiError, TeezTimeoutError } from "@teez-sdk/teez-b2c-api";
