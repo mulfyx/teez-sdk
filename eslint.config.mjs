@@ -80,6 +80,7 @@ export default defineConfig([
 			"unicorn/no-keyword-prefix": "off",
 			"unicorn/no-negated-condition": "off",
 			"unicorn/no-useless-undefined": "off",
+			"unicorn/prefer-json-parse-buffer": "off",
 			"unicorn/prefer-native-coercion-functions": "off",
 			"unicorn/prefer-single-call": "off",
 			"unicorn/prefer-switch": "off",
