@@ -1,134 +1,133 @@
-import { optionalNullish } from "../../common/helpers";
-import * as v from "valibot";
+import * as z from "zod/mini";
 
 /**
  * Schema for installment payment information.
  */
-export const SkuApiInstallmentSchema = v.object({
+export const SkuApiInstallmentSchema = z.object({
 	/**
 	 * URL to the installment SVG icon
 	 */
-	installmentSvg: v.string(),
+	installmentSvg: z.string(),
 
 	/**
 	 * Description of the installment term
 	 */
-	installmentTerm: v.string(),
+	installmentTerm: z.string(),
 });
 
 /**
  * Schema for shop details associated with a SKU.
  */
-export const SkuApiShopSchema = v.object({
+export const SkuApiShopSchema = z.object({
 	/**
 	 * Unique identifier of the shop
 	 */
-	id: v.number(),
+	id: z.number(),
 
 	/**
 	 * URL to the shop's logo
 	 */
-	logo: optionalNullish(v.string()),
+	logo: z.nullish(z.string()),
 
 	/**
 	 * Name of the shop
 	 */
-	name: v.string(),
+	name: z.string(),
 
 	/**
 	 * URL to the shop's photo
 	 */
-	photo: v.string(),
+	photo: z.string(),
 
 	/**
 	 * URL to the shop's page or resource
 	 */
-	url: v.string(),
+	url: z.string(),
 
 	/**
 	 * Indicates if installment payment is available
 	 */
-	isInstallment: v.boolean(),
+	isInstallment: z.boolean(),
 
 	/**
 	 * Popularity text for the shop (e.g., "Часто покупают", "11 заказов")
 	 */
-	qtyPurchasedInfo: optionalNullish(v.string()),
+	qtyPurchasedInfo: z.nullish(z.string()),
 
 	/**
 	 * Average rating of the shop
 	 */
-	rating: optionalNullish(v.number()),
+	rating: z.nullish(z.number()),
 
 	/**
 	 * Number of days since the shop was registered
 	 */
-	daysSinceRegistration: v.number(),
+	daysSinceRegistration: z.number(),
 
 	/**
 	 * Indicates if the shop represents a single brand
 	 */
-	isMonobrand: v.boolean(),
+	isMonobrand: z.boolean(),
 });
 
 /**
  * Schema for brand information.
  */
-export const SkuApiBrandSchema = v.object({
+export const SkuApiBrandSchema = z.object({
 	/**
 	 * Unique identifier of the brand
 	 */
-	id: v.number(),
+	id: z.number(),
 
 	/**
 	 * Name of the brand
 	 */
-	name: v.string(),
+	name: z.string(),
 });
 
 /**
  * Schema for a category item.
  */
-export const SkuApiCategorySchema = v.object({
+export const SkuApiCategorySchema = z.object({
 	/**
 	 * Unique identifier of the category
 	 */
-	id: v.number(),
+	id: z.number(),
 
 	/**
 	 * Name of the category
 	 */
-	name: v.string(),
+	name: z.string(),
 
 	/**
 	 * Indicates if this is the primary category for the product
 	 */
-	isPrimary: v.boolean(),
+	isPrimary: z.boolean(),
 });
 
 /**
  * Schema for an attribute property value.
  */
-export const SkuApiAttributePropertyValueSchema = v.object({
+export const SkuApiAttributePropertyValueSchema = z.object({
 	/**
 	 * Name of the property value (e.g., "Red", "XL")
 	 */
-	name: v.string(),
+	name: z.string(),
 
 	/**
 	 * URL to a photo representing this property value
 	 */
-	photo: v.string(),
+	photo: z.string(),
 });
 
 /**
  * Schema for a product attribute.
  */
-export const SkuApiAttributePropertySchema = v.object({
+export const SkuApiAttributePropertySchema = z.object({
 	/**
 	 * Name of the attribute (e.g., "Color", "Size")
 	 */
-	name: v.string(),
+	name: z.string(),
 
 	/**
 	 * Value details for the attribute
@@ -139,57 +138,57 @@ export const SkuApiAttributePropertySchema = v.object({
 /**
  * Schema for SKU attributes configuration.
  */
-export const SkuApiAttributeSchema = v.object({
+export const SkuApiAttributeSchema = z.object({
 	/**
 	 * SKU ID associated with this specific attribute combination
 	 */
-	skuId: v.number(),
+	skuId: z.number(),
 
 	/**
 	 * Quantity available for this specific variant
 	 */
-	quantity: v.number(),
+	quantity: z.number(),
 
 	/**
 	 * List of properties defining this variant
 	 */
-	attributeProperties: v.array(SkuApiAttributePropertySchema),
+	attributeProperties: z.array(SkuApiAttributePropertySchema),
 });
 
 /**
  * Schema for a product tag.
  */
-export const SkuApiTagSchema = v.object({
+export const SkuApiTagSchema = z.object({
 	/**
 	 * Type of the tag
 	 */
-	type: v.string(),
+	type: z.string(),
 
 	/**
 	 * Display name of the tag
 	 */
-	name: v.string(),
+	name: z.string(),
 
 	/**
 	 * URL to the SVG icon for the tag
 	 */
-	svg: v.string(),
+	svg: z.string(),
 
 	/**
 	 * Value associated with the tag
 	 */
-	value: optionalNullish(v.string()),
+	value: z.nullish(z.string()),
 });
 
 /**
  * Type literal for SKU stock availability type
  */
-export const SkuStockAvailabilityTypeSchema = v.literal("stock");
+export const SkuStockAvailabilityTypeSchema = z.literal("stock");
 
 /**
  * Schema for stock availability information.
  */
-export const SkuApiStockAvailabilitySchema = v.object({
+export const SkuApiStockAvailabilitySchema = z.object({
 	/**
 	 * Type of stock status (known value: "stock")
 	 */
@@ -198,137 +197,137 @@ export const SkuApiStockAvailabilitySchema = v.object({
 	/**
 	 * SVG icon representing stock status
 	 */
-	svg: optionalNullish(v.string()),
+	svg: z.nullish(z.string()),
 
 	/**
 	 * Localized text describing stock status (e.g., "В наличии - осталось всего 16 штук")
 	 */
-	text: v.string(),
+	text: z.string(),
 
 	/**
 	 * Maximum quantity available
 	 */
-	maxQty: v.number(),
+	maxQty: z.number(),
 
 	/**
 	 * Localized reason text for quantity limit (e.g., "В наличии только 16 штук")
 	 */
-	maxQtyReason: v.string(),
+	maxQtyReason: z.string(),
 });
 
 /**
  * Response schema for getting a specific SKU by ID.
  */
-export const SkuApiGetResponseSchema = v.object({
+export const SkuApiGetResponseSchema = z.object({
 	/**
 	 * Unique product identifier
 	 */
-	productId: v.number(),
+	productId: z.number(),
 
 	/**
 	 * Unique stock keeping unit identifier
 	 */
-	skuId: v.number(),
+	skuId: z.number(),
 
 	/**
 	 * Detailed product description in HTML format
 	 */
-	description: v.string(),
+	description: z.string(),
 
 	/**
 	 * Full display name of the product
 	 */
-	name: v.string(),
+	name: z.string(),
 
 	/**
 	 * List of URLs for product photos
 	 */
-	photos: v.array(v.string()),
+	photos: z.array(z.string()),
 
 	/**
 	 * Brief summary of the product
 	 */
-	shortDescription: v.string(),
+	shortDescription: z.string(),
 
 	/**
 	 * Discount amount
 	 */
-	discount: v.number(),
+	discount: z.number(),
 
 	/**
 	 * Original price before discounts
 	 */
-	originalPrice: v.number(),
+	originalPrice: z.number(),
 
 	/**
 	 * Discount percentage
 	 */
-	percentDiscount: v.number(),
+	percentDiscount: z.number(),
 
 	/**
 	 * Current selling price
 	 */
-	price: v.number(),
+	price: z.number(),
 
 	/**
 	 * Quantity available in stock
 	 */
-	qty: v.number(),
+	qty: z.number(),
 
 	/**
 	 * Stock availability details
 	 */
-	stockAvailability: optionalNullish(SkuApiStockAvailabilitySchema),
+	stockAvailability: z.nullish(SkuApiStockAvailabilitySchema),
 
 	/**
 	 * Installment payment options
 	 */
-	installment: optionalNullish(SkuApiInstallmentSchema),
+	installment: z.nullish(SkuApiInstallmentSchema),
 
 	/**
 	 * Indicates if the product is on promotion
 	 */
-	isPromo: v.boolean(),
+	isPromo: z.boolean(),
 
 	/**
 	 * Name of the promotion
 	 */
-	promoName: v.string(),
+	promoName: z.string(),
 
 	/**
 	 * List of applicable promocodes
 	 */
-	promocodes: v.array(v.string()),
+	promocodes: z.array(z.string()),
 
 	/**
 	 * Popularity text indicating purchase frequency (e.g., "Часто покупают", "11 заказов", "930 заказов")
 	 */
-	qtyPurchasedInfo: optionalNullish(v.string()),
+	qtyPurchasedInfo: z.nullish(z.string()),
 
 	/**
 	 * Average rating score
 	 */
-	rating: optionalNullish(v.number()),
+	rating: z.nullish(z.number()),
 
 	/**
 	 * Total number of ratings
 	 */
-	scoreQuantity: optionalNullish(v.number()),
+	scoreQuantity: z.nullish(z.number()),
 
 	/**
 	 * Total number of text reviews
 	 */
-	textReviewQuantity: optionalNullish(v.number()),
+	textReviewQuantity: z.nullish(z.number()),
 
 	/**
 	 * Brand information
 	 */
-	brand: optionalNullish(SkuApiBrandSchema),
+	brand: z.nullish(SkuApiBrandSchema),
 
 	/**
 	 * List of categories the product belongs to
 	 */
-	categories: v.array(SkuApiCategorySchema),
+	categories: z.array(SkuApiCategorySchema),
 
 	/**
 	 * Details of the shop selling the product
@@ -338,187 +337,187 @@ export const SkuApiGetResponseSchema = v.object({
 	/**
 	 * Dictionary of additional product information
 	 */
-	additionalInfo: v.record(v.string(), v.string()),
+	additionalInfo: z.record(z.string(), z.string()),
 
 	/**
 	 * List of available attribute variants
 	 */
-	attributes: v.array(SkuApiAttributeSchema),
+	attributes: z.array(SkuApiAttributeSchema),
 
 	/**
 	 * List of tags associated with the product
 	 */
-	tags: v.array(SkuApiTagSchema),
+	tags: z.array(SkuApiTagSchema),
 });
 
 /**
  * Schema for a similar product item.
  */
-export const SkuApiSimilarItemSchema = v.object({
+export const SkuApiSimilarItemSchema = z.object({
 	/**
 	 * Unique product identifier
 	 */
-	productId: v.number(),
+	productId: z.number(),
 
 	/**
 	 * Unique stock keeping unit identifier
 	 */
-	skuId: v.number(),
+	skuId: z.number(),
 
 	/**
 	 * URL for the full-size image
 	 */
-	imageUrl: v.string(),
+	imageUrl: z.string(),
 
 	/**
 	 * Display name of the similar product
 	 */
-	name: v.string(),
+	name: z.string(),
 
 	/**
 	 * Brief description of the similar product
 	 */
-	shortDescription: v.string(),
+	shortDescription: z.string(),
 
 	/**
 	 * URL for the small preview image
 	 */
-	thumbnailUrl: v.string(),
+	thumbnailUrl: z.string(),
 
 	/**
 	 * Original price before discounts
 	 */
-	originalPrice: v.number(),
+	originalPrice: z.number(),
 
 	/**
 	 * Current selling price
 	 */
-	price: v.number(),
+	price: z.number(),
 
 	/**
 	 * Quantity available in stock
 	 */
-	qty: v.number(),
+	qty: z.number(),
 
 	/**
 	 * Indicates if the product is on promotion
 	 */
-	isPromo: v.boolean(),
+	isPromo: z.boolean(),
 
 	/**
 	 * Name of the promotion
 	 */
-	promoName: v.string(),
+	promoName: z.string(),
 
 	/**
 	 * Popularity text indicating purchase frequency (e.g., "Часто покупают")
 	 */
-	qtyPurchasedInfo: optionalNullish(v.string()),
+	qtyPurchasedInfo: z.nullish(z.string()),
 
 	/**
 	 * Average rating score
 	 */
-	rating: optionalNullish(v.number()),
+	rating: z.nullish(z.number()),
 
 	/**
 	 * Total number of ratings
 	 */
-	scoreQuantity: optionalNullish(v.number()),
+	scoreQuantity: z.nullish(z.number()),
 
 	/**
 	 * Moderation status code
 	 */
-	moderationStatus: v.number(),
+	moderationStatus: z.number(),
 });
 
 /**
  * Response schema for similar SKUs.
  */
-export const SkuApiGetSimilarResponseSchema = v.object({
+export const SkuApiGetSimilarResponseSchema = z.object({
 	/**
 	 * List of similar product items
 	 */
-	items: v.array(SkuApiSimilarItemSchema),
+	items: z.array(SkuApiSimilarItemSchema),
 
 	/**
 	 * Current page number
 	 */
-	pageNumber: v.number(),
+	pageNumber: z.number(),
 
 	/**
 	 * Total number of pages available
 	 */
-	totalPages: v.number(),
+	totalPages: z.number(),
 
 	/**
 	 * Total number of similar items found
 	 */
-	totalCount: v.number(),
+	totalCount: z.number(),
 
 	/**
 	 * Indicates if there is a previous page
 	 */
-	hasPreviousPage: v.boolean(),
+	hasPreviousPage: z.boolean(),
 
 	/**
 	 * Indicates if there is a next page
 	 */
-	hasNextPage: v.boolean(),
+	hasNextPage: z.boolean(),
 });
 
 /**
  * Schema for a collection item.
  */
-export const SkuApiCollectionItemSchema = v.object({
+export const SkuApiCollectionItemSchema = z.object({
 	/**
 	 * Unique identifier of the collection
 	 */
-	id: v.number(),
+	id: z.number(),
 
 	/**
 	 * URL for the collection's cover image
 	 */
-	cover: v.string(),
+	cover: z.string(),
 
 	/**
 	 * URL to the collection's icon
 	 */
-	icon: v.string(),
+	icon: z.string(),
 
 	/**
 	 * Name of the collection
 	 */
-	name: v.string(),
+	name: z.string(),
 
 	/**
 	 * Number of items in the collection
 	 */
-	quantity: v.number(),
+	quantity: z.number(),
 
 	/**
 	 * Priority for sorting or display order
 	 */
-	priority: v.number(),
+	priority: z.number(),
 });
 
 /**
  * Response schema for SKU collections.
  */
-export const SkuApiGetCollectionsResponseSchema = v.array(
+export const SkuApiGetCollectionsResponseSchema = z.array(
 	SkuApiCollectionItemSchema,
 );
 
 /**
  * Response schema for review availability check.
  */
-export const SkuApiGetReviewAvailableResponseSchema = v.object({
+export const SkuApiGetReviewAvailableResponseSchema = z.object({
 	/**
 	 * Description of the review availability status
 	 */
-	description: v.string(),
+	description: z.string(),
 
 	/**
 	 * Message regarding review availability
 	 */
-	message: v.string(),
+	message: z.string(),
 });

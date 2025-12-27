@@ -4,7 +4,7 @@ import { TeezNetworkError } from "../errors/teez-network-error";
 import { TeezTimeoutError } from "../errors/teez-timeout-error";
 import { buildUrl, parseResponse } from "./helpers";
 import { type HttpGetOptions, type HttpRequestOptions } from "./types";
-import type * as v from "valibot";
+import type * as z from "zod/mini";
 
 /**
  * Internal HTTP client for making API requests.
@@ -104,9 +104,9 @@ export class HttpClient {
 	/**
 	 * Performs a GET request and validates the response.
 	 */
-	public async get<T extends v.GenericSchema>(
+	public async get<T extends z.ZodMiniType>(
 		options: HttpGetOptions<T>,
-	): Promise<v.InferOutput<T>> {
+	): Promise<z.output<T>> {
 		const { path, params, schema, ...rest } = options;
 
 		const url = buildUrl(path, this.baseUrl, params);

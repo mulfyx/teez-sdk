@@ -1,22 +1,21 @@
-import { optionalNullish } from "../../common/helpers";
 import { FilterSchema } from "../../common/schemas";
-import * as v from "valibot";
+import * as z from "zod/mini";
 
 /**
  * Type union for product sort keys
  */
-export const ProductSortKeySchema = v.union([
-	v.literal("popularity"),
-	v.literal("highestRated"),
-	v.literal("new"),
-	v.literal("price"),
-	v.literal("priceDesc"),
+export const ProductSortKeySchema = z.union([
+	z.literal("popularity"),
+	z.literal("highestRated"),
+	z.literal("new"),
+	z.literal("price"),
+	z.literal("priceDesc"),
 ]);
 
 /**
  * Schema for a sort option.
  */
-export const ProductsApiSortOptionSchema = v.object({
+export const ProductsApiSortOptionSchema = z.object({
 	/**
 	 * Sort key - "popularity", "highestRated", "new", "price", or "priceDesc"
 	 */
@@ -25,110 +24,110 @@ export const ProductsApiSortOptionSchema = v.object({
 	/**
 	 * Localized display name of the sort option
 	 */
-	name: v.string(),
+	name: z.string(),
 });
 
 /**
  * Response schema for available sort options.
  */
-export const ProductsApiGetSortOptionsResponseSchema = v.array(
+export const ProductsApiGetSortOptionsResponseSchema = z.array(
 	ProductsApiSortOptionSchema,
 );
 
 /**
  * Schema for a product review item.
  */
-export const ProductsApiReviewItemSchema = v.object({
+export const ProductsApiReviewItemSchema = z.object({
 	/**
 	 * Name of the review author
 	 */
-	author: v.string(),
+	author: z.string(),
 
 	/**
 	 * Text content of the review
 	 */
-	reviewText: v.string(),
+	reviewText: z.string(),
 
 	/**
 	 * Rating score given in the review
 	 */
-	scoreValue: v.number(),
+	scoreValue: z.number(),
 
 	/**
 	 * Additional attributes associated with the review
 	 */
-	attributes: v.record(v.string(), v.string()),
+	attributes: z.record(z.string(), z.string()),
 
 	/**
 	 * Date and time when the review was created
 	 */
-	createdAt: v.string(),
+	createdAt: z.string(),
 });
 
 /**
  * Response schema for product reviews.
  */
-export const ProductsApiGetReviewsResponseSchema = v.object({
+export const ProductsApiGetReviewsResponseSchema = z.object({
 	/**
 	 * List of review items
 	 */
-	items: v.array(ProductsApiReviewItemSchema),
+	items: z.array(ProductsApiReviewItemSchema),
 
 	/**
 	 * Current page number
 	 */
-	pageNumber: v.number(),
+	pageNumber: z.number(),
 
 	/**
 	 * Total number of pages available
 	 */
-	totalPages: v.number(),
+	totalPages: z.number(),
 
 	/**
 	 * Total number of reviews
 	 */
-	totalCount: v.number(),
+	totalCount: z.number(),
 
 	/**
 	 * Indicates if there is a previous page
 	 */
-	hasPreviousPage: v.boolean(),
+	hasPreviousPage: z.boolean(),
 
 	/**
 	 * Indicates if there is a next page
 	 */
-	hasNextPage: v.boolean(),
+	hasNextPage: z.boolean(),
 });
 
 /**
  * Schema for a product badge.
  */
-export const ProductsApiBadgeSchema = v.object({
+export const ProductsApiBadgeSchema = z.object({
 	/**
 	 * Background color code
 	 */
-	backgroundColor: v.number(),
+	backgroundColor: z.number(),
 
 	/**
 	 * Text label of the badge
 	 */
-	label: v.string(),
+	label: z.string(),
 
 	/**
 	 * Text color code
 	 */
-	textColor: v.number(),
+	textColor: z.number(),
 });
 
 /**
  * Type literal for products stock availability type
  */
-export const ProductsStockAvailabilityTypeSchema = v.literal("stock");
+export const ProductsStockAvailabilityTypeSchema = z.literal("stock");
 
 /**
  * Schema for stock availability information.
  */
-export const ProductsApiStockAvailabilitySchema = v.object({
+export const ProductsApiStockAvailabilitySchema = z.object({
 	/**
 	 * Type of stock status (known value: "stock")
 	 */
@@ -137,107 +136,107 @@ export const ProductsApiStockAvailabilitySchema = v.object({
 	/**
 	 * SVG icon representing stock status
 	 */
-	svg: optionalNullish(v.string()),
+	svg: z.nullish(z.string()),
 
 	/**
 	 * Localized text describing stock status (e.g., "В наличии - осталось всего 16 штук")
 	 */
-	text: v.string(),
+	text: z.string(),
 
 	/**
 	 * Maximum quantity available
 	 */
-	maxQty: v.number(),
+	maxQty: z.number(),
 
 	/**
 	 * Localized reason text for quantity limit (e.g., "В наличии только 16 штук")
 	 */
-	maxQtyReason: v.string(),
+	maxQtyReason: z.string(),
 });
 
 /**
  * Schema for a product item.
  */
-export const ProductsApiProductItemSchema = v.object({
+export const ProductsApiProductItemSchema = z.object({
 	/**
 	 * Unique product identifier
 	 */
-	productId: v.number(),
+	productId: z.number(),
 
 	/**
 	 * Unique stock keeping unit identifier
 	 */
-	skuId: v.number(),
+	skuId: z.number(),
 
 	/**
 	 * URL for the full-size image
 	 */
-	imageUrl: v.string(),
+	imageUrl: z.string(),
 
 	/**
 	 * Full display name of the product
 	 */
-	name: v.string(),
+	name: z.string(),
 
 	/**
 	 * Brief description of the product
 	 */
-	shortDescription: v.string(),
+	shortDescription: z.string(),
 
 	/**
 	 * URL for the small preview image
 	 */
-	thumbnailUrl: v.string(),
+	thumbnailUrl: z.string(),
 
 	/**
 	 * Original price before discounts
 	 */
-	originalPrice: v.number(),
+	originalPrice: z.number(),
 
 	/**
 	 * Current selling price
 	 */
-	price: v.number(),
+	price: z.number(),
 
 	/**
 	 * Quantity available in stock
 	 */
-	qty: v.number(),
+	qty: z.number(),
 
 	/**
 	 * Stock availability details
 	 */
-	stockAvailability: optionalNullish(ProductsApiStockAvailabilitySchema),
+	stockAvailability: z.nullish(ProductsApiStockAvailabilitySchema),
 
 	/**
 	 * Indicates if the product is on promotion
 	 */
-	isPromo: v.boolean(),
+	isPromo: z.boolean(),
 
 	/**
 	 * Name of the promotion
 	 */
-	promoName: v.string(),
+	promoName: z.string(),
 
 	/**
 	 * List of applicable promocodes
 	 */
-	promocodes: v.array(v.string()),
+	promocodes: z.array(z.string()),
 
 	/**
 	 * Popularity text indicating purchase frequency (e.g., "Часто покупают", "11 заказов", "930 заказов")
 	 */
-	qtyPurchasedInfo: optionalNullish(v.string()),
+	qtyPurchasedInfo: z.nullish(z.string()),
 
 	/**
 	 * Average rating score
 	 */
-	rating: optionalNullish(v.number()),
+	rating: z.nullish(z.number()),
 
 	/**
 	 * Total number of ratings
 	 */
-	scoreQuantity: optionalNullish(v.number()),
+	scoreQuantity: z.nullish(z.number()),
 
 	/**
 	 * Badge information for the product
@@ -247,45 +246,45 @@ export const ProductsApiProductItemSchema = v.object({
 	/**
 	 * Moderation status code
 	 */
-	moderationStatus: v.number(),
+	moderationStatus: z.number(),
 });
 
 /**
  * Response schema for the product list.
  */
-export const ProductsApiListResponseSchema = v.object({
+export const ProductsApiListResponseSchema = z.object({
 	/**
 	 * List of applicable filters
 	 */
-	filters: v.array(FilterSchema),
+	filters: z.array(FilterSchema),
 
 	/**
 	 * List of product items
 	 */
-	items: v.array(ProductsApiProductItemSchema),
+	items: z.array(ProductsApiProductItemSchema),
 
 	/**
 	 * Current page number
 	 */
-	pageNumber: v.number(),
+	pageNumber: z.number(),
 
 	/**
 	 * Total number of pages available
 	 */
-	totalPages: v.number(),
+	totalPages: z.number(),
 
 	/**
 	 * Total number of products found
 	 */
-	totalCount: v.number(),
+	totalCount: z.number(),
 
 	/**
 	 * Indicates if there is a previous page
 	 */
-	hasPreviousPage: v.boolean(),
+	hasPreviousPage: z.boolean(),
 
 	/**
 	 * Indicates if there is a next page
 	 */
-	hasNextPage: v.boolean(),
+	hasNextPage: z.boolean(),
 });

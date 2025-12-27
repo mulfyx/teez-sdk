@@ -1,31 +1,31 @@
-import * as v from "valibot";
+import * as z from "zod/mini";
 
 /**
  * Schema for range filter options (e.g., price slider).
  * Common schema used by multiple APIs.
  */
-export const RangeFilterOptionSchema = v.object({
+export const RangeFilterOptionSchema = z.object({
 	/**
 	 * Minimum value for range filters
 	 */
-	min: v.number(),
+	min: z.number(),
 
 	/**
 	 * Maximum value for range filters
 	 */
-	max: v.number(),
+	max: z.number(),
 });
 
 /**
  * Type literal for range-based filters
  */
-export const RangeTypeSchema = v.literal("range");
+export const RangeTypeSchema = z.literal("range");
 
 /**
  * Schema for range filters (e.g., price slider).
- * Use this in variant-based filter schemas.
+ * Use this in discriminatedUnion-based filter schemas.
  */
-export const RangeFilterSchema = v.object({
+export const RangeFilterSchema = z.object({
 	/**
 	 * Filter type: range for price slider
 	 */
@@ -34,48 +34,48 @@ export const RangeFilterSchema = v.object({
 	/**
 	 * Localized display name of the filter
 	 */
-	name: v.string(),
+	name: z.string(),
 
 	/**
 	 * Unique code identifying the filter type
 	 */
-	code: v.string(),
+	code: z.string(),
 
 	/**
 	 * List of available options for this filter
 	 */
-	options: v.array(RangeFilterOptionSchema),
+	options: z.array(RangeFilterOptionSchema),
 });
 
 /**
  * Schema for category/brand filter options.
  * Common schema used by multiple APIs.
  */
-export const CategoryFilterOptionSchema = v.object({
+export const CategoryFilterOptionSchema = z.object({
 	/**
 	 * Display label for the filter option
 	 */
-	label: v.string(),
+	label: z.string(),
 
 	/**
 	 * Value for the filter option
 	 */
-	value: v.number(),
+	value: z.number(),
 });
 
 /**
  * Type union for category filter types
  */
-export const CategoryFilterTypesSchema = v.union([
-	v.literal("category"),
-	v.literal("alphabetic_search_list"),
+export const CategoryFilterTypesSchema = z.union([
+	z.literal("category"),
+	z.literal("alphabetic_search_list"),
 ]);
 
 /**
  * Schema for category/brand filters.
- * Use this in variant-based filter schemas.
+ * Use this in discriminatedUnion-based filter schemas.
  */
-export const CategoryFilterSchema = v.object({
+export const CategoryFilterSchema = z.object({
 	/**
 	 * Filter type: category or alphabetic_search_list
 	 */
@@ -84,24 +84,24 @@ export const CategoryFilterSchema = v.object({
 	/**
 	 * Localized display name of the filter
 	 */
-	name: v.string(),
+	name: z.string(),
 
 	/**
 	 * Unique code identifying the filter type
 	 */
-	code: v.string(),
+	code: z.string(),
 
 	/**
 	 * List of available options for this filter
 	 */
-	options: v.array(CategoryFilterOptionSchema),
+	options: z.array(CategoryFilterOptionSchema),
 });
 
 /**
  * Union filter schema that can be either range or category filter.
  * This is the recommended pattern for type-safe filters.
  */
-export const FilterSchema = v.variant("type", [
+export const FilterSchema = z.discriminatedUnion("type", [
 	RangeFilterSchema,
 	CategoryFilterSchema,
 ]);

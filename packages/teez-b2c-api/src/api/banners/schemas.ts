@@ -1,15 +1,14 @@
-import { optionalNullish } from "../../common/helpers";
-import * as v from "valibot";
+import * as z from "zod/mini";
 
 /**
  * Type literal for banner image resource type
  */
-export const BannerImageTypeSchema = v.literal("network");
+export const BannerImageTypeSchema = z.literal("network");
 
 /**
  * Schema for a banner image.
  */
-export const BannersApiImageSchema = v.object({
+export const BannersApiImageSchema = z.object({
 	/**
 	 * Type of image resource (e.g., "network" for remote URLs)
 	 */
@@ -18,22 +17,22 @@ export const BannersApiImageSchema = v.object({
 	/**
 	 * Direct URL to the image
 	 */
-	url: v.string(),
+	url: z.string(),
 });
 
 /**
  * Type union for banner action types
  */
-export const BannerActionTypesSchema = v.union([
-	v.literal("url"),
-	v.literal("path"),
-	v.literal("key"),
+export const BannerActionTypesSchema = z.union([
+	z.literal("url"),
+	z.literal("path"),
+	z.literal("key"),
 ]);
 
 /**
  * Schema for a banner action.
  */
-export const BannersApiActionSchema = v.object({
+export const BannersApiActionSchema = z.object({
 	/**
 	 * Type of action - "url" for external links, "path" for app navigation, "key" for special actions
 	 */
@@ -42,18 +41,18 @@ export const BannersApiActionSchema = v.object({
 	/**
 	 * Target value - full URL for "url" type, app path for "path" type (e.g., "/collection/393"), or action key for "key" type
 	 */
-	value: v.string(),
+	value: z.string(),
 
 	/**
 	 * Key for analytics tracking
 	 */
-	analyticsKey: optionalNullish(v.string()),
+	analyticsKey: z.nullish(z.string()),
 });
 
 /**
  * Schema for a banner item containing an image and an action.
  */
-export const BannersApiBannerItemSchema = v.object({
+export const BannersApiBannerItemSchema = z.object({
 	/**
 	 * Image details for the banner
 	 */
@@ -68,4 +67,4 @@ export const BannersApiBannerItemSchema = v.object({
 /**
  * Response schema for the list of banners.
  */
-export const BannersApiListResponseSchema = v.array(BannersApiBannerItemSchema);
+export const BannersApiListResponseSchema = z.array(BannersApiBannerItemSchema);

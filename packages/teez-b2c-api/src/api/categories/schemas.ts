@@ -1,129 +1,124 @@
-import { optionalNullish } from "../../common/helpers";
-import * as v from "valibot";
+import * as z from "zod/mini";
 
 /**
- * Base fields present in all category types.
+ * Schema for a category list item.
  */
-const BaseCategoryFields = {
+export const CategoriesApiListResponseItemSchema = z.object({
 	/**
 	 * Unique identifier of the category
 	 */
-	id: v.number(),
-
-	/**
-	 * Depth level in the category tree
-	 */
-	level: v.number(),
+	id: z.number(),
 
 	/**
 	 * Localized display name of the category
 	 */
-	name: v.string(),
+	name: z.string(),
+
+	/**
+	 * Depth level in the category tree
+	 */
+	level: z.number(),
+
+	/**
+	 * Identifier of the parent category
+	 */
+	parentId: z.number(),
 
 	/**
 	 * Indicates if there are nested subcategories
 	 */
-	hasSubcategories: v.boolean(),
-};
-
-/**
- * Additional fields for full category objects.
- */
-const FullCategoryFields = {
-	/**
-	 * Identifier of the parent category
-	 */
-	parentId: v.number(),
+	hasSubcategories: z.boolean(),
 
 	/**
 	 * Indicates if the category contains adult content
 	 */
-	isAdult: v.boolean(),
-};
-
-// Helper types for interface inference
-type BaseCategory = v.InferOutput<
-	v.ObjectSchema<typeof BaseCategoryFields, undefined>
->;
-
-type FullCategory = v.InferOutput<
-	v.ObjectSchema<typeof FullCategoryFields, undefined>
->;
-
-/**
- * Schema for a category list item.
- * Flat structure without subcategories.
- */
-export const CategoriesApiListResponseItemSchema = v.object({
-	...BaseCategoryFields,
-	...FullCategoryFields,
+	isAdult: z.boolean(),
 });
 
 /**
  * Response schema for the list of categories.
  */
-export const CategoriesApiListResponseSchema = v.array(
+export const CategoriesApiListResponseSchema = z.array(
 	CategoriesApiListResponseItemSchema,
 );
 
 /**
- * Interface for detailed category information.
- * Includes full fields and nested subcategories.
- */
-interface CategoriesApiGetResponse extends BaseCategory, FullCategory {
-	/**
-	 * List of nested subcategories
-	 */
-	subcategories?: CategoriesApiGetResponse[] | null;
-}
-
-/**
  * Response schema for getting a specific category by ID.
  */
-export const CategoriesApiGetResponseSchema: v.GenericSchema<CategoriesApiGetResponse> =
-	v.object({
-		...BaseCategoryFields,
-		...FullCategoryFields,
-
-		/**
-		 * List of nested subcategories.
-		 * v.lazy is used inside v.array to handle recursion correctly.
-		 */
-		subcategories: optionalNullish(
-			v.array(v.lazy(() => CategoriesApiGetResponseSchema)),
-		),
-	});
-
-/**
- * Interface for a parent category item.
- * Contains only base fields and hierarchy structure.
- */
-interface CategoriesApiGetParentsResponseItem extends BaseCategory {
+export const CategoriesApiGetResponseSchema = z.object({
 	/**
-	 * List of nested subcategories
+	 * Unique identifier of the category
 	 */
-	subcategories?: CategoriesApiGetParentsResponseItem[] | null;
-}
+	id: z.number(),
+
+	/**
+	 * Localized display name of the category
+	 */
+	name: z.string(),
+
+	/**
+	 * Depth level in the category tree
+	 */
+	level: z.number(),
+
+	/**
+	 * Identifier of the parent category
+	 */
+	parentId: z.number(),
+
+	/**
+	 * Indicates if there are nested subcategories
+	 */
+	hasSubcategories: z.boolean(),
+
+	/**
+	 * Indicates if the category contains adult content
+	 */
+	isAdult: z.boolean(),
+
+	/**
+	 * List of nested subcategories.
+	 */
+	get subcategories() {
+		return z.nullish(z.array(CategoriesApiGetResponseSchema));
+	},
+});
 
 /**
  * Schema for a parent category item with nesting.
  */
-export const CategoriesApiGetParentsResponseItemSchema: v.GenericSchema<CategoriesApiGetParentsResponseItem> =
-	v.object({
-		...BaseCategoryFields,
+export const CategoriesApiGetParentsResponseItemSchema = z.object({
+	/**
+	 * Unique identifier of the category
+	 */
+	id: z.number(),
 
-		/**
-		 * List of nested subcategories.
-		 * v.lazy is used inside v.array to handle recursion correctly.
-		 */
-		subcategories: optionalNullish(
-			v.array(v.lazy(() => CategoriesApiGetParentsResponseItemSchema)),
-		),
-	});
+	/**
+	 * Localized display name of the category
+	 */
+	name: z.string(),
+
+	/**
+	 * Depth level in the category tree
+	 */
+	level: z.number(),
+
+	/**
+	 * Indicates if there are nested subcategories
+	 */
+	hasSubcategories: z.boolean(),
+
+	/**
+	 * List of nested subcategories.
+	 */
+	get subcategories() {
+		return z.nullish(z.array(CategoriesApiGetParentsResponseItemSchema));
+	},
+});
 
 /**
  * Response schema for getting parent categories.
  */
-export const CategoriesApiGetParentsResponseSchema = v.array(
+export const CategoriesApiGetParentsResponseSchema = z.array(
 	CategoriesApiGetParentsResponseItemSchema,
 );

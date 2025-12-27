@@ -1,4 +1,4 @@
-import type { GenericSchema } from "valibot";
+import type * as z from "zod/mini";
 
 /**
  * Type representing URL query parameters.
@@ -26,7 +26,7 @@ export interface HttpRequestOptions extends Omit<
 /**
  * Options for making a GET request.
  */
-export interface HttpGetOptions<T extends GenericSchema> extends Omit<
+export interface HttpGetOptions<T extends z.ZodMiniType> extends Omit<
 	HttpRequestOptions,
 	"url" | "method" | "body"
 > {
@@ -41,7 +41,7 @@ export interface HttpGetOptions<T extends GenericSchema> extends Omit<
 	params?: QueryParams;
 
 	/**
-	 * Valibot schema to validate the response.
+	 * Zod schema to validate the response.
 	 */
 	schema: T;
 }

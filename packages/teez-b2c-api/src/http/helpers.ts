@@ -3,7 +3,13 @@ import {
 	type TeezValidationIssue,
 } from "../errors/teez-validation-error";
 import { type QueryParams } from "./types";
-import * as v from "valibot";
+import * as z from "zod/mini";
+
+type SafeParseResult = ReturnType<typeof z.safeParse>;
+
+type SafeParseFailure = Extract<SafeParseResult, { success: false }>;
+
+type ZodMiniError = SafeParseFailure["error"];
 
 /**
  * Constructs a full URL with query parameters.
@@ -35,30 +41,27 @@ export function buildUrl(
 }
 
 /**
- * Converts Valibot BaseIssue[] to abstract ValidationIssue[].
+ * Converts Zod ZodError to abstract ValidationIssue[].
  */
-export function toValidationIssues(
-	issues: v.BaseIssue<unknown>[],
-): TeezValidationIssue[] {
-	return issues.map((issue) => ({
+export function toValidationIssues(error: ZodMiniError): TeezValidationIssue[] {
+	return error.issues.map((issue) => ({
+		code: issue.code,
+		path: issue.path,
 		message: issue.message,
-		path: issue.path?.map((part) => part.key as string | number),
-		expected: issue.expected ?? undefined,
-		received: issue.received ?? undefined,
 	}));
 }
 
 /**
  * Validates and parses the API response data against a schema.
  */
-export function parseResponse<T extends v.GenericSchema>(
+export function parseResponse<T extends z.ZodMiniType>(
 	schema: T,
 	data: unknown,
-): v.InferOutput<T> {
-	const result = v.safeParse(schema, data);
+): z.output<T> {
+	const result = z.safeParse(schema, data);
 
 	if (!result.success) {
-		const issues = toValidationIssues(result.issues);
+		const issues = toValidationIssues(result.error);
 
 		throw new TeezValidationError("Response validation failed", {
 			issues,
@@ -66,5 +69,5 @@ export function parseResponse<T extends v.GenericSchema>(
 		});
 	}
 
-	return result.output;
+	return result.data;
 }

@@ -1,100 +1,99 @@
-import { optionalNullish } from "../../common/helpers";
 import { FilterSchema } from "../../common/schemas";
-import * as v from "valibot";
+import * as z from "zod/mini";
 
 /**
  * Schema for shop contact information.
  */
-export const ShopsApiContactInfoSchema = v.object({
+export const ShopsApiContactInfoSchema = z.object({
 	/**
 	 * Business Identification Number
 	 */
-	bin: v.string(),
+	bin: z.string(),
 
 	/**
 	 * Number of days since the shop was registered
 	 */
-	daysSinceRegistration: v.number(),
+	daysSinceRegistration: z.number(),
 
 	/**
 	 * Legal entity type code
 	 */
-	legalType: v.number(),
+	legalType: z.number(),
 });
 
 /**
  * Schema for a shop tag.
  */
-export const ShopsApiTagSchema = v.object({
+export const ShopsApiTagSchema = z.object({
 	/**
 	 * Description of the tag
 	 */
-	description: v.string(),
+	description: z.string(),
 
 	/**
 	 * URL to the raster icon for the tag
 	 */
-	icon: v.string(),
+	icon: z.string(),
 
 	/**
 	 * Display name of the tag
 	 */
-	name: v.string(),
+	name: z.string(),
 
 	/**
 	 * URL to the SVG icon for the tag
 	 */
-	svg: v.string(),
+	svg: z.string(),
 
 	/**
 	 * Unique code for the tag
 	 */
-	code: v.string(),
+	code: z.string(),
 });
 
 /**
  * Response schema for getting a specific shop by ID.
  */
-export const ShopsApiGetResponseSchema = v.object({
+export const ShopsApiGetResponseSchema = z.object({
 	/**
 	 * Unique identifier of the shop
 	 */
-	id: v.number(),
+	id: z.number(),
 
 	/**
 	 * URL to the shop's banner image
 	 */
-	banner: optionalNullish(v.string()),
+	banner: z.nullish(z.string()),
 
 	/**
 	 * Description of the shop
 	 */
-	description: v.string(),
+	description: z.string(),
 
 	/**
 	 * URL to the shop's logo
 	 */
-	logo: optionalNullish(v.string()),
+	logo: z.nullish(z.string()),
 
 	/**
 	 * Name of the shop
 	 */
-	name: v.string(),
+	name: z.string(),
 
 	/**
 	 * Text about total orders/purchases (e.g., "11 заказов", "930 заказов")
 	 */
-	qtyPurchasedInfo: optionalNullish(v.string()),
+	qtyPurchasedInfo: z.nullish(z.string()),
 
 	/**
 	 * Average rating of the shop
 	 */
-	rating: optionalNullish(v.number()),
+	rating: z.nullish(z.number()),
 
 	/**
 	 * Total number of reviews received
 	 */
-	totalReviews: optionalNullish(v.number()),
+	totalReviews: z.nullish(z.number()),
 
 	/**
 	 * Contact information for the shop
@@ -104,7 +103,7 @@ export const ShopsApiGetResponseSchema = v.object({
 	/**
 	 * Indicates if the shop represents a single brand
 	 */
-	isMonobrand: v.boolean(),
+	isMonobrand: z.boolean(),
 
 	/**
 	 * Tag associated with the shop
@@ -115,62 +114,62 @@ export const ShopsApiGetResponseSchema = v.object({
 /**
  * Schema for a shop item in a list.
  */
-export const ShopsApiShopItemSchema = v.object({
+export const ShopsApiShopItemSchema = z.object({
 	/**
 	 * Unique identifier of the shop
 	 */
-	id: v.number(),
+	id: z.number(),
 
 	/**
 	 * URL to the shop's icon
 	 */
-	icon: v.string(),
+	icon: z.string(),
 });
 
 /**
  * Response schema for the monobrand shop list.
  */
-export const ShopsApiGetMonobrandResponseSchema = v.object({
+export const ShopsApiGetMonobrandResponseSchema = z.object({
 	/**
 	 * List of monobrand shops
 	 */
-	items: v.array(ShopsApiShopItemSchema),
+	items: z.array(ShopsApiShopItemSchema),
 
 	/**
 	 * Current page number
 	 */
-	pageNumber: v.number(),
+	pageNumber: z.number(),
 
 	/**
 	 * Total number of pages available
 	 */
-	totalPages: v.number(),
+	totalPages: z.number(),
 
 	/**
 	 * Total number of shops found
 	 */
-	totalCount: v.number(),
+	totalCount: z.number(),
 
 	/**
 	 * Indicates if there is a previous page
 	 */
-	hasPreviousPage: v.boolean(),
+	hasPreviousPage: z.boolean(),
 
 	/**
 	 * Indicates if there is a next page
 	 */
-	hasNextPage: v.boolean(),
+	hasNextPage: z.boolean(),
 });
 
 /**
  * Type literal for shops stock availability type
  */
-export const ShopsStockAvailabilityTypeSchema = v.literal("stock");
+export const ShopsStockAvailabilityTypeSchema = z.literal("stock");
 
 /**
  * Schema for stock availability information.
  */
-export const ShopsApiStockAvailabilitySchema = v.object({
+export const ShopsApiStockAvailabilitySchema = z.object({
 	/**
 	 * Type of stock status (known value: "stock")
 	 */
@@ -179,150 +178,150 @@ export const ShopsApiStockAvailabilitySchema = v.object({
 	/**
 	 * SVG icon representing stock status
 	 */
-	svg: optionalNullish(v.string()),
+	svg: z.nullish(z.string()),
 
 	/**
 	 * Localized text describing stock status (e.g., "В наличии - осталось всего 16 штук")
 	 */
-	text: v.string(),
+	text: z.string(),
 
 	/**
 	 * Maximum quantity available
 	 */
-	maxQty: v.number(),
+	maxQty: z.number(),
 
 	/**
 	 * Localized reason text for quantity limit (e.g., "В наличии только 16 штук")
 	 */
-	maxQtyReason: v.string(),
+	maxQtyReason: z.string(),
 });
 
 /**
  * Schema for a product item in a shop.
  */
-export const ShopsApiProductItemSchema = v.object({
+export const ShopsApiProductItemSchema = z.object({
 	/**
 	 * Unique product identifier
 	 */
-	productId: v.number(),
+	productId: z.number(),
 
 	/**
 	 * Unique stock keeping unit identifier
 	 */
-	skuId: v.number(),
+	skuId: z.number(),
 
 	/**
 	 * URL for the full-size image
 	 */
-	imageUrl: v.string(),
+	imageUrl: z.string(),
 
 	/**
 	 * Full display name of the product
 	 */
-	name: v.string(),
+	name: z.string(),
 
 	/**
 	 * Brief description of the product
 	 */
-	shortDescription: v.string(),
+	shortDescription: z.string(),
 
 	/**
 	 * URL for the small preview image
 	 */
-	thumbnailUrl: v.string(),
+	thumbnailUrl: z.string(),
 
 	/**
 	 * Original price before discounts
 	 */
-	originalPrice: v.number(),
+	originalPrice: z.number(),
 
 	/**
 	 * Current selling price
 	 */
-	price: v.number(),
+	price: z.number(),
 
 	/**
 	 * Indicates if the item is in stock
 	 */
-	inStock: v.boolean(),
+	inStock: z.boolean(),
 
 	/**
 	 * Quantity available in stock
 	 */
-	qty: v.number(),
+	qty: z.number(),
 
 	/**
 	 * Stock availability details
 	 */
-	stockAvailability: optionalNullish(ShopsApiStockAvailabilitySchema),
+	stockAvailability: z.nullish(ShopsApiStockAvailabilitySchema),
 
 	/**
 	 * Indicates if the product is on promotion
 	 */
-	isPromo: v.boolean(),
+	isPromo: z.boolean(),
 
 	/**
 	 * Name of the promotion
 	 */
-	promoName: v.string(),
+	promoName: z.string(),
 
 	/**
 	 * Popularity text indicating purchase frequency (e.g., "Часто покупают")
 	 */
-	qtyPurchasedInfo: optionalNullish(v.string()),
+	qtyPurchasedInfo: z.nullish(z.string()),
 
 	/**
 	 * Average rating score
 	 */
-	rating: optionalNullish(v.number()),
+	rating: z.nullish(z.number()),
 
 	/**
 	 * Total number of ratings
 	 */
-	scoreQuantity: optionalNullish(v.number()),
+	scoreQuantity: z.nullish(z.number()),
 
 	/**
 	 * Moderation status code
 	 */
-	moderationStatus: v.number(),
+	moderationStatus: z.number(),
 });
 
 /**
  * Response schema for products from a specific shop.
  */
-export const ShopsApiGetProductsResponseSchema = v.object({
+export const ShopsApiGetProductsResponseSchema = z.object({
 	/**
 	 * List of applicable filters
 	 */
-	filters: v.array(FilterSchema),
+	filters: z.array(FilterSchema),
 
 	/**
 	 * List of product items
 	 */
-	items: v.array(ShopsApiProductItemSchema),
+	items: z.array(ShopsApiProductItemSchema),
 
 	/**
 	 * Current page number
 	 */
-	pageNumber: v.number(),
+	pageNumber: z.number(),
 
 	/**
 	 * Total number of pages available
 	 */
-	totalPages: v.number(),
+	totalPages: z.number(),
 
 	/**
 	 * Total number of products found
 	 */
-	totalCount: v.number(),
+	totalCount: z.number(),
 
 	/**
 	 * Indicates if there is a previous page
 	 */
-	hasPreviousPage: v.boolean(),
+	hasPreviousPage: z.boolean(),
 
 	/**
 	 * Indicates if there is a next page
 	 */
-	hasNextPage: v.boolean(),
+	hasNextPage: z.boolean(),
 });

@@ -1,28 +1,23 @@
 import { TeezError } from "./teez-error";
 
 /**
- * Abstract representation of a validation issue, independent of any validation library.
+ * Abstract representation of a validation issue.
  */
 export interface TeezValidationIssue {
 	/**
-	 * The error message.
+	 * Error code (e.g., "invalid_type", "too_small").
+	 */
+	code: string;
+
+	/**
+	 * The path to the invalid field (array format).
+	 */
+	path: (string | number | symbol)[];
+
+	/**
+	 * Human-readable error message.
 	 */
 	message: string;
-
-	/**
-	 * The path to the invalid field (flattened for simplicity).
-	 */
-	path?: (string | number)[];
-
-	/**
-	 * The expected value type (optional).
-	 */
-	expected?: string;
-
-	/**
-	 * The received value (optional).
-	 */
-	received?: string;
 }
 
 /**

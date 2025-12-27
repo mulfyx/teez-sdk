@@ -1,42 +1,41 @@
-import { optionalNullish } from "../../common/helpers";
-import * as v from "valibot";
+import * as z from "zod/mini";
 
 /**
  * Schema for a promotion item.
  */
-export const PromoApiItemSchema = v.object({
+export const PromoApiItemSchema = z.object({
 	/**
 	 * Unique identifier of the promotion
 	 */
-	id: v.number(),
+	id: z.number(),
 
 	/**
 	 * Localized name of the promotion
 	 */
-	name: v.string(),
+	name: z.string(),
 
 	/**
 	 * Localized detailed description of the promotion
 	 */
-	description: optionalNullish(v.string()),
+	description: z.nullish(z.string()),
 
 	/**
 	 * URL to the SVG icon for the promotion
 	 */
-	svgUrl: optionalNullish(v.string()),
+	svgUrl: z.nullish(z.string()),
 
 	/**
 	 * Start date of the promotion
 	 */
-	startDate: v.string(),
+	startDate: z.string(),
 
 	/**
 	 * End date of the promotion
 	 */
-	endDate: v.string(),
+	endDate: z.string(),
 });
 
 /**
  * Response schema for the list of promotions.
  */
-export const PromoApiListResponseSchema = v.array(PromoApiItemSchema);
+export const PromoApiListResponseSchema = z.array(PromoApiItemSchema);
