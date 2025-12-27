@@ -53,6 +53,18 @@ export default defineConfig([
 			"@typescript-eslint/explicit-member-accessibility": "error",
 			"@typescript-eslint/no-dynamic-delete": "off",
 			"@typescript-eslint/return-await": ["error", "always"],
+			"@typescript-eslint/strict-boolean-expressions": [
+				"error",
+				{
+					allowAny: false,
+					allowNullableBoolean: false,
+					allowNullableNumber: false,
+					allowNullableObject: false,
+					allowNullableString: false,
+					allowNumber: false,
+					allowString: false,
+				},
+			],
 			curly: "error",
 			"no-empty": [
 				"error",
