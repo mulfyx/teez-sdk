@@ -37,8 +37,8 @@ export class SkuApi {
 	 *   skuId: 123
 	 * });
 	 */
-	public async get(params: SkuApiGetParams): Promise<SkuApiGetResponse> {
-		return await this.http.get({
+	public get(params: SkuApiGetParams): Promise<SkuApiGetResponse> {
+		return this.http.get({
 			path: `/api/v2/sku/${params.skuId}`,
 			params,
 			schema: SkuApiGetResponseSchema,
@@ -53,10 +53,10 @@ export class SkuApi {
 	 *   skuId: 123
 	 * });
 	 */
-	public async getSimilar(
+	public getSimilar(
 		params: SkuApiGetSimilarParams,
 	): Promise<SkuApiGetSimilarResponse> {
-		return await this.http.get({
+		return this.http.get({
 			path: "/api/v2/sku/similar-skus",
 			params,
 			schema: SkuApiGetSimilarResponseSchema,
@@ -71,10 +71,10 @@ export class SkuApi {
 	 *   skuId: 123
 	 * });
 	 */
-	public async getCollections(
+	public getCollections(
 		params: SkuApiGetCollectionsParams,
 	): Promise<SkuApiGetCollectionsResponse> {
-		return await this.http.get({
+		return this.http.get({
 			path: `/sku/${params.skuId}/collections`,
 			params,
 			schema: SkuApiGetCollectionsResponseSchema,
@@ -89,10 +89,10 @@ export class SkuApi {
 	 *   skuId: 123
 	 * });
 	 */
-	public async getReviewAvailable(
+	public getReviewAvailable(
 		params: SkuApiGetReviewAvailableParams,
 	): Promise<SkuApiGetReviewAvailableResponse> {
-		return await this.http.get({
+		return this.http.get({
 			path: `/sku/${params.skuId}/review-available`,
 			params,
 			schema: SkuApiGetReviewAvailableResponseSchema,

@@ -34,8 +34,8 @@ export class ShopsApi {
 	 *   shopId: 123
 	 * });
 	 */
-	public async get(params: ShopsApiGetParams): Promise<ShopsApiGetResponse> {
-		return await this.http.get({
+	public get(params: ShopsApiGetParams): Promise<ShopsApiGetResponse> {
+		return this.http.get({
 			path: `/api/v1/shops/${params.shopId}`,
 			params,
 			schema: ShopsApiGetResponseSchema,
@@ -48,10 +48,10 @@ export class ShopsApi {
 	 * @example
 	 * const monobrand = await client.shops.getMonobrand();
 	 */
-	public async getMonobrand(
+	public getMonobrand(
 		params: ShopsApiGetMonobrandParams = {},
 	): Promise<ShopsApiGetMonobrandResponse> {
-		return await this.http.get({
+		return this.http.get({
 			path: "/api/v1/shops/monobrand",
 			params,
 			schema: ShopsApiGetMonobrandResponseSchema,
@@ -67,10 +67,10 @@ export class ShopsApi {
 	 *   pageSize: 10
 	 * });
 	 */
-	public async getProducts(
+	public getProducts(
 		params: ShopsApiGetProductsParams,
 	): Promise<ShopsApiGetProductsResponse> {
-		return await this.http.get({
+		return this.http.get({
 			path: `/api/v2/shops/${params.shopId}/products`,
 			params,
 			schema: ShopsApiGetProductsResponseSchema,

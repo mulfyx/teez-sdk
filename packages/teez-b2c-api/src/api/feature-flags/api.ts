@@ -20,10 +20,10 @@ export class FeatureFlagsApi {
 	 * @example
 	 * const flags = await client.featureFlags.list();
 	 */
-	public async list(
+	public list(
 		params: FeatureFlagsApiListParams = {},
 	): Promise<FeatureFlagsApiListResponse> {
-		return await this.http.get({
+		return this.http.get({
 			path: "/api/v1/feature-flags",
 			params,
 			schema: FeatureFlagsApiListResponseSchema,

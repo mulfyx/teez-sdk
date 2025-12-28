@@ -20,10 +20,8 @@ export class PromoApi {
 	 * @example
 	 * const promos = await client.promo.list();
 	 */
-	public async list(
-		params: PromoApiListParams = {},
-	): Promise<PromoApiListResponse> {
-		return await this.http.get({
+	public list(params: PromoApiListParams = {}): Promise<PromoApiListResponse> {
+		return this.http.get({
 			path: "/api/promo",
 			params,
 			schema: PromoApiListResponseSchema,

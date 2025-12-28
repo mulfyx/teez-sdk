@@ -35,10 +35,10 @@ export class CollectionsApi {
 	 *   pageSize: 10
 	 * });
 	 */
-	public async getSkus(
+	public getSkus(
 		params: CollectionsApiGetSkusParams,
 	): Promise<CollectionsApiGetSkusResponse> {
-		return await this.http.get({
+		return this.http.get({
 			path: "/api/v2/collections/skus",
 			params,
 			schema: CollectionsApiGetSkusResponseSchema,
@@ -51,10 +51,10 @@ export class CollectionsApi {
 	 * @example
 	 * const collections = await client.collections.list();
 	 */
-	public async list(
+	public list(
 		params: CollectionsApiListParams = {},
 	): Promise<CollectionsApiListResponse> {
-		return await this.http.get({
+		return this.http.get({
 			path: "/collections",
 			params,
 			schema: CollectionsApiListResponseSchema,
@@ -69,10 +69,10 @@ export class CollectionsApi {
 	 *   collectionId: 123
 	 * });
 	 */
-	public async get(
+	public get(
 		params: CollectionsApiGetParams,
 	): Promise<CollectionsApiGetResponse> {
-		return await this.http.get({
+		return this.http.get({
 			path: `/collections/${params.collectionId}`,
 			params,
 			schema: CollectionsApiGetResponseSchema,

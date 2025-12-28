@@ -32,10 +32,10 @@ export class ProductsApi {
 	 * @example
 	 * const sortOptions = await client.products.getSortOptions();
 	 */
-	public async getSortOptions(
+	public getSortOptions(
 		params: ProductsApiGetSortOptionsParams = {},
 	): Promise<ProductsApiGetSortOptionsResponse> {
-		return await this.http.get({
+		return this.http.get({
 			path: "/api/product/sort-options",
 			params,
 			schema: ProductsApiGetSortOptionsResponseSchema,
@@ -51,10 +51,10 @@ export class ProductsApi {
 	 *   pageNumber: 1
 	 * });
 	 */
-	public async list(
+	public list(
 		params: ProductsApiListParams = {},
 	): Promise<ProductsApiListResponse> {
-		return await this.http.get({
+		return this.http.get({
 			path: "/api/v2/product",
 			params,
 			schema: ProductsApiListResponseSchema,
@@ -69,10 +69,10 @@ export class ProductsApi {
 	 *   productId: 12345
 	 * });
 	 */
-	public async getReviews(
+	public getReviews(
 		params: ProductsApiGetReviewsParams,
 	): Promise<ProductsApiGetReviewsResponse> {
-		return await this.http.get({
+		return this.http.get({
 			path: `/api/v1/product/${params.productId}/review`,
 			params,
 			schema: ProductsApiGetReviewsResponseSchema,

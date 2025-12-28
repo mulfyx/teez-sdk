@@ -32,10 +32,10 @@ export class CategoriesApi {
 	 * @example
 	 * const categories = await client.categories.list();
 	 */
-	public async list(
+	public list(
 		params: CategoriesApiListParams = {},
 	): Promise<CategoriesApiListResponse> {
-		return await this.http.get({
+		return this.http.get({
 			path: "/categories",
 			params,
 			schema: CategoriesApiListResponseSchema,
@@ -50,10 +50,10 @@ export class CategoriesApi {
 	 *   categoryId: 1234
 	 * });
 	 */
-	public async get(
+	public get(
 		params: CategoriesApiGetParams,
 	): Promise<CategoriesApiGetResponse> {
-		return await this.http.get({
+		return this.http.get({
 			path: `/categories/${params.categoryId}`,
 			params,
 			schema: CategoriesApiGetResponseSchema,
@@ -68,10 +68,10 @@ export class CategoriesApi {
 	 *   categoryId: [123, 456]
 	 * });
 	 */
-	public async getParents(
+	public getParents(
 		params: CategoriesApiGetParentsParams,
 	): Promise<CategoriesApiGetParentsResponse> {
-		return await this.http.get({
+		return this.http.get({
 			path: "/api/v1/categories/parents",
 			params,
 			schema: CategoriesApiGetParentsResponseSchema,

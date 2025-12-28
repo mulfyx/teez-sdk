@@ -20,10 +20,10 @@ export class BannersApi {
 	 * @example
 	 * const banners = await client.banners.list();
 	 */
-	public async list(
+	public list(
 		params: BannersApiListParams = {},
 	): Promise<BannersApiListResponse> {
-		return await this.http.get({
+		return this.http.get({
 			path: "/api/v3/banners",
 			params,
 			schema: BannersApiListResponseSchema,
