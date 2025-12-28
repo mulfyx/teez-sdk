@@ -5,6 +5,7 @@ import * as z from "zod/mini";
  * Type union for product sort keys
  */
 export const ProductSortKeySchema = z.union([
+	z.literal("byRelevance"),
 	z.literal("popularity"),
 	z.literal("highestRated"),
 	z.literal("new"),

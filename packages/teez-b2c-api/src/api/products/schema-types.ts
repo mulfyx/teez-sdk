@@ -8,6 +8,7 @@
  * Type union for product sort keys
  */
 export type ProductSortKey =
+	| "byRelevance"
 	| "popularity"
 	| "highestRated"
 	| "new"
