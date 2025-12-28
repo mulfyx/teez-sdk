@@ -15,6 +15,12 @@ import { HttpClient } from "./http/client";
 
 /**
  * Main client for interacting with the Teez B2C API.
+ *
+ * @example
+ * const client = new TeezClient({
+ *   language: "ru",
+ *   timeout: 10000
+ * });
  */
 export class TeezClient {
 	/**
@@ -67,6 +73,11 @@ export class TeezClient {
 	 */
 	public readonly sku: SkuApi;
 
+	/**
+	 * Initializes a new instance of the TeezClient.
+	 *
+	 * @param config Optional client configuration.
+	 */
 	public constructor(config?: TeezClientConfig) {
 		this.config = resolveConfig(config);
 

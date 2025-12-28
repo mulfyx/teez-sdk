@@ -25,6 +25,11 @@ export class HttpClient {
 	 */
 	private readonly timeout: number;
 
+	/**
+	 * Initializes a new instance of the HttpClient.
+	 *
+	 * @param config Resolved client configuration.
+	 */
 	public constructor(config: ResolvedTeezClientConfig) {
 		this.baseUrl = config.baseUrl;
 
@@ -35,6 +40,8 @@ export class HttpClient {
 
 	/**
 	 * Performs a low-level HTTP request.
+	 *
+	 * @param options Request options.
 	 */
 	public async request(options: HttpRequestOptions): Promise<unknown> {
 		const { url, headers, ...fetchOptions } = options;

@@ -19,10 +19,18 @@ import {
  * API for retrieving product category information.
  */
 export class CategoriesApi {
+	/**
+	 * Initializes a new instance of the CategoriesApi.
+	 *
+	 * @param http HTTP client instance.
+	 */
 	public constructor(private http: HttpClient) {}
 
 	/**
 	 * Retrieves a list of all categories.
+	 *
+	 * @example
+	 * const categories = await client.categories.list();
 	 */
 	public async list(
 		params: CategoriesApiListParams = {},
@@ -36,6 +44,11 @@ export class CategoriesApi {
 
 	/**
 	 * Retrieves detailed information about a specific category by its ID.
+	 *
+	 * @example
+	 * const category = await client.categories.get({
+	 *   categoryId: 1234
+	 * });
 	 */
 	public async get(
 		params: CategoriesApiGetParams,
@@ -49,6 +62,11 @@ export class CategoriesApi {
 
 	/**
 	 * Retrieves parent categories for specific category IDs.
+	 *
+	 * @example
+	 * const parents = await client.categories.getParents({
+	 *   categoryId: [123, 456]
+	 * });
 	 */
 	public async getParents(
 		params: CategoriesApiGetParentsParams,

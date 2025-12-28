@@ -19,10 +19,20 @@ import {
  * API for interacting with shop-related endpoints.
  */
 export class ShopsApi {
+	/**
+	 * Initializes a new instance of the ShopsApi.
+	 *
+	 * @param http HTTP client instance.
+	 */
 	public constructor(private http: HttpClient) {}
 
 	/**
 	 * Retrieves details of a specific shop.
+	 *
+	 * @example
+	 * const shop = await client.shops.get({
+	 *   shopId: 123
+	 * });
 	 */
 	public async get(params: ShopsApiGetParams): Promise<ShopsApiGetResponse> {
 		return await this.http.get({
@@ -34,6 +44,9 @@ export class ShopsApi {
 
 	/**
 	 * Retrieves monobrand shop details.
+	 *
+	 * @example
+	 * const monobrand = await client.shops.getMonobrand();
 	 */
 	public async getMonobrand(
 		params: ShopsApiGetMonobrandParams = {},
@@ -47,6 +60,12 @@ export class ShopsApi {
 
 	/**
 	 * Retrieves products for a specific shop.
+	 *
+	 * @example
+	 * const shopProducts = await client.shops.getProducts({
+	 *   shopId: 123,
+	 *   pageSize: 10
+	 * });
 	 */
 	public async getProducts(
 		params: ShopsApiGetProductsParams,

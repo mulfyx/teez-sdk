@@ -19,10 +19,18 @@ import {
  * API for retrieving product listings, details, and reviews.
  */
 export class ProductsApi {
+	/**
+	 * Initializes a new instance of the ProductsApi.
+	 *
+	 * @param http HTTP client instance.
+	 */
 	public constructor(private http: HttpClient) {}
 
 	/**
 	 * Retrieves available sorting options for product lists.
+	 *
+	 * @example
+	 * const sortOptions = await client.products.getSortOptions();
 	 */
 	public async getSortOptions(
 		params: ProductsApiGetSortOptionsParams = {},
@@ -36,6 +44,12 @@ export class ProductsApi {
 
 	/**
 	 * Retrieves a list of products with optional filtering and pagination.
+	 *
+	 * @example
+	 * const products = await client.products.list({
+	 *   pageSize: 20,
+	 *   pageNumber: 1
+	 * });
 	 */
 	public async list(
 		params: ProductsApiListParams = {},
@@ -49,6 +63,11 @@ export class ProductsApi {
 
 	/**
 	 * Retrieves reviews for a specific product.
+	 *
+	 * @example
+	 * const reviews = await client.products.getReviews({
+	 *   productId: 12345
+	 * });
 	 */
 	public async getReviews(
 		params: ProductsApiGetReviewsParams,

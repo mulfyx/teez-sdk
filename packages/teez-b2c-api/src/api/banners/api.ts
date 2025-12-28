@@ -7,10 +7,18 @@ import { type BannersApiListParams } from "./types";
  * API for retrieving promotional and informational banners.
  */
 export class BannersApi {
+	/**
+	 * Initializes a new instance of the BannersApi.
+	 *
+	 * @param http HTTP client instance.
+	 */
 	public constructor(private http: HttpClient) {}
 
 	/**
 	 * Retrieves a list of active banners.
+	 *
+	 * @example
+	 * const banners = await client.banners.list();
 	 */
 	public async list(
 		params: BannersApiListParams = {},

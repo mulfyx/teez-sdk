@@ -22,10 +22,20 @@ import {
  * API for interacting with SKU-related endpoints.
  */
 export class SkuApi {
+	/**
+	 * Initializes a new instance of the SkuApi.
+	 *
+	 * @param http HTTP client instance.
+	 */
 	public constructor(private http: HttpClient) {}
 
 	/**
 	 * Retrieves details of a specific SKU.
+	 *
+	 * @example
+	 * const sku = await client.sku.get({
+	 *   skuId: 123
+	 * });
 	 */
 	public async get(params: SkuApiGetParams): Promise<SkuApiGetResponse> {
 		return await this.http.get({
@@ -37,6 +47,11 @@ export class SkuApi {
 
 	/**
 	 * Retrieves similar SKUs.
+	 *
+	 * @example
+	 * const similar = await client.sku.getSimilar({
+	 *   skuId: 123
+	 * });
 	 */
 	public async getSimilar(
 		params: SkuApiGetSimilarParams,
@@ -50,6 +65,11 @@ export class SkuApi {
 
 	/**
 	 * Retrieves collections associated with a SKU.
+	 *
+	 * @example
+	 * const collections = await client.sku.getCollections({
+	 *   skuId: 123
+	 * });
 	 */
 	public async getCollections(
 		params: SkuApiGetCollectionsParams,
@@ -63,6 +83,11 @@ export class SkuApi {
 
 	/**
 	 * Checks if a review is available for a SKU.
+	 *
+	 * @example
+	 * const isAvailable = await client.sku.getReviewAvailable({
+	 *   skuId: 123
+	 * });
 	 */
 	public async getReviewAvailable(
 		params: SkuApiGetReviewAvailableParams,
