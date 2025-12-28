@@ -1,4 +1,5 @@
-import { type BaseParams, type SortOption } from "../../common/types";
+import { type BaseParams } from "../../common/types";
+import { type ProductSortKey } from "../products/schema-types";
 
 /**
  * Parameters for fetching SKUs from a collection.
@@ -22,7 +23,7 @@ export interface CollectionsApiGetSkusParams extends BaseParams {
 	/**
 	 * Sorting option for the results
 	 */
-	sortBy?: SortOption;
+	sortBy?: ProductSortKey;
 }
 
 /**

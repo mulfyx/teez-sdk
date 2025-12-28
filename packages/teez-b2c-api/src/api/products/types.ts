@@ -1,4 +1,5 @@
-import { type BaseParams, type SortOption } from "../../common/types";
+import { type BaseParams } from "../../common/types";
+import { type ProductSortKey } from "./schema-types";
 
 /**
  * Parameters for fetching product sort options.
@@ -62,7 +63,7 @@ export interface ProductsApiListParams extends BaseParams {
 	/**
 	 * Criteria to sort products by
 	 */
-	sortBy?: SortOption;
+	sortBy?: ProductSortKey;
 
 	/**
 	 * Filter products by brand ID

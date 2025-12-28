@@ -19,41 +19,6 @@ export const LANGUAGES = {
 } as const;
 
 /**
- * Standard sort options for product and collection searches
- */
-export const SORT_OPTIONS = {
-	/**
-	 * Sort by relevance (usually for search results)
-	 */
-	BY_RELEVANCE: "byRelevance",
-
-	/**
-	 * Sort by popularity descending
-	 */
-	POPULARITY: "popularity",
-
-	/**
-	 * Sort by user rating descending
-	 */
-	HIGHEST_RATED: "highestRated",
-
-	/**
-	 * Sort by creation date descending
-	 */
-	NEW: "new",
-
-	/**
-	 * Sort by price ascending
-	 */
-	PRICE: "price",
-
-	/**
-	 * Sort by price descending
-	 */
-	PRICE_DESC: "priceDesc",
-} as const;
-
-/**
  * Default application version code.
  */
 export const DEFAULT_APP_VERSION = "193";

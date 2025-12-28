@@ -1,4 +1,5 @@
-import { type BaseParams, type SortOption } from "../../common/types";
+import { type BaseParams } from "../../common/types";
+import { type ProductSortKey } from "../products/schema-types";
 
 /**
  * Parameters for fetching a specific shop.
@@ -52,7 +53,7 @@ export interface ShopsApiGetProductsParams extends BaseParams {
 	/**
 	 * Sorting option for the results
 	 */
-	sortBy?: SortOption;
+	sortBy?: ProductSortKey;
 
 	/**
 	 * Filter by category ID
