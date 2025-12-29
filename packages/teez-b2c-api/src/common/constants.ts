@@ -21,4 +21,4 @@ export const LANGUAGES = {
 /**
  * Default application version code.
  */
-export const DEFAULT_APP_VERSION = "193";
+export const DEFAULT_APP_VERSION = "200";
