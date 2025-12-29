@@ -3,7 +3,13 @@ import { TeezApiError } from "../errors/teez-api-error";
 import { TeezNetworkError } from "../errors/teez-network-error";
 import { TeezTimeoutError } from "../errors/teez-timeout-error";
 import { buildUrl, parseResponse } from "./helpers";
-import { type HttpGetOptions, type HttpRequestOptions } from "./types";
+import {
+	type HttpDeleteOptions,
+	type HttpGetOptions,
+	type HttpPatchOptions,
+	type HttpPostOptions,
+	type HttpRequestOptions,
+} from "./types";
 import type * as z from "zod/mini";
 
 /**
@@ -11,9 +17,9 @@ import type * as z from "zod/mini";
  */
 export class HttpClient {
 	/**
-	 * Base URL for all requests.
+	 * Client configuration.
 	 */
-	private readonly baseUrl: string;
+	private readonly config: ResolvedTeezClientConfig;
 
 	/**
 	 * Headers to include in all requests.
@@ -21,21 +27,14 @@ export class HttpClient {
 	private readonly headers: Record<string, string>;
 
 	/**
-	 * Request timeout in milliseconds.
-	 */
-	private readonly timeout: number;
-
-	/**
 	 * Initializes a new instance of the HttpClient.
 	 *
 	 * @param config Resolved client configuration.
 	 */
 	public constructor(config: ResolvedTeezClientConfig) {
-		this.baseUrl = config.baseUrl;
+		this.config = config;
 
 		this.headers = buildHeaders(config);
-
-		this.timeout = config.timeout;
 	}
 
 	/**
@@ -50,7 +49,7 @@ export class HttpClient {
 
 		const timeoutId = setTimeout(() => {
 			controller.abort();
-		}, this.timeout);
+		}, this.config.timeout);
 
 		try {
 			const response = await fetch(url, {
@@ -82,6 +81,10 @@ export class HttpClient {
 				);
 			}
 
+			if (response.status === 204) {
+				return undefined;
+			}
+
 			return await response.json();
 		} catch (error) {
 			if (error instanceof TeezApiError) {
@@ -90,10 +93,10 @@ export class HttpClient {
 
 			if (error instanceof DOMException && error.name === "AbortError") {
 				throw new TeezTimeoutError(
-					`Request timed out after ${this.timeout}ms`,
+					`Request timed out after ${this.config.timeout}ms`,
 					{
 						url,
-						timeout: this.timeout,
+						timeout: this.config.timeout,
 						cause: error,
 					},
 				);
@@ -116,7 +119,7 @@ export class HttpClient {
 	): Promise<z.output<T>> {
 		const { path, params, schema, ...rest } = options;
 
-		const url = buildUrl(path, this.baseUrl, params);
+		const url = buildUrl(path, this.config.baseUrl, params);
 
 		const data = await this.request({
 			url,
@@ -125,5 +128,58 @@ export class HttpClient {
 		});
 
 		return parseResponse(schema, data);
+	}
+
+	/**
+	 * Performs a POST request.
+	 */
+	public post(options: HttpPostOptions): Promise<unknown> {
+		const { path, params, body, ...rest } = options;
+
+		const url = buildUrl(path, this.config.baseUrl, params);
+
+		return this.request({
+			url,
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: body != undefined ? JSON.stringify(body) : undefined,
+			...rest,
+		});
+	}
+
+	/**
+	 * Performs a PATCH request.
+	 */
+	public patch(options: HttpPatchOptions): Promise<unknown> {
+		const { path, params, body, ...rest } = options;
+
+		const url = buildUrl(path, this.config.baseUrl, params);
+
+		return this.request({
+			url,
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: body != undefined ? JSON.stringify(body) : undefined,
+			...rest,
+		});
+	}
+
+	/**
+	 * Performs a DELETE request.
+	 */
+	public delete(options: HttpDeleteOptions): Promise<unknown> {
+		const { path, params, ...rest } = options;
+
+		const url = buildUrl(path, this.config.baseUrl, params);
+
+		return this.request({
+			url,
+			method: "DELETE",
+			...rest,
+		});
 	}
 }
