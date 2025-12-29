@@ -62,7 +62,7 @@ interface TeezClientConfig {
 	appVersion?: string;
 
 	/** Language for API responses. Default: "ru" */
-	language?: "ru" | "kk" | "uz";
+	language?: "ru" | "kk";
 
 	/** Request timeout in milliseconds. Default: 30000 */
 	timeout?: number;
