@@ -95,10 +95,6 @@ export interface ProductsApiGetReviewsResponse {
  */
 export interface ProductsApiBadge {
 	/**
-	 * Background color code
-	 */
-	backgroundColor: number;
-	/**
 	 * Text label of the badge
 	 */
 	label: string;
@@ -106,6 +102,10 @@ export interface ProductsApiBadge {
 	 * Text color code
 	 */
 	textColor: number;
+	/**
+	 * Background color code
+	 */
+	backgroundColor?: (number | null) | undefined;
 }
 
 /**
@@ -190,7 +190,7 @@ export interface ProductsApiProductItem {
 	/**
 	 * Name of the promotion
 	 */
-	promoName: string;
+	promoName?: (string | null) | undefined;
 	/**
 	 * List of applicable promocodes
 	 */
@@ -210,7 +210,7 @@ export interface ProductsApiProductItem {
 	/**
 	 * Badge information for the product
 	 */
-	badge: ProductsApiBadge;
+	badge?: (ProductsApiBadge | null) | undefined;
 	/**
 	 * Moderation status code
 	 */

@@ -105,11 +105,6 @@ export const ProductsApiGetReviewsResponseSchema = z.object({
  */
 export const ProductsApiBadgeSchema = z.object({
 	/**
-	 * Background color code
-	 */
-	backgroundColor: z.number(),
-
-	/**
 	 * Text label of the badge
 	 */
 	label: z.string(),
@@ -118,6 +113,11 @@ export const ProductsApiBadgeSchema = z.object({
 	 * Text color code
 	 */
 	textColor: z.number(),
+
+	/**
+	 * Background color code
+	 */
+	backgroundColor: z.nullish(z.number()),
 });
 
 /**
@@ -217,7 +217,7 @@ export const ProductsApiProductItemSchema = z.object({
 	/**
 	 * Name of the promotion
 	 */
-	promoName: z.string(),
+	promoName: z.nullish(z.string()),
 
 	/**
 	 * List of applicable promocodes
@@ -242,7 +242,7 @@ export const ProductsApiProductItemSchema = z.object({
 	/**
 	 * Badge information for the product
 	 */
-	badge: ProductsApiBadgeSchema,
+	badge: z.nullish(ProductsApiBadgeSchema),
 
 	/**
 	 * Moderation status code
