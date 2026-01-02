@@ -10,6 +10,11 @@ export * from "./errors/teez-network-error";
 export * from "./errors/teez-timeout-error";
 export * from "./errors/teez-validation-error";
 
+export * from "./api/auth/api";
+export * from "./api/auth/schemas";
+export * from "./api/auth/schema-types";
+export * from "./api/auth/types";
+
 export * from "./api/banners/api";
 export * from "./api/banners/schemas";
 export * from "./api/banners/schema-types";

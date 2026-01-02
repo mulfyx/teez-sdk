@@ -1,3 +1,4 @@
+import { AuthApi } from "./api/auth/api";
 import { BannersApi } from "./api/banners/api";
 import { CategoriesApi } from "./api/categories/api";
 import { CollectionsApi } from "./api/collections/api";
@@ -32,6 +33,11 @@ export class TeezClient {
 	 * HTTP client for making requests.
 	 */
 	private readonly http: HttpClient;
+
+	/**
+	 * API for authentication operations (login, verify OTP, check token).
+	 */
+	public readonly auth: AuthApi;
 
 	/**
 	 * API for retrieving banners.
@@ -83,6 +89,7 @@ export class TeezClient {
 
 		this.http = new HttpClient(this.config);
 
+		this.auth = new AuthApi(this.http);
 		this.banners = new BannersApi(this.http);
 		this.categories = new CategoriesApi(this.http);
 		this.collections = new CollectionsApi(this.http);

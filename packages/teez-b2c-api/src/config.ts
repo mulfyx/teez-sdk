@@ -12,6 +12,11 @@ export interface TeezClientConfig {
 	baseUrl?: string;
 
 	/**
+	 * JWT bearer token for authenticated requests.
+	 */
+	token?: string;
+
+	/**
 	 * Application version string.
 	 * @default "193"
 	 */
@@ -43,6 +48,11 @@ export interface ResolvedTeezClientConfig {
 	 * Base URL for the API.
 	 */
 	readonly baseUrl: string;
+
+	/**
+	 * JWT bearer token for authenticated requests.
+	 */
+	readonly token?: string;
 
 	/**
 	 * Application version string.
@@ -84,6 +94,7 @@ export function resolveConfig(
 ): ResolvedTeezClientConfig {
 	return {
 		baseUrl: config?.baseUrl ?? DEFAULT_CONFIG.baseUrl,
+		token: config?.token,
 		appVersion: config?.appVersion ?? DEFAULT_CONFIG.appVersion,
 		language: config?.language ?? DEFAULT_CONFIG.language,
 		timeout: config?.timeout ?? DEFAULT_CONFIG.timeout,
@@ -107,10 +118,16 @@ export function buildUserAgent(appVersion: string): string {
 export function buildHeaders(
 	config: ResolvedTeezClientConfig,
 ): Record<string, string> {
-	return {
+	const headers: Record<string, string> = {
 		"accept-language": config.language,
 		"user-agent": buildUserAgent(config.appVersion),
 		"x-app-version": config.appVersion,
 		...config.headers,
 	};
+
+	if (config.token !== undefined && config.token !== null) {
+		headers["authorization"] = `Bearer ${config.token}`;
+	}
+
+	return headers;
 }
