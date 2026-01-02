@@ -30,6 +30,11 @@ export * from "./api/collections/schemas";
 export * from "./api/collections/schema-types";
 export * from "./api/collections/types";
 
+export * from "./api/feature-flags/api";
+export * from "./api/feature-flags/schemas";
+export * from "./api/feature-flags/schema-types";
+export * from "./api/feature-flags/types";
+
 export * from "./api/products/api";
 export * from "./api/products/schemas";
 export * from "./api/products/schema-types";
@@ -50,7 +55,7 @@ export * from "./api/sku/schemas";
 export * from "./api/sku/schema-types";
 export * from "./api/sku/types";
 
-export * from "./api/feature-flags/api";
-export * from "./api/feature-flags/schemas";
-export * from "./api/feature-flags/schema-types";
-export * from "./api/feature-flags/types";
+export * from "./api/users/api";
+export * from "./api/users/schemas";
+export * from "./api/users/schema-types";
+export * from "./api/users/types";

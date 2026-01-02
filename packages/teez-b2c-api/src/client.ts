@@ -7,6 +7,7 @@ import { ProductsApi } from "./api/products/api";
 import { PromoApi } from "./api/promo/api";
 import { ShopsApi } from "./api/shops/api";
 import { SkuApi } from "./api/sku/api";
+import { UsersApi } from "./api/users/api";
 import {
 	resolveConfig,
 	type ResolvedTeezClientConfig,
@@ -35,7 +36,7 @@ export class TeezClient {
 	private readonly http: HttpClient;
 
 	/**
-	 * API for authentication operations (login, verify OTP, check token).
+	 * API for authentication operations.
 	 */
 	public readonly auth: AuthApi;
 
@@ -80,6 +81,11 @@ export class TeezClient {
 	public readonly sku: SkuApi;
 
 	/**
+	 * API for user management operations.
+	 */
+	public readonly users: UsersApi;
+
+	/**
 	 * Initializes a new instance of the TeezClient.
 	 *
 	 * @param config Optional client configuration.
@@ -98,6 +104,7 @@ export class TeezClient {
 		this.promo = new PromoApi(this.http);
 		this.shops = new ShopsApi(this.http);
 		this.sku = new SkuApi(this.http);
+		this.users = new UsersApi(this.http);
 	}
 
 	/**

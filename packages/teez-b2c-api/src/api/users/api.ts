@@ -1,0 +1,71 @@
+import { type HttpClient } from "../../http/client";
+import { parseResponse } from "../../http/helpers";
+import {
+	type UsersApiRegisterDeviceResponse,
+	type UsersApiUpdateLanguageResponse,
+} from "./schema-types";
+import {
+	UsersApiRegisterDeviceResponseSchema,
+	UsersApiUpdateLanguageResponseSchema,
+} from "./schemas";
+import {
+	type UsersApiRegisterDeviceParams,
+	type UsersApiUpdateLanguageParams,
+} from "./types";
+
+/**
+ * API for user management operations.
+ */
+export class UsersApi {
+	/**
+	 * Initializes a new instance of the UsersApi.
+	 *
+	 * @param http HTTP client instance.
+	 */
+	public constructor(private http: HttpClient) {}
+
+	/**
+	 * Updates the user's preferred language.
+	 *
+	 * @example
+	 * await client.users.updateLanguage({
+	 *   language: "ru"
+	 * });
+	 */
+	public async updateLanguage(
+		params: UsersApiUpdateLanguageParams,
+	): Promise<UsersApiUpdateLanguageResponse> {
+		const response = await this.http.patch({
+			path: "/api/v1/users/me/language",
+			body: params,
+		});
+
+		return parseResponse(UsersApiUpdateLanguageResponseSchema, response);
+	}
+
+	/**
+	 * Registers device identity for analytics tracking.
+	 *
+	 * @example
+	 * await client.users.registerDevice({
+	 *   deviceIdentity: {
+	 *     sdkInformation: [
+	 *       {
+	 *         type: "Appsflyer",
+	 *         deviceId: "1765694307025-6267413661002574019"
+	 *       }
+	 *     ]
+	 *   }
+	 * });
+	 */
+	public async registerDevice(
+		params: UsersApiRegisterDeviceParams,
+	): Promise<UsersApiRegisterDeviceResponse> {
+		const response = await this.http.post({
+			path: "/api/v1/device-identities",
+			body: params,
+		});
+
+		return parseResponse(UsersApiRegisterDeviceResponseSchema, response);
+	}
+}
