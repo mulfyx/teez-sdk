@@ -1,7 +1,7 @@
 import * as z from "zod/mini";
 
 /**
- * Response schema for login.
+ * Response schema for initiating phone login.
  */
 export const AuthApiLoginResponseSchema = z.void();
 
@@ -15,19 +15,24 @@ export const AuthApiVerifyResponseSchema = z.object({
 	userId: z.string(),
 
 	/**
-	 * JWT access token for authenticated requests
+	 * User's phone number in E.164 format
+	 */
+	phone: z.string(),
+
+	/**
+	 * JWT access token for API authentication (HS512 algorithm, ~24 hour expiration)
 	 */
 	accessToken: z.string(),
 
 	/**
-	 * Refresh token for obtaining new access tokens
+	 * Base64-encoded refresh token for obtaining new access tokens
 	 */
 	refreshToken: z.string(),
 
 	/**
-	 * User's phone number
+	 * User's preferred payment method ID
 	 */
-	phone: z.string(),
+	paymentId: z.nullish(z.number()),
 
 	/**
 	 * User's default pickup point
@@ -40,14 +45,9 @@ export const AuthApiVerifyResponseSchema = z.object({
 	address: z.nullish(z.unknown()),
 
 	/**
-	 * User's default recipient information
+	 * User's default order recipient information
 	 */
 	recipient: z.nullish(z.unknown()),
-
-	/**
-	 * User's default payment method ID
-	 */
-	paymentId: z.nullish(z.number()),
 });
 
 /**
@@ -60,7 +60,7 @@ export const AuthApiCheckTokenResponseSchema = z.object({
 	userId: z.string(),
 
 	/**
-	 * User's phone number
+	 * User's phone number in E.164 format
 	 */
 	phoneNumber: z.string(),
 
@@ -75,22 +75,22 @@ export const AuthApiCheckTokenResponseSchema = z.object({
 	email: z.string(),
 
 	/**
-	 * Token expiration date (ISO 8601 format)
+	 * Token expiration datetime in ISO 8601 format (e.g., "2025-12-30T13:08:44+00:00")
 	 */
 	expiredTokenDate: z.string(),
 
 	/**
-	 * User's language preference (ru or kk)
+	 * User's preferred language: "ru" (Russian) or "kk" (Kazakh)
 	 */
 	language: z.enum(["ru", "kk"]),
 
 	/**
-	 * Whether user has any orders in the system
+	 * Whether user has active orders in progress
 	 */
 	hasOrders: z.boolean(),
 
 	/**
-	 * Whether user has any orders (alternative field)
+	 * Whether user has any order history (including completed orders)
 	 */
 	hasAnyOrders: z.boolean(),
 });

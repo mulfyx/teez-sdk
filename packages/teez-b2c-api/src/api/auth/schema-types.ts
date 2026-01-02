@@ -5,7 +5,7 @@
  */
 
 /**
- * Response schema for login.
+ * Response schema for initiating phone login.
  */
 export type AuthApiLoginResponse = void | undefined;
 
@@ -18,17 +18,21 @@ export interface AuthApiVerifyResponse {
 	 */
 	userId: string;
 	/**
-	 * JWT access token for authenticated requests
+	 * User's phone number in E.164 format
+	 */
+	phone: string;
+	/**
+	 * JWT access token for API authentication (HS512 algorithm, ~24 hour expiration)
 	 */
 	accessToken: string;
 	/**
-	 * Refresh token for obtaining new access tokens
+	 * Base64-encoded refresh token for obtaining new access tokens
 	 */
 	refreshToken: string;
 	/**
-	 * User's phone number
+	 * User's preferred payment method ID
 	 */
-	phone: string;
+	paymentId?: (number | null) | undefined;
 	/**
 	 * User's default pickup point
 	 */
@@ -38,13 +42,9 @@ export interface AuthApiVerifyResponse {
 	 */
 	address?: (unknown | null) | undefined;
 	/**
-	 * User's default recipient information
+	 * User's default order recipient information
 	 */
 	recipient?: (unknown | null) | undefined;
-	/**
-	 * User's default payment method ID
-	 */
-	paymentId?: (number | null) | undefined;
 }
 
 /**
@@ -56,7 +56,7 @@ export interface AuthApiCheckTokenResponse {
 	 */
 	userId: string;
 	/**
-	 * User's phone number
+	 * User's phone number in E.164 format
 	 */
 	phoneNumber: string;
 	/**
@@ -68,19 +68,19 @@ export interface AuthApiCheckTokenResponse {
 	 */
 	email: string;
 	/**
-	 * Token expiration date (ISO 8601 format)
+	 * Token expiration datetime in ISO 8601 format (e.g., "2025-12-30T13:08:44+00:00")
 	 */
 	expiredTokenDate: string;
 	/**
-	 * User's language preference (ru or kk)
+	 * User's preferred language: "ru" (Russian) or "kk" (Kazakh)
 	 */
 	language: "ru" | "kk";
 	/**
-	 * Whether user has any orders in the system
+	 * Whether user has active orders in progress
 	 */
 	hasOrders: boolean;
 	/**
-	 * Whether user has any orders (alternative field)
+	 * Whether user has any order history (including completed orders)
 	 */
 	hasAnyOrders: boolean;
 }

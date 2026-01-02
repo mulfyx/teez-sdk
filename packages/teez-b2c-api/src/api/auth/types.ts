@@ -5,7 +5,7 @@ import { type BaseParams } from "../../common/types";
  */
 export interface AuthApiLoginParams extends BaseParams {
 	/**
-	 * Phone number with country code (e.g., "+77071234567")
+	 * Phone number with country code in E.164 format (e.g., "+77071234567")
 	 */
 	phone: string;
 }
@@ -15,12 +15,12 @@ export interface AuthApiLoginParams extends BaseParams {
  */
 export interface AuthApiVerifyParams extends BaseParams {
 	/**
-	 * Phone number with country code (e.g., "+77071234567")
+	 * Phone number with country code in E.164 format (e.g., "+77071234567")
 	 */
 	phone: string;
 
 	/**
-	 * OTP code received via SMS
+	 * 4-digit OTP code received via SMS
 	 */
 	otpCode: string;
 }
