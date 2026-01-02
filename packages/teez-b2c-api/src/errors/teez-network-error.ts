@@ -7,7 +7,7 @@ export interface TeezNetworkErrorOptions extends ErrorOptions {
 	/**
 	 * URL of the request that failed.
 	 */
-	url: string;
+	url: URL;
 }
 
 /**
@@ -19,7 +19,7 @@ export class TeezNetworkError extends TeezError {
 	/**
 	 * URL of the request that failed.
 	 */
-	public readonly url: string;
+	public readonly url: URL;
 
 	public constructor(
 		message: string,

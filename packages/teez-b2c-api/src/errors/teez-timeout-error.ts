@@ -7,7 +7,7 @@ export interface TeezTimeoutErrorOptions extends ErrorOptions {
 	/**
 	 * URL of the request that timed out.
 	 */
-	url: string;
+	url: URL;
 
 	/**
 	 * Timeout duration in milliseconds.
@@ -24,7 +24,7 @@ export class TeezTimeoutError extends TeezError {
 	/**
 	 * URL of the request that timed out.
 	 */
-	public readonly url: string;
+	public readonly url: URL;
 
 	/**
 	 * Timeout duration in milliseconds.

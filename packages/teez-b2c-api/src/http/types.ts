@@ -1,5 +1,3 @@
-import type * as z from "zod/mini";
-
 /**
  * Type representing URL query parameters.
  */
@@ -13,9 +11,14 @@ export interface HttpRequestOptions extends Omit<
 	"headers" | "signal" | "body"
 > {
 	/**
-	 * Full URL for the request.
+	 * Relative path to the resource.
 	 */
-	url: string;
+	path: string;
+
+	/**
+	 * Query parameters to append to the URL.
+	 */
+	params?: QueryParams;
 
 	/**
 	 * Additional headers for this specific request.
@@ -32,76 +35,19 @@ export interface HttpRequestOptions extends Omit<
 /**
  * Options for making a GET request.
  */
-export interface HttpGetOptions<T extends z.ZodMiniType> extends Omit<
-	HttpRequestOptions,
-	"url" | "method" | "body"
-> {
-	/**
-	 * Relative path to the resource.
-	 */
-	path: string;
-
-	/**
-	 * Query parameters to append to the URL.
-	 */
-	params?: QueryParams;
-
-	/**
-	 * Zod schema to validate the response.
-	 */
-	schema: T;
-}
+export type HttpGetOptions = Omit<HttpRequestOptions, "method" | "body">;
 
 /**
  * Options for making a POST request.
  */
-export interface HttpPostOptions extends Omit<
-	HttpRequestOptions,
-	"url" | "method"
-> {
-	/**
-	 * Relative path to the resource.
-	 */
-	path: string;
-
-	/**
-	 * Query parameters to append to the URL.
-	 */
-	params?: QueryParams;
-}
+export type HttpPostOptions = Omit<HttpRequestOptions, "method">;
 
 /**
  * Options for making a PATCH request.
  */
-export interface HttpPatchOptions extends Omit<
-	HttpRequestOptions,
-	"url" | "method"
-> {
-	/**
-	 * Relative path to the resource.
-	 */
-	path: string;
-
-	/**
-	 * Query parameters to append to the URL.
-	 */
-	params?: QueryParams;
-}
+export type HttpPatchOptions = Omit<HttpRequestOptions, "method">;
 
 /**
  * Options for making a DELETE request.
  */
-export interface HttpDeleteOptions extends Omit<
-	HttpRequestOptions,
-	"url" | "method"
-> {
-	/**
-	 * Relative path to the resource.
-	 */
-	path: string;
-
-	/**
-	 * Query parameters to append to the URL.
-	 */
-	params?: QueryParams;
-}
+export type HttpDeleteOptions = Omit<HttpRequestOptions, "method">;

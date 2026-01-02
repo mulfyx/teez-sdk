@@ -3,9 +3,13 @@ import {
 	type TeezValidationIssue,
 } from "../errors/teez-validation-error";
 import { type QueryParams } from "./types";
-import * as z from "zod/mini";
+import {
+	safeParse,
+	type output as ZodInferOutput,
+	type ZodMiniType,
+} from "zod/mini";
 
-type SafeParseResult = ReturnType<typeof z.safeParse>;
+type SafeParseResult = ReturnType<typeof safeParse>;
 
 type SafeParseFailure = Extract<SafeParseResult, { success: false }>;
 
@@ -18,7 +22,7 @@ export function buildUrl(
 	path: string,
 	baseUrl: string,
 	queryParams?: QueryParams,
-): string {
+): URL {
 	const url = new URL(path, baseUrl);
 
 	if (queryParams != undefined) {
@@ -37,7 +41,7 @@ export function buildUrl(
 		}
 	}
 
-	return String(url);
+	return url;
 }
 
 /**
@@ -54,11 +58,11 @@ export function toValidationIssues(error: ZodMiniError): TeezValidationIssue[] {
 /**
  * Validates and parses the API response data against a schema.
  */
-export function parseResponse<T extends z.ZodMiniType>(
+export function parseResponse<T extends ZodMiniType>(
 	schema: T,
 	data: unknown,
-): z.output<T> {
-	const result = z.safeParse(schema, data);
+): ZodInferOutput<T> {
+	const result = safeParse(schema, data);
 
 	if (!result.success) {
 		const issues = toValidationIssues(result.error);

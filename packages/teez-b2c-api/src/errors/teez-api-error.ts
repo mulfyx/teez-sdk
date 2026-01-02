@@ -7,7 +7,7 @@ export interface TeezApiErrorOptions extends ErrorOptions {
 	/**
 	 * URL of the request that failed.
 	 */
-	url: string;
+	url: URL;
 
 	/**
 	 * HTTP status code.
@@ -32,6 +32,11 @@ export class TeezApiError extends TeezError {
 	public override name = "TeezApiError";
 
 	/**
+	 * URL of the request that failed.
+	 */
+	public readonly url: URL;
+
+	/**
 	 * HTTP status code.
 	 */
 	public readonly status: number;
@@ -40,11 +45,6 @@ export class TeezApiError extends TeezError {
 	 * HTTP status text.
 	 */
 	public readonly statusText: string;
-
-	/**
-	 * URL of the request that failed.
-	 */
-	public readonly url: string;
 
 	/**
 	 * Response body, if available.
@@ -57,9 +57,9 @@ export class TeezApiError extends TeezError {
 	) {
 		super(message, errorOptions);
 
+		this.url = url;
 		this.status = status;
 		this.statusText = statusText;
-		this.url = url;
 		this.body = body;
 	}
 

@@ -1,5 +1,6 @@
 import { buildHeaders, type ResolvedTeezClientConfig } from "../config";
 import { TeezApiError } from "../errors/teez-api-error";
+import { TeezError } from "../errors/teez-error";
 import { TeezNetworkError } from "../errors/teez-network-error";
 import { TeezTimeoutError } from "../errors/teez-timeout-error";
 import { buildUrl, parseResponse } from "./helpers";
@@ -10,7 +11,7 @@ import {
 	type HttpPostOptions,
 	type HttpRequestOptions,
 } from "./types";
-import type * as z from "zod/mini";
+import { type output as ZodInferOutput, type ZodMiniType } from "zod/mini";
 
 /**
  * Internal HTTP client for making API requests.
@@ -38,38 +39,57 @@ export class HttpClient {
 	/**
 	 * Performs a low-level HTTP request.
 	 */
-	public async request({
-		url,
-		headers,
-		body,
-		...options
-	}: HttpRequestOptions): Promise<unknown> {
+	public request(options: HttpRequestOptions): Promise<unknown>;
+
+	/**
+	 * Performs a low-level HTTP request with schema validation.
+	 */
+	public request<T extends ZodMiniType>(
+		options: HttpRequestOptions,
+		schema: T,
+	): Promise<ZodInferOutput<T>>;
+
+	/**
+	 * Implementation of request method.
+	 */
+	public async request<T extends ZodMiniType>(
+		{
+			path,
+			params,
+			headers: headersRaw,
+			body: bodyRaw,
+			...options
+		}: HttpRequestOptions,
+		schema?: T,
+	): Promise<ZodInferOutput<T> | unknown> {
+		const url = buildUrl(path, this.config.baseUrl, params);
+
+		const headers = new Headers({
+			...this.headers,
+			...headersRaw,
+		});
+
+		let body: RequestInit["body"] | undefined;
+
+		if (bodyRaw !== undefined) {
+			body = JSON.stringify(bodyRaw);
+
+			if (!headers.has("Content-Type")) {
+				headers.set("Content-Type", "application/json");
+			}
+		}
+
 		const controller = new AbortController();
 
 		const timeoutId = setTimeout(() => {
 			controller.abort();
 		}, this.config.timeout);
 
-		const finalHeaders: Record<string, string> = {
-			...this.headers,
-			...headers,
-		};
-
-		let finalBody: RequestInit["body"] | undefined;
-
-		if (body !== undefined) {
-			finalBody = JSON.stringify(body);
-
-			if (finalHeaders["Content-Type"] == undefined) {
-				finalHeaders["Content-Type"] = "application/json";
-			}
-		}
-
 		try {
 			const response = await fetch(url, {
 				...options,
-				headers: finalHeaders,
-				body: finalBody,
+				headers,
+				body,
 				signal: controller.signal,
 			});
 
@@ -97,9 +117,11 @@ export class HttpClient {
 				return undefined;
 			}
 
-			return await response.json();
+			const data = await response.json();
+
+			return schema != undefined ? parseResponse(schema, data) : data;
 		} catch (error) {
-			if (error instanceof TeezApiError) {
+			if (error instanceof TeezError) {
 				throw error;
 			}
 
@@ -124,69 +146,101 @@ export class HttpClient {
 	}
 
 	/**
-	 * Performs a GET request and validates the response.
+	 * Performs a GET request.
 	 */
-	public async get<T extends z.ZodMiniType>({
-		path,
-		params,
-		schema,
-		...options
-	}: HttpGetOptions<T>): Promise<z.output<T>> {
-		const url = buildUrl(path, this.config.baseUrl, params);
+	public get(options: HttpGetOptions): Promise<unknown>;
 
-		const data = await this.request({
-			...options,
-			url,
-			method: "GET",
-		});
+	/**
+	 * Performs a GET request with schema validation.
+	 */
+	public get<T extends ZodMiniType>(
+		options: HttpGetOptions,
+		schema: T,
+	): Promise<ZodInferOutput<T>>;
 
-		return parseResponse(schema, data);
+	/**
+	 * Implementation of GET method.
+	 */
+	public get<T extends ZodMiniType>(
+		options: HttpGetOptions,
+		schema?: T,
+	): Promise<ZodInferOutput<T> | unknown> {
+		return schema != undefined
+			? this.request({ ...options, method: "GET" }, schema)
+			: this.request({ ...options, method: "GET" });
 	}
 
 	/**
 	 * Performs a POST request.
 	 */
-	public post({ path, params, ...options }: HttpPostOptions): Promise<unknown> {
-		const url = buildUrl(path, this.config.baseUrl, params);
 
-		return this.request({
-			...options,
-			url,
-			method: "POST",
-		});
+	/**
+	 * Performs a POST request with schema validation.
+	 */
+	public post<T extends ZodMiniType>(
+		options: HttpPostOptions,
+		schema: T,
+	): Promise<ZodInferOutput<T>>;
+
+	/**
+	 * Implementation of POST method.
+	 */
+	public post<T extends ZodMiniType>(
+		options: HttpPostOptions,
+		schema?: T,
+	): Promise<ZodInferOutput<T> | unknown> {
+		return schema != undefined
+			? this.request({ ...options, method: "POST" }, schema)
+			: this.request({ ...options, method: "POST" });
 	}
 
 	/**
 	 * Performs a PATCH request.
 	 */
-	public patch({
-		path,
-		params,
-		...options
-	}: HttpPatchOptions): Promise<unknown> {
-		const url = buildUrl(path, this.config.baseUrl, params);
+	public patch(options: HttpPatchOptions): Promise<unknown>;
 
-		return this.request({
-			...options,
-			url,
-			method: "PATCH",
-		});
+	/**
+	 * Performs a PATCH request with schema validation.
+	 */
+	public patch<T extends ZodMiniType>(
+		options: HttpPatchOptions,
+		schema: T,
+	): Promise<ZodInferOutput<T>>;
+
+	/**
+	 * Implementation of PATCH method.
+	 */
+	public patch<T extends ZodMiniType>(
+		options: HttpPatchOptions,
+		schema?: T,
+	): Promise<ZodInferOutput<T> | unknown> {
+		return schema != undefined
+			? this.request({ ...options, method: "PATCH" }, schema)
+			: this.request({ ...options, method: "PATCH" });
 	}
 
 	/**
 	 * Performs a DELETE request.
 	 */
-	public delete({
-		path,
-		params,
-		...options
-	}: HttpDeleteOptions): Promise<unknown> {
-		const url = buildUrl(path, this.config.baseUrl, params);
+	public delete(options: HttpDeleteOptions): Promise<unknown>;
 
-		return this.request({
-			...options,
-			url,
-			method: "DELETE",
-		});
+	/**
+	 * Performs a DELETE request with schema validation.
+	 */
+	public delete<T extends ZodMiniType>(
+		options: HttpDeleteOptions,
+		schema: T,
+	): Promise<ZodInferOutput<T>>;
+
+	/**
+	 * Implementation of DELETE method.
+	 */
+	public delete<T extends ZodMiniType>(
+		options: HttpDeleteOptions,
+		schema?: T,
+	): Promise<ZodInferOutput<T> | unknown> {
+		return schema != undefined
+			? this.request({ ...options, method: "DELETE" }, schema)
+			: this.request({ ...options, method: "DELETE" });
 	}
 }
