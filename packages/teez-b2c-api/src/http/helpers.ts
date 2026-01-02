@@ -36,6 +36,7 @@ export function buildUrl(
 					url.searchParams.append(key, String(item));
 				}
 			} else {
+				// eslint-disable-next-line @typescript-eslint/no-base-to-string
 				url.searchParams.set(key, String(value));
 			}
 		}

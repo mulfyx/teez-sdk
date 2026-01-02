@@ -125,7 +125,7 @@ export function buildHeaders(
 		...config.headers,
 	};
 
-	if (config.token !== undefined && config.token !== null) {
+	if (config.token != undefined) {
 		headers["authorization"] = `Bearer ${config.token}`;
 	}
 

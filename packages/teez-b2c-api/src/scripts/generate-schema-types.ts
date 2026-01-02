@@ -6,7 +6,6 @@ import {
 	Project,
 	SyntaxKind,
 	type Node,
-	type ObjectLiteralExpression,
 	type PropertyAssignment,
 	type VariableDeclaration,
 } from "ts-morph";
@@ -194,13 +193,15 @@ function extractFieldJSDocs(decl: VariableDeclaration): Map<string, string> {
 			return;
 		}
 
-		const [arg] = callExpr.getArguments();
+		const [objectLiteral] = callExpr.getArguments();
 
-		if (arg == undefined || !arg.isKind(SyntaxKind.ObjectLiteralExpression)) {
+		if (
+			// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+			objectLiteral == undefined ||
+			!objectLiteral.isKind(SyntaxKind.ObjectLiteralExpression)
+		) {
 			return;
 		}
-
-		const objectLiteral = arg as ObjectLiteralExpression;
 
 		for (const prop of objectLiteral.getProperties()) {
 			if (
@@ -212,7 +213,7 @@ function extractFieldJSDocs(decl: VariableDeclaration): Map<string, string> {
 
 			const propAssignment = prop as PropertyAssignment;
 
-			const fieldName = propAssignment.getName?.() ?? "";
+			const fieldName = propAssignment.getName();
 
 			if (fieldName.length === 0) {
 				continue;
@@ -225,7 +226,7 @@ function extractFieldJSDocs(decl: VariableDeclaration): Map<string, string> {
 			for (const range of leadingComments) {
 				const commentText = range.getText();
 
-				const match = commentText.match(/\/\*\*([\S\s]*?)\*\//);
+				const match = /\/\*\*([\S\s]*?)\*\//.exec(commentText);
 
 				if (match?.[1] != undefined) {
 					const extracted = match[1]

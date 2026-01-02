@@ -61,7 +61,7 @@ export class HttpClient {
 			...options
 		}: HttpRequestOptions,
 		schema?: T,
-	): Promise<ZodInferOutput<T> | unknown> {
+	): Promise<unknown> {
 		const url = buildUrl(path, this.config.baseUrl, params);
 
 		const headers = new Headers({
@@ -164,7 +164,7 @@ export class HttpClient {
 	public get<T extends ZodMiniType>(
 		options: HttpGetOptions,
 		schema?: T,
-	): Promise<ZodInferOutput<T> | unknown> {
+	): Promise<unknown> {
 		return schema != undefined
 			? this.request({ ...options, method: "GET" }, schema)
 			: this.request({ ...options, method: "GET" });
@@ -188,7 +188,7 @@ export class HttpClient {
 	public post<T extends ZodMiniType>(
 		options: HttpPostOptions,
 		schema?: T,
-	): Promise<ZodInferOutput<T> | unknown> {
+	): Promise<unknown> {
 		return schema != undefined
 			? this.request({ ...options, method: "POST" }, schema)
 			: this.request({ ...options, method: "POST" });
@@ -213,7 +213,7 @@ export class HttpClient {
 	public patch<T extends ZodMiniType>(
 		options: HttpPatchOptions,
 		schema?: T,
-	): Promise<ZodInferOutput<T> | unknown> {
+	): Promise<unknown> {
 		return schema != undefined
 			? this.request({ ...options, method: "PATCH" }, schema)
 			: this.request({ ...options, method: "PATCH" });
@@ -238,7 +238,7 @@ export class HttpClient {
 	public delete<T extends ZodMiniType>(
 		options: HttpDeleteOptions,
 		schema?: T,
-	): Promise<ZodInferOutput<T> | unknown> {
+	): Promise<unknown> {
 		return schema != undefined
 			? this.request({ ...options, method: "DELETE" }, schema)
 			: this.request({ ...options, method: "DELETE" });

@@ -1,7 +1,6 @@
 import js from "@eslint/js";
 import * as tsParser from "@typescript-eslint/parser";
 import gitignore from "eslint-config-flat-gitignore";
-import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript";
 import { importX } from "eslint-plugin-import-x";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
 import { defineConfig } from "eslint/config";
@@ -9,14 +8,13 @@ import * as tseslint from "typescript-eslint";
 
 export default defineConfig([
 	gitignore(),
+	js.configs.recommended,
+	eslintPluginUnicorn.configs.all,
+	tseslint.configs.strictTypeChecked,
+	tseslint.configs.stylisticTypeChecked,
+	importX.flatConfigs.recommended,
+	importX.flatConfigs.typescript,
 	{
-		extends: [
-			js.configs.recommended,
-			tseslint.configs.strict,
-			tseslint.configs.stylistic,
-			importX.flatConfigs.recommended,
-			importX.flatConfigs.typescript,
-		],
 		languageOptions: {
 			parser: tsParser,
 			ecmaVersion: "latest",
@@ -28,11 +26,7 @@ export default defineConfig([
 				tsconfigRootDir: import.meta.dirname,
 			},
 		},
-		settings: {
-			"import-x/resolver-next": [createTypeScriptImportResolver()],
-		},
 	},
-	eslintPluginUnicorn.configs.all,
 	{
 		rules: {
 			"@typescript-eslint/consistent-type-imports": [
@@ -52,6 +46,12 @@ export default defineConfig([
 			],
 			"@typescript-eslint/explicit-member-accessibility": "error",
 			"@typescript-eslint/no-dynamic-delete": "off",
+			"@typescript-eslint/restrict-template-expressions": [
+				"error",
+				{
+					allowNumber: true,
+				},
+			],
 			"@typescript-eslint/return-await": ["error", "always"],
 			"@typescript-eslint/strict-boolean-expressions": [
 				"error",
@@ -104,12 +104,6 @@ export default defineConfig([
 					withDash: true,
 				},
 			],
-		},
-	},
-	{
-		files: ["**/src/**/schema-types.ts"],
-		rules: {
-			"@typescript-eslint/no-invalid-void-type": "off",
 		},
 	},
 ]);
