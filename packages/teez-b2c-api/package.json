@@ -1,6 +1,6 @@
 {
 	"name": "@teez-sdk/teez-b2c-api",
-	"version": "2.0.0",
+	"version": "2.1.0",
 	"type": "module",
 	"description": "TypeScript SDK for Teez B2C API",
 	"repository": {
