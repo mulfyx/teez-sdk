@@ -2,6 +2,7 @@ import { AuthApi } from "./api/auth/api";
 import { BannersApi } from "./api/banners/api";
 import { CategoriesApi } from "./api/categories/api";
 import { CollectionsApi } from "./api/collections/api";
+import { FavoritesApi } from "./api/favorites/api";
 import { FeatureFlagsApi } from "./api/feature-flags/api";
 import { ProductsApi } from "./api/products/api";
 import { PromoApi } from "./api/promo/api";
@@ -56,6 +57,11 @@ export class TeezClient {
 	public readonly collections: CollectionsApi;
 
 	/**
+	 * API for managing user favorites.
+	 */
+	public readonly favorites: FavoritesApi;
+
+	/**
 	 * API for retrieving feature flags.
 	 */
 	public readonly featureFlags: FeatureFlagsApi;
@@ -99,6 +105,7 @@ export class TeezClient {
 		this.banners = new BannersApi(this.http);
 		this.categories = new CategoriesApi(this.http);
 		this.collections = new CollectionsApi(this.http);
+		this.favorites = new FavoritesApi(this.http);
 		this.featureFlags = new FeatureFlagsApi(this.http);
 		this.products = new ProductsApi(this.http);
 		this.promo = new PromoApi(this.http);

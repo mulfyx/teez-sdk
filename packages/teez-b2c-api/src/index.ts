@@ -30,6 +30,11 @@ export * from "./api/collections/schemas";
 export * from "./api/collections/schema-types";
 export * from "./api/collections/types";
 
+export * from "./api/favorites/api";
+export * from "./api/favorites/schemas";
+export * from "./api/favorites/schema-types";
+export * from "./api/favorites/types";
+
 export * from "./api/feature-flags/api";
 export * from "./api/feature-flags/schemas";
 export * from "./api/feature-flags/schema-types";
