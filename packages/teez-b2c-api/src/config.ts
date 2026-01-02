@@ -1,5 +1,7 @@
 import { BASE_URL, DEFAULT_APP_VERSION } from "./common/constants";
 import { type Language } from "./common/types";
+import { type HeadersInit } from "./http/types";
+import { mergeHeaders } from "./utils/merge-headers";
 
 /**
  * Configuration options for the Teez client.
@@ -37,7 +39,7 @@ export interface TeezClientConfig {
 	/**
 	 * Custom headers to include in all requests.
 	 */
-	headers?: Record<string, string>;
+	headers?: HeadersInit;
 }
 
 /**
@@ -70,9 +72,9 @@ export interface ResolvedTeezClientConfig {
 	readonly timeout: number;
 
 	/**
-	 * Custom headers included in requests.
+	 * Resolved headers as Headers object for efficient manipulation.
 	 */
-	readonly headers: Readonly<Record<string, string>>;
+	readonly headers: Headers;
 }
 
 /**
@@ -83,7 +85,7 @@ export const DEFAULT_CONFIG: ResolvedTeezClientConfig = {
 	appVersion: DEFAULT_APP_VERSION,
 	language: "ru",
 	timeout: 30_000,
-	headers: {},
+	headers: new Headers(),
 };
 
 /**
@@ -92,16 +94,15 @@ export const DEFAULT_CONFIG: ResolvedTeezClientConfig = {
 export function resolveConfig(
 	config?: TeezClientConfig,
 ): ResolvedTeezClientConfig {
+	const headers = mergeHeaders(DEFAULT_CONFIG.headers, config?.headers);
+
 	return {
 		baseUrl: config?.baseUrl ?? DEFAULT_CONFIG.baseUrl,
 		token: config?.token,
 		appVersion: config?.appVersion ?? DEFAULT_CONFIG.appVersion,
 		language: config?.language ?? DEFAULT_CONFIG.language,
 		timeout: config?.timeout ?? DEFAULT_CONFIG.timeout,
-		headers: {
-			...DEFAULT_CONFIG.headers,
-			...config?.headers,
-		},
+		headers,
 	};
 }
 
@@ -115,18 +116,15 @@ export function buildUserAgent(appVersion: string): string {
 /**
  * Builds the headers object for API requests based on configuration.
  */
-export function buildHeaders(
-	config: ResolvedTeezClientConfig,
-): Record<string, string> {
-	const headers: Record<string, string> = {
-		"accept-language": config.language,
-		"user-agent": buildUserAgent(config.appVersion),
-		"x-app-version": config.appVersion,
-		...config.headers,
-	};
+export function buildHeaders(config: ResolvedTeezClientConfig): Headers {
+	const headers = new Headers(config.headers);
+
+	headers.set("Accept-Language", config.language);
+	headers.set("User-Agent", buildUserAgent(config.appVersion));
+	headers.set("X-App-Version", config.appVersion);
 
 	if (config.token != undefined) {
-		headers["authorization"] = `Bearer ${config.token}`;
+		headers.set("Authorization", `Bearer ${config.token}`);
 	}
 
 	return headers;

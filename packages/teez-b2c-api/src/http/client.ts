@@ -3,6 +3,7 @@ import { TeezApiError } from "../errors/teez-api-error";
 import { TeezError } from "../errors/teez-error";
 import { TeezNetworkError } from "../errors/teez-network-error";
 import { TeezTimeoutError } from "../errors/teez-timeout-error";
+import { mergeHeaders } from "../utils/merge-headers";
 import { buildUrl, parseResponse } from "./helpers";
 import {
 	type HttpDeleteOptions,
@@ -25,7 +26,7 @@ export class HttpClient {
 	/**
 	 * Headers to include in all requests.
 	 */
-	private readonly headers: Record<string, string>;
+	private readonly headers: Headers;
 
 	/**
 	 * Initializes a new instance of the HttpClient.
@@ -64,10 +65,7 @@ export class HttpClient {
 	): Promise<unknown> {
 		const url = buildUrl(path, this.config.baseUrl, params);
 
-		const headers = new Headers({
-			...this.headers,
-			...headersRaw,
-		});
+		const headers = mergeHeaders(this.headers, headersRaw);
 
 		let body: RequestInit["body"] | undefined;
 
@@ -94,7 +92,7 @@ export class HttpClient {
 			});
 
 			if (!response.ok) {
-				let errorBody;
+				let errorBody: unknown;
 
 				try {
 					errorBody = await response.json();

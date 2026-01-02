@@ -4,6 +4,11 @@
 export type QueryParams = Record<string, unknown>;
 
 /**
+ * Type representing HTTP headers initialization.
+ */
+export type HeadersInit = NonNullable<ConstructorParameters<typeof Headers>[0]>;
+
+/**
  * Options for making a generic HTTP request.
  */
 export interface HttpRequestOptions extends Omit<
@@ -23,7 +28,7 @@ export interface HttpRequestOptions extends Omit<
 	/**
 	 * Additional headers for this specific request.
 	 */
-	headers?: Record<string, string>;
+	headers?: HeadersInit;
 
 	/**
 	 * Request body to send.
