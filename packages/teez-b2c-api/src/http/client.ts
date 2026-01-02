@@ -28,8 +28,6 @@ export class HttpClient {
 
 	/**
 	 * Initializes a new instance of the HttpClient.
-	 *
-	 * @param config Resolved client configuration.
 	 */
 	public constructor(config: ResolvedTeezClientConfig) {
 		this.config = config;
@@ -39,35 +37,49 @@ export class HttpClient {
 
 	/**
 	 * Performs a low-level HTTP request.
-	 *
-	 * @param options Request options.
 	 */
-	public async request(options: HttpRequestOptions): Promise<unknown> {
-		const { url, headers, ...fetchOptions } = options;
-
+	public async request({
+		url,
+		headers,
+		body,
+		...options
+	}: HttpRequestOptions): Promise<unknown> {
 		const controller = new AbortController();
 
 		const timeoutId = setTimeout(() => {
 			controller.abort();
 		}, this.config.timeout);
 
+		const finalHeaders: Record<string, string> = {
+			...this.headers,
+			...headers,
+		};
+
+		let finalBody: RequestInit["body"] | undefined;
+
+		if (body !== undefined) {
+			finalBody = JSON.stringify(body);
+
+			if (finalHeaders["Content-Type"] == undefined) {
+				finalHeaders["Content-Type"] = "application/json";
+			}
+		}
+
 		try {
 			const response = await fetch(url, {
-				...fetchOptions,
-				headers: {
-					...this.headers,
-					...headers,
-				},
+				...options,
+				headers: finalHeaders,
+				body: finalBody,
 				signal: controller.signal,
 			});
 
 			if (!response.ok) {
-				let body;
+				let errorBody;
 
 				try {
-					body = await response.json();
+					errorBody = await response.json();
 				} catch {
-					body = await response.text().catch(() => undefined);
+					errorBody = await response.text().catch(() => undefined);
 				}
 
 				throw new TeezApiError(
@@ -76,7 +88,7 @@ export class HttpClient {
 						url,
 						status: response.status,
 						statusText: response.statusText,
-						body,
+						body: errorBody,
 					},
 				);
 			}
@@ -114,17 +126,18 @@ export class HttpClient {
 	/**
 	 * Performs a GET request and validates the response.
 	 */
-	public async get<T extends z.ZodMiniType>(
-		options: HttpGetOptions<T>,
-	): Promise<z.output<T>> {
-		const { path, params, schema, ...rest } = options;
-
+	public async get<T extends z.ZodMiniType>({
+		path,
+		params,
+		schema,
+		...options
+	}: HttpGetOptions<T>): Promise<z.output<T>> {
 		const url = buildUrl(path, this.config.baseUrl, params);
 
 		const data = await this.request({
+			...options,
 			url,
 			method: "GET",
-			...rest,
 		});
 
 		return parseResponse(schema, data);
@@ -133,53 +146,47 @@ export class HttpClient {
 	/**
 	 * Performs a POST request.
 	 */
-	public post(options: HttpPostOptions): Promise<unknown> {
-		const { path, params, body, ...rest } = options;
-
+	public post({ path, params, ...options }: HttpPostOptions): Promise<unknown> {
 		const url = buildUrl(path, this.config.baseUrl, params);
 
 		return this.request({
+			...options,
 			url,
 			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: body != undefined ? JSON.stringify(body) : undefined,
-			...rest,
 		});
 	}
 
 	/**
 	 * Performs a PATCH request.
 	 */
-	public patch(options: HttpPatchOptions): Promise<unknown> {
-		const { path, params, body, ...rest } = options;
-
+	public patch({
+		path,
+		params,
+		...options
+	}: HttpPatchOptions): Promise<unknown> {
 		const url = buildUrl(path, this.config.baseUrl, params);
 
 		return this.request({
+			...options,
 			url,
 			method: "PATCH",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: body != undefined ? JSON.stringify(body) : undefined,
-			...rest,
 		});
 	}
 
 	/**
 	 * Performs a DELETE request.
 	 */
-	public delete(options: HttpDeleteOptions): Promise<unknown> {
-		const { path, params, ...rest } = options;
-
+	public delete({
+		path,
+		params,
+		...options
+	}: HttpDeleteOptions): Promise<unknown> {
 		const url = buildUrl(path, this.config.baseUrl, params);
 
 		return this.request({
+			...options,
 			url,
 			method: "DELETE",
-			...rest,
 		});
 	}
 }

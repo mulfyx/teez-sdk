@@ -10,7 +10,7 @@ export type QueryParams = Record<string, unknown>;
  */
 export interface HttpRequestOptions extends Omit<
 	RequestInit,
-	"headers" | "signal"
+	"headers" | "signal" | "body"
 > {
 	/**
 	 * Full URL for the request.
@@ -21,6 +21,12 @@ export interface HttpRequestOptions extends Omit<
 	 * Additional headers for this specific request.
 	 */
 	headers?: Record<string, string>;
+
+	/**
+	 * Request body to send.
+	 * It will be strictly serialized to JSON.
+	 */
+	body?: unknown;
 }
 
 /**
@@ -51,17 +57,12 @@ export interface HttpGetOptions<T extends z.ZodMiniType> extends Omit<
  */
 export interface HttpPostOptions extends Omit<
 	HttpRequestOptions,
-	"url" | "method" | "body"
+	"url" | "method"
 > {
 	/**
 	 * Relative path to the resource.
 	 */
 	path: string;
-
-	/**
-	 * Request body to send (will be JSON-serialized).
-	 */
-	body?: unknown;
 
 	/**
 	 * Query parameters to append to the URL.
@@ -74,17 +75,12 @@ export interface HttpPostOptions extends Omit<
  */
 export interface HttpPatchOptions extends Omit<
 	HttpRequestOptions,
-	"url" | "method" | "body"
+	"url" | "method"
 > {
 	/**
 	 * Relative path to the resource.
 	 */
 	path: string;
-
-	/**
-	 * Request body to send (will be JSON-serialized).
-	 */
-	body?: unknown;
 
 	/**
 	 * Query parameters to append to the URL.
@@ -97,7 +93,7 @@ export interface HttpPatchOptions extends Omit<
  */
 export interface HttpDeleteOptions extends Omit<
 	HttpRequestOptions,
-	"url" | "method" | "body"
+	"url" | "method"
 > {
 	/**
 	 * Relative path to the resource.
