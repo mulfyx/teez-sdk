@@ -544,8 +544,6 @@ function writeTypeFile(
 			dummySourceFile,
 		);
 
-		console.log({ typeText });
-
 		lines.push(typeText);
 		lines.push("");
 	}
