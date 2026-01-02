@@ -1,5 +1,4 @@
 import { type HttpClient } from "../../http/client";
-import { parseResponse } from "../../http/helpers";
 import {
 	type UsersApiRegisterDeviceResponse,
 	type UsersApiUpdateLanguageResponse,
@@ -32,15 +31,16 @@ export class UsersApi {
 	 *   language: "ru"
 	 * });
 	 */
-	public async updateLanguage(
+	public updateLanguage(
 		params: UsersApiUpdateLanguageParams,
 	): Promise<UsersApiUpdateLanguageResponse> {
-		const response = await this.http.patch({
-			path: "/api/v1/users/me/language",
-			body: params,
-		});
-
-		return parseResponse(UsersApiUpdateLanguageResponseSchema, response);
+		return this.http.patch(
+			{
+				path: "/api/v1/users/me/language",
+				body: params,
+			},
+			UsersApiUpdateLanguageResponseSchema,
+		);
 	}
 
 	/**
@@ -58,14 +58,15 @@ export class UsersApi {
 	 *   }
 	 * });
 	 */
-	public async registerDevice(
+	public registerDevice(
 		params: UsersApiRegisterDeviceParams,
 	): Promise<UsersApiRegisterDeviceResponse> {
-		const response = await this.http.post({
-			path: "/api/v1/device-identities",
-			body: params,
-		});
-
-		return parseResponse(UsersApiRegisterDeviceResponseSchema, response);
+		return this.http.post(
+			{
+				path: "/api/v1/device-identities",
+				body: params,
+			},
+			UsersApiRegisterDeviceResponseSchema,
+		);
 	}
 }

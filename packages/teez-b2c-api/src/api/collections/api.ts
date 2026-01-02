@@ -38,11 +38,13 @@ export class CollectionsApi {
 	public getSkus(
 		params: CollectionsApiGetSkusParams,
 	): Promise<CollectionsApiGetSkusResponse> {
-		return this.http.get({
-			path: "/api/v2/collections/skus",
-			params,
-			schema: CollectionsApiGetSkusResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: "/api/v2/collections/skus",
+				params,
+			},
+			CollectionsApiGetSkusResponseSchema,
+		);
 	}
 
 	/**
@@ -54,11 +56,13 @@ export class CollectionsApi {
 	public list(
 		params: CollectionsApiListParams = {},
 	): Promise<CollectionsApiListResponse> {
-		return this.http.get({
-			path: "/collections",
-			params,
-			schema: CollectionsApiListResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: "/collections",
+				params,
+			},
+			CollectionsApiListResponseSchema,
+		);
 	}
 
 	/**
@@ -72,10 +76,12 @@ export class CollectionsApi {
 	public get(
 		params: CollectionsApiGetParams,
 	): Promise<CollectionsApiGetResponse> {
-		return this.http.get({
-			path: `/collections/${params.collectionId}`,
-			params,
-			schema: CollectionsApiGetResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: `/collections/${params.collectionId}`,
+				params,
+			},
+			CollectionsApiGetResponseSchema,
+		);
 	}
 }

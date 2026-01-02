@@ -35,11 +35,13 @@ export class ProductsApi {
 	public getSortOptions(
 		params: ProductsApiGetSortOptionsParams = {},
 	): Promise<ProductsApiGetSortOptionsResponse> {
-		return this.http.get({
-			path: "/api/product/sort-options",
-			params,
-			schema: ProductsApiGetSortOptionsResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: "/api/product/sort-options",
+				params,
+			},
+			ProductsApiGetSortOptionsResponseSchema,
+		);
 	}
 
 	/**
@@ -54,11 +56,13 @@ export class ProductsApi {
 	public list(
 		params: ProductsApiListParams = {},
 	): Promise<ProductsApiListResponse> {
-		return this.http.get({
-			path: "/api/v2/product",
-			params,
-			schema: ProductsApiListResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: "/api/v2/product",
+				params,
+			},
+			ProductsApiListResponseSchema,
+		);
 	}
 
 	/**
@@ -72,10 +76,12 @@ export class ProductsApi {
 	public getReviews(
 		params: ProductsApiGetReviewsParams,
 	): Promise<ProductsApiGetReviewsResponse> {
-		return this.http.get({
-			path: `/api/v1/product/${params.productId}/review`,
-			params,
-			schema: ProductsApiGetReviewsResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: `/api/v1/product/${params.productId}/review`,
+				params,
+			},
+			ProductsApiGetReviewsResponseSchema,
+		);
 	}
 }

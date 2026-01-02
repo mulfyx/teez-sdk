@@ -35,11 +35,13 @@ export class CategoriesApi {
 	public list(
 		params: CategoriesApiListParams = {},
 	): Promise<CategoriesApiListResponse> {
-		return this.http.get({
-			path: "/categories",
-			params,
-			schema: CategoriesApiListResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: "/categories",
+				params,
+			},
+			CategoriesApiListResponseSchema,
+		);
 	}
 
 	/**
@@ -53,11 +55,13 @@ export class CategoriesApi {
 	public get(
 		params: CategoriesApiGetParams,
 	): Promise<CategoriesApiGetResponse> {
-		return this.http.get({
-			path: `/categories/${params.categoryId}`,
-			params,
-			schema: CategoriesApiGetResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: `/categories/${params.categoryId}`,
+				params,
+			},
+			CategoriesApiGetResponseSchema,
+		);
 	}
 
 	/**
@@ -71,10 +75,12 @@ export class CategoriesApi {
 	public getParents(
 		params: CategoriesApiGetParentsParams,
 	): Promise<CategoriesApiGetParentsResponse> {
-		return this.http.get({
-			path: "/api/v1/categories/parents",
-			params,
-			schema: CategoriesApiGetParentsResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: "/api/v1/categories/parents",
+				params,
+			},
+			CategoriesApiGetParentsResponseSchema,
+		);
 	}
 }

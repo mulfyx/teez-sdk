@@ -38,11 +38,13 @@ export class SkuApi {
 	 * });
 	 */
 	public get(params: SkuApiGetParams): Promise<SkuApiGetResponse> {
-		return this.http.get({
-			path: `/api/v2/sku/${params.skuId}`,
-			params,
-			schema: SkuApiGetResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: `/api/v2/sku/${params.skuId}`,
+				params,
+			},
+			SkuApiGetResponseSchema,
+		);
 	}
 
 	/**
@@ -56,11 +58,13 @@ export class SkuApi {
 	public getSimilar(
 		params: SkuApiGetSimilarParams,
 	): Promise<SkuApiGetSimilarResponse> {
-		return this.http.get({
-			path: "/api/v2/sku/similar-skus",
-			params,
-			schema: SkuApiGetSimilarResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: "/api/v2/sku/similar-skus",
+				params,
+			},
+			SkuApiGetSimilarResponseSchema,
+		);
 	}
 
 	/**
@@ -74,11 +78,13 @@ export class SkuApi {
 	public getCollections(
 		params: SkuApiGetCollectionsParams,
 	): Promise<SkuApiGetCollectionsResponse> {
-		return this.http.get({
-			path: `/sku/${params.skuId}/collections`,
-			params,
-			schema: SkuApiGetCollectionsResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: `/sku/${params.skuId}/collections`,
+				params,
+			},
+			SkuApiGetCollectionsResponseSchema,
+		);
 	}
 
 	/**
@@ -92,10 +98,12 @@ export class SkuApi {
 	public getReviewAvailable(
 		params: SkuApiGetReviewAvailableParams,
 	): Promise<SkuApiGetReviewAvailableResponse> {
-		return this.http.get({
-			path: `/sku/${params.skuId}/review-available`,
-			params,
-			schema: SkuApiGetReviewAvailableResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: `/sku/${params.skuId}/review-available`,
+				params,
+			},
+			SkuApiGetReviewAvailableResponseSchema,
+		);
 	}
 }

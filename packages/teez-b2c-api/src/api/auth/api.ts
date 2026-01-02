@@ -1,5 +1,4 @@
 import { type HttpClient } from "../../http/client";
-import { parseResponse } from "../../http/helpers";
 import {
 	type AuthApiCheckTokenResponse,
 	type AuthApiLoginResponse,
@@ -35,15 +34,14 @@ export class AuthApi {
 	 *   phone: "+77071234567"
 	 * });
 	 */
-	public async login(
-		params: AuthApiLoginParams,
-	): Promise<AuthApiLoginResponse> {
-		const response = await this.http.post({
-			path: "/auth/login",
-			body: params,
-		});
-
-		return parseResponse(AuthApiLoginResponseSchema, response);
+	public login(params: AuthApiLoginParams): Promise<AuthApiLoginResponse> {
+		return this.http.post(
+			{
+				path: "/auth/login",
+				body: params,
+			},
+			AuthApiLoginResponseSchema,
+		);
 	}
 
 	/**
@@ -55,15 +53,14 @@ export class AuthApi {
 	 *   otpCode: "2610"
 	 * });
 	 */
-	public async verify(
-		params: AuthApiVerifyParams,
-	): Promise<AuthApiVerifyResponse> {
-		const response = await this.http.post({
-			path: "/auth/verify",
-			body: params,
-		});
-
-		return parseResponse(AuthApiVerifyResponseSchema, response);
+	public verify(params: AuthApiVerifyParams): Promise<AuthApiVerifyResponse> {
+		return this.http.post(
+			{
+				path: "/auth/verify",
+				body: params,
+			},
+			AuthApiVerifyResponseSchema,
+		);
 	}
 
 	/**
@@ -72,13 +69,15 @@ export class AuthApi {
 	 * @example
 	 * const response = await client.auth.checkToken();
 	 */
-	public async checkToken(
+	public checkToken(
 		params: AuthApiCheckTokenParams = {},
 	): Promise<AuthApiCheckTokenResponse> {
-		return await this.http.get({
-			path: "/auth/check-token",
-			params,
-			schema: AuthApiCheckTokenResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: "/auth/check-token",
+				params,
+			},
+			AuthApiCheckTokenResponseSchema,
+		);
 	}
 }

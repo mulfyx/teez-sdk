@@ -21,10 +21,12 @@ export class PromoApi {
 	 * const promos = await client.promo.list();
 	 */
 	public list(params: PromoApiListParams = {}): Promise<PromoApiListResponse> {
-		return this.http.get({
-			path: "/api/promo",
-			params,
-			schema: PromoApiListResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: "/api/promo",
+				params,
+			},
+			PromoApiListResponseSchema,
+		);
 	}
 }

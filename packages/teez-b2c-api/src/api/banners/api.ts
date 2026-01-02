@@ -23,10 +23,12 @@ export class BannersApi {
 	public list(
 		params: BannersApiListParams = {},
 	): Promise<BannersApiListResponse> {
-		return this.http.get({
-			path: "/api/v3/banners",
-			params,
-			schema: BannersApiListResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: "/api/v3/banners",
+				params,
+			},
+			BannersApiListResponseSchema,
+		);
 	}
 }

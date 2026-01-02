@@ -35,11 +35,13 @@ export class ShopsApi {
 	 * });
 	 */
 	public get(params: ShopsApiGetParams): Promise<ShopsApiGetResponse> {
-		return this.http.get({
-			path: `/api/v1/shops/${params.shopId}`,
-			params,
-			schema: ShopsApiGetResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: `/api/v1/shops/${params.shopId}`,
+				params,
+			},
+			ShopsApiGetResponseSchema,
+		);
 	}
 
 	/**
@@ -51,11 +53,13 @@ export class ShopsApi {
 	public getMonobrand(
 		params: ShopsApiGetMonobrandParams = {},
 	): Promise<ShopsApiGetMonobrandResponse> {
-		return this.http.get({
-			path: "/api/v1/shops/monobrand",
-			params,
-			schema: ShopsApiGetMonobrandResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: "/api/v1/shops/monobrand",
+				params,
+			},
+			ShopsApiGetMonobrandResponseSchema,
+		);
 	}
 
 	/**
@@ -70,10 +74,12 @@ export class ShopsApi {
 	public getProducts(
 		params: ShopsApiGetProductsParams,
 	): Promise<ShopsApiGetProductsResponse> {
-		return this.http.get({
-			path: `/api/v2/shops/${params.shopId}/products`,
-			params,
-			schema: ShopsApiGetProductsResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: `/api/v2/shops/${params.shopId}/products`,
+				params,
+			},
+			ShopsApiGetProductsResponseSchema,
+		);
 	}
 }

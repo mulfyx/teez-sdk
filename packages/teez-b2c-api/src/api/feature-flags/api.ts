@@ -23,10 +23,12 @@ export class FeatureFlagsApi {
 	public list(
 		params: FeatureFlagsApiListParams = {},
 	): Promise<FeatureFlagsApiListResponse> {
-		return this.http.get({
-			path: "/api/v1/feature-flags",
-			params,
-			schema: FeatureFlagsApiListResponseSchema,
-		});
+		return this.http.get(
+			{
+				path: "/api/v1/feature-flags",
+				params,
+			},
+			FeatureFlagsApiListResponseSchema,
+		);
 	}
 }
