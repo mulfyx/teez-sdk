@@ -1,3 +1,5 @@
+import { type HeadersInit } from "../http/types";
+
 /**
  * Merges base headers with new ones (overrides).
  * Returns a new Headers instance without mutating the original source.
