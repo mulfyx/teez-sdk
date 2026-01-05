@@ -55,8 +55,11 @@ The `TeezClient` accepts an optional configuration object:
 
 ```typescript
 interface TeezClientConfig {
-	/** Base URL for the API. Default: "[https://b2c-api.teez.kz](https://b2c-api.teez.kz)" */
+	/** Base URL for the API. Default: "https://b2c-api.teez.kz" */
 	baseUrl?: string;
+
+	/** JWT bearer token for authenticated requests. */
+	token?: string;
 
 	/** Application version. Default: "193" */
 	appVersion?: string;
@@ -144,18 +147,37 @@ const similar = await client.sku.getSimilar({
 });
 ```
 
+### Authentication
+
+```typescript
+// Step 1: Send OTP to phone
+await client.auth.login({ phone: "+77071234567" });
+
+// Step 2: Verify OTP and get access token
+const { accessToken } = await client.auth.verify({
+	phone: "+77071234567",
+	otpCode: "2610",
+});
+
+// Step 3: Use token for authenticated requests
+const authenticatedClient = new TeezClient({ token: accessToken });
+```
+
 ## Available APIs
 
 The client exposes the following API modules:
 
-- `client.banners` - Retrieve banners.
-- `client.categories` - Browse product categories.
-- `client.collections` - access curated collections.
-- `client.featureFlags` - Check feature availability.
-- `client.products` - Search and filter products, get reviews.
-- `client.promo` - Access promotions.
-- `client.shops` - Information about shops.
-- `client.sku` - Detailed SKU information.
+- `client.auth` - Handle authentication, including login and OTP verification.
+- `client.banners` - Retrieve promotional banners.
+- `client.categories` - Browse and search product categories.
+- `client.collections` - Access curated product collections.
+- `client.favorites` - Manage user favorite products.
+- `client.featureFlags` - Check available feature flags.
+- `client.products` - Search products and view reviews.
+- `client.promo` - Access information about active promotions.
+- `client.shops` - Get information about shops and sellers.
+- `client.sku` - Retrieve detailed SKU information.
+- `client.users` - Manage user profiles and preferences.
 
 ## Error Handling
 
