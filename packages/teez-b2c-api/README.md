@@ -1,5 +1,14 @@
 # @teez-sdk/teez-b2c-api
 
+<div align="center">
+
+[![npm version](https://img.shields.io/npm/v/@teez-sdk/teez-b2c-api?style=flat-square&color=blue)](https://www.npmjs.com/package/@teez-sdk/teez-b2c-api)
+[![npm downloads](https://img.shields.io/npm/dm/@teez-sdk/teez-b2c-api?style=flat-square)](https://www.npmjs.com/package/@teez-sdk/teez-b2c-api)
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/@teez-sdk/teez-b2c-api?style=flat-square&label=minzipped)](https://bundlephobia.com/package/@teez-sdk/teez-b2c-api)
+[![Powered by Zod](https://img.shields.io/badge/Validation-Zod-3068b7?style=flat-square&logo=zod&logoColor=white)](https://zod.dev)
+
+</div>
+
 A typed TypeScript client for the Teez B2C API.
 
 ## Features

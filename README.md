@@ -1,5 +1,14 @@
 # Teez SDK
 
+<div align="center">
+
+[![License: MIT](https://img.shields.io/github/license/mulfyx/teez-sdk?style=flat-square&color=yellow)](./LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-%3E=20-green?style=flat-square&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square&logo=prettier&logoColor=white)](https://github.com/prettier/prettier)
+
+</div>
+
 This monorepo contains SDKs and tools for interacting with the Teez platform APIs. It is organized as a workspace to manage multiple packages efficiently.
 
 ## Packages
