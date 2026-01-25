@@ -8,12 +8,6 @@ import * as tseslint from "typescript-eslint";
 
 export default defineConfig([
 	gitignore(),
-	js.configs.recommended,
-	eslintPluginUnicorn.configs.all,
-	tseslint.configs.strictTypeChecked,
-	tseslint.configs.stylisticTypeChecked,
-	importX.flatConfigs.recommended,
-	importX.flatConfigs.typescript,
 	{
 		languageOptions: {
 			parser: tsParser,
@@ -27,6 +21,12 @@ export default defineConfig([
 			},
 		},
 	},
+	js.configs.recommended,
+	eslintPluginUnicorn.configs.all,
+	tseslint.configs.strictTypeChecked,
+	tseslint.configs.stylisticTypeChecked,
+	importX.flatConfigs.recommended,
+	importX.flatConfigs.typescript,
 	{
 		rules: {
 			"@typescript-eslint/consistent-type-imports": [
