@@ -1,18 +1,17 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { doc } from "../../../schema/metadata";
-
-export const skuGetReviewAvailableResponse200Schema = doc({
-	schema: z.object({
-		description: doc({
-			schema: z.string(),
-			description: "Description of the review availability status",
-		}),
-		message: doc({
-			schema: z.string(),
-			description: "Message regarding review availability",
-		}),
+export const skuGetReviewAvailableResponse200Schema = v.pipe(
+	v.object({
+		description: v.pipe(
+			v.string(),
+			v.description("Description of the review availability status"),
+		),
+		message: v.pipe(
+			v.string(),
+			v.description("Message regarding review availability"),
+		),
 	}),
-	description:
+	v.description(
 		"Short message payload returned by the review availability endpoint and its unauthorized error body.",
-});
+	),
+);

@@ -1,6 +1,4 @@
-import * as z from "zod/mini";
-
-import { doc } from "../schema/metadata";
+import * as v from "valibot";
 
 export interface PaginationFieldsOptions {
 	totalCountDescription: string;
@@ -9,15 +7,13 @@ export interface PaginationFieldsOptions {
 	hasPreviousPageDescription?: string;
 	hasNextPageDescription?: string;
 }
-
 export interface PaginationFieldsShape {
-	pageNumber: z.ZodMiniNumber;
-	totalPages: z.ZodMiniNumber;
-	totalCount: z.ZodMiniNumber;
-	hasPreviousPage: z.ZodMiniBoolean;
-	hasNextPage: z.ZodMiniBoolean;
+	pageNumber: v.NumberSchema<undefined>;
+	totalPages: v.NumberSchema<undefined>;
+	totalCount: v.NumberSchema<undefined>;
+	hasPreviousPage: v.BooleanSchema<undefined>;
+	hasNextPage: v.BooleanSchema<undefined>;
 }
-
 export function createPaginationFields({
 	totalCountDescription,
 	pageNumberDescription = "Current page number",
@@ -26,25 +22,13 @@ export function createPaginationFields({
 	hasNextPageDescription = "Indicates if there is a next page",
 }: PaginationFieldsOptions): PaginationFieldsShape {
 	return {
-		pageNumber: doc({
-			schema: z.number(),
-			description: pageNumberDescription,
-		}),
-		totalPages: doc({
-			schema: z.number(),
-			description: totalPagesDescription,
-		}),
-		totalCount: doc({
-			schema: z.number(),
-			description: totalCountDescription,
-		}),
-		hasPreviousPage: doc({
-			schema: z.boolean(),
-			description: hasPreviousPageDescription,
-		}),
-		hasNextPage: doc({
-			schema: z.boolean(),
-			description: hasNextPageDescription,
-		}),
+		pageNumber: v.pipe(v.number(), v.description(pageNumberDescription)),
+		totalPages: v.pipe(v.number(), v.description(totalPagesDescription)),
+		totalCount: v.pipe(v.number(), v.description(totalCountDescription)),
+		hasPreviousPage: v.pipe(
+			v.boolean(),
+			v.description(hasPreviousPageDescription),
+		),
+		hasNextPage: v.pipe(v.boolean(), v.description(hasNextPageDescription)),
 	} satisfies PaginationFieldsShape;
 }

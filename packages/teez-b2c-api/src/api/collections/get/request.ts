@@ -1,13 +1,11 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { doc } from "../../../schema/metadata";
-
-export const collectionsGetRequestPathSchema = doc({
-	schema: z.object({
-		collectionId: doc({
-			schema: z.number(),
-			description: "Unique identifier of the collection",
-		}),
+export const collectionsGetRequestPathSchema = v.pipe(
+	v.object({
+		collectionId: v.pipe(
+			v.number(),
+			v.description("Unique identifier of the collection"),
+		),
 	}),
-	description: "Parameters for fetching a specific collection.",
-});
+	v.description("Parameters for fetching a specific collection."),
+);

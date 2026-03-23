@@ -1,13 +1,8 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { doc } from "../../../schema/metadata";
-
-export const shopsGetRequestPathSchema = doc({
-	schema: z.object({
-		shopId: doc({
-			schema: z.number(),
-			description: "Unique identifier of the shop",
-		}),
+export const shopsGetRequestPathSchema = v.pipe(
+	v.object({
+		shopId: v.pipe(v.number(), v.description("Unique identifier of the shop")),
 	}),
-	description: "Parameters for fetching a specific shop.",
-});
+	v.description("Parameters for fetching a specific shop."),
+);

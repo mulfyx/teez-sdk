@@ -1,51 +1,57 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import {
-	nullishToUndefined,
-	type NullishSchema,
-	type OptionalSchema,
-} from "../../../schema/codecs";
-import { doc, registerSchemaDoc } from "../../../schema/metadata";
+import { nullishToUndefined } from "../../../schema/nullish";
 
-type CategoriesGetParentsSubcategoriesSchema = z.ZodMiniCodec<
-	NullishSchema<z.ZodMiniArray<typeof categoriesGetParentsItemSchema>>,
-	OptionalSchema<z.ZodMiniArray<typeof categoriesGetParentsItemSchema>>
->;
-
-export const categoriesGetParentsItemSchema = doc({
-	schema: z.object({
-		id: doc({
-			schema: z.number(),
-			description: "Unique identifier of the category",
-		}),
-		name: doc({
-			schema: z.string(),
-			description: "Localized display name of the category",
-		}),
-		level: doc({
-			schema: z.number(),
-			description: "Depth level in the category tree",
-		}),
-		hasSubcategories: doc({
-			schema: z.boolean(),
-			description: "Indicates if there are nested subcategories",
-		}),
-		get subcategories(): CategoriesGetParentsSubcategoriesSchema {
-			const subcategoriesSchema = nullishToUndefined(
-				z.array(categoriesGetParentsItemSchema),
-			);
-
-			return registerSchemaDoc(subcategoriesSchema, {
-				description: "List of nested subcategories.",
-			});
-		},
+export interface CategoriesGetParentsItemInput {
+	id: number;
+	name: string;
+	level: number;
+	hasSubcategories: boolean;
+	subcategories?: CategoriesGetParentsItemInput[] | null | undefined;
+}
+export interface CategoriesGetParentsItemOutput {
+	id: number;
+	name: string;
+	level: number;
+	hasSubcategories: boolean;
+	subcategories?: CategoriesGetParentsItemOutput[] | undefined;
+}
+function createCategoriesGetParentsSubcategoriesSchema(): v.GenericSchema<
+	CategoriesGetParentsItemInput[] | null | undefined,
+	CategoriesGetParentsItemOutput[] | undefined
+> {
+	return v.pipe(
+		nullishToUndefined(v.array(v.lazy(() => categoriesGetParentsItemSchema))),
+		v.description("List of nested subcategories."),
+	);
+}
+export const categoriesGetParentsItemSchema: v.GenericSchema<
+	CategoriesGetParentsItemInput,
+	CategoriesGetParentsItemOutput
+> = v.pipe(
+	v.object({
+		id: v.pipe(v.number(), v.description("Unique identifier of the category")),
+		name: v.pipe(
+			v.string(),
+			v.description("Localized display name of the category"),
+		),
+		level: v.pipe(
+			v.number(),
+			v.description("Depth level in the category tree"),
+		),
+		hasSubcategories: v.pipe(
+			v.boolean(),
+			v.description("Indicates if there are nested subcategories"),
+		),
+		subcategories: createCategoriesGetParentsSubcategoriesSchema(),
 	}),
-	description:
+	v.description(
 		"Category node used inside parent-category chains, including nested subcategories.",
-});
-
-export const categoriesGetParentsResponse200Schema = doc({
-	schema: z.array(categoriesGetParentsItemSchema),
-	description:
+	),
+);
+export const categoriesGetParentsResponse200Schema = v.pipe(
+	v.array(categoriesGetParentsItemSchema),
+	v.description(
 		"Parent category chains returned for the requested category identifiers.",
-});
+	),
+);

@@ -1,6 +1,6 @@
 # @teez-sdk/teez-b2c-api
 
-Typed SDK for the Teez B2C API built around operation definitions, `zod/mini` schemas, runtime validation, and a registry that can be reused for SDK, MCP, and documentation generation.
+Typed SDK for the Teez B2C API built around operation definitions, `valibot` schemas, runtime validation, and an operation catalog that can be reused for SDK, MCP, and documentation generation.
 
 Use `createTeezClient()` for the full client, or `createTeezClientFromOperations(...)` to assemble a smaller client from selected operation groups for better tree-shaking.
 
@@ -100,7 +100,7 @@ import { createTeezClient } from "@teez-sdk/teez-b2c-api";
 const client = createTeezClient();
 ```
 
-If your application only needs part of the API, prefer `createTeezClientFromOperations(...)`. It lets bundlers drop unused operation groups instead of pulling in the full registry:
+If your application only needs part of the API, prefer `createTeezClientFromOperations(...)`. It lets bundlers drop unused operation groups instead of pulling in the full operation catalog:
 
 ```ts
 import {
@@ -167,7 +167,7 @@ Every operation validates:
 - success payloads after the response is received
 - error response bodies before they are attached to `TeezApiError.parsedBody`
 
-The package keeps its `zod/mini` schemas as internal validation details. Public type exports stay at the operation level:
+The package keeps its `valibot` schemas as internal validation details. Public type exports stay at the operation level:
 
 ```ts
 import {
@@ -182,9 +182,9 @@ import {
 
 Generated schema-derived model types are intentionally not part of the package contract. If an application needs its own domain models, define them locally.
 
-## Operation Registry
+## Operation Catalog
 
-The SDK exposes the grouped registry, a flat list, and name lookup helpers:
+The SDK exposes the grouped operation catalog, a flat list, and name lookup helpers:
 
 ```ts
 import {

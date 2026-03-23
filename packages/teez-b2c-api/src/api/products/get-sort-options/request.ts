@@ -1,17 +1,15 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { doc } from "../../../schema/metadata";
-
-export const productsGetSortOptionsRequestQuerySchema = doc({
-	schema: z.object({
-		IsSearch: doc({
-			schema: z.nullish(z.boolean()),
-			description: "Indicates if the context is a search result",
-		}),
-		IsPromo: doc({
-			schema: z.nullish(z.boolean()),
-			description: "Indicates if the context is a promotional listing",
-		}),
+export const productsGetSortOptionsRequestQuerySchema = v.pipe(
+	v.object({
+		IsSearch: v.pipe(
+			v.nullish(v.boolean()),
+			v.description("Indicates if the context is a search result"),
+		),
+		IsPromo: v.pipe(
+			v.nullish(v.boolean()),
+			v.description("Indicates if the context is a promotional listing"),
+		),
 	}),
-	description: "Parameters for fetching product sort options.",
-});
+	v.description("Parameters for fetching product sort options."),
+);

@@ -1,46 +1,38 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { doc } from "../../schema/metadata";
-
-export const rangeFilterOptionSchema = doc({
-	schema: z.object({
-		min: doc({
-			schema: z.number(),
-			description: "Minimum value for range filters",
-		}),
-		max: doc({
-			schema: z.number(),
-			description: "Maximum value for range filters",
-		}),
+export const rangeFilterOptionSchema = v.pipe(
+	v.object({
+		min: v.pipe(v.number(), v.description("Minimum value for range filters")),
+		max: v.pipe(v.number(), v.description("Maximum value for range filters")),
 	}),
-	description:
+	v.description(
 		"Schema for range filter options (e.g., price slider).\nCommon schema used by multiple APIs.",
-});
-
-export const rangeTypeSchema = doc({
-	schema: z.literal("range"),
-	description: "Type literal for range-based filters",
-});
-
-export const rangeFilterSchema = doc({
-	schema: z.object({
-		type: doc({
-			schema: rangeTypeSchema,
-			description: "Filter type: range for price slider",
-		}),
-		name: doc({
-			schema: z.string(),
-			description: "Localized display name of the filter",
-		}),
-		code: doc({
-			schema: z.string(),
-			description: "Unique code identifying the filter type",
-		}),
-		options: doc({
-			schema: z.array(rangeFilterOptionSchema),
-			description: "List of available options for this filter",
-		}),
+	),
+);
+export const rangeTypeSchema = v.pipe(
+	v.literal("range"),
+	v.description("Type literal for range-based filters"),
+);
+export const rangeFilterSchema = v.pipe(
+	v.object({
+		type: v.pipe(
+			rangeTypeSchema,
+			v.description("Filter type: range for price slider"),
+		),
+		name: v.pipe(
+			v.string(),
+			v.description("Localized display name of the filter"),
+		),
+		code: v.pipe(
+			v.string(),
+			v.description("Unique code identifying the filter type"),
+		),
+		options: v.pipe(
+			v.array(rangeFilterOptionSchema),
+			v.description("List of available options for this filter"),
+		),
 	}),
-	description:
+	v.description(
 		"Schema for range filters (e.g., price slider).\nUse this in discriminatedUnion-based filter schemas.",
-});
+	),
+);

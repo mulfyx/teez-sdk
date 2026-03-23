@@ -1,38 +1,32 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { doc } from "../../../schema/metadata";
-
-export const categoriesListItemSchema = doc({
-	schema: z.object({
-		id: doc({
-			schema: z.number(),
-			description: "Unique identifier of the category",
-		}),
-		name: doc({
-			schema: z.string(),
-			description: "Localized display name of the category",
-		}),
-		level: doc({
-			schema: z.number(),
-			description: "Depth level in the category tree",
-		}),
-		parentId: doc({
-			schema: z.number(),
-			description: "Identifier of the parent category",
-		}),
-		hasSubcategories: doc({
-			schema: z.boolean(),
-			description: "Indicates if there are nested subcategories",
-		}),
-		isAdult: doc({
-			schema: z.boolean(),
-			description: "Indicates if the category contains adult content",
-		}),
+export const categoriesListItemSchema = v.pipe(
+	v.object({
+		id: v.pipe(v.number(), v.description("Unique identifier of the category")),
+		name: v.pipe(
+			v.string(),
+			v.description("Localized display name of the category"),
+		),
+		level: v.pipe(
+			v.number(),
+			v.description("Depth level in the category tree"),
+		),
+		parentId: v.pipe(
+			v.number(),
+			v.description("Identifier of the parent category"),
+		),
+		hasSubcategories: v.pipe(
+			v.boolean(),
+			v.description("Indicates if there are nested subcategories"),
+		),
+		isAdult: v.pipe(
+			v.boolean(),
+			v.description("Indicates if the category contains adult content"),
+		),
 	}),
-	description: "Category node returned by the category tree endpoint.",
-});
-
-export const categoriesListResponse200Schema = doc({
-	schema: z.array(categoriesListItemSchema),
-	description: "Top-level category tree returned for storefront navigation.",
-});
+	v.description("Category node returned by the category tree endpoint."),
+);
+export const categoriesListResponse200Schema = v.pipe(
+	v.array(categoriesListItemSchema),
+	v.description("Top-level category tree returned for storefront navigation."),
+);

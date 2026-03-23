@@ -1,21 +1,19 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { doc } from "../../../schema/metadata";
-
-export const shopsGetMonobrandRequestQuerySchema = doc({
-	schema: z.object({
-		seed: doc({
-			schema: z.nullish(z.number()),
-			description: "Random seed for consistent pagination",
-		}),
-		pageNumber: doc({
-			schema: z.nullish(z.number()),
-			description: "Number of the page to retrieve",
-		}),
-		pageSize: doc({
-			schema: z.nullish(z.number()),
-			description: "Number of items per page",
-		}),
+export const shopsGetMonobrandRequestQuerySchema = v.pipe(
+	v.object({
+		seed: v.pipe(
+			v.nullish(v.number()),
+			v.description("Random seed for consistent pagination"),
+		),
+		pageNumber: v.pipe(
+			v.nullish(v.number()),
+			v.description("Number of the page to retrieve"),
+		),
+		pageSize: v.pipe(
+			v.nullish(v.number()),
+			v.description("Number of items per page"),
+		),
 	}),
-	description: "Parameters for fetching monobrand shops.",
-});
+	v.description("Parameters for fetching monobrand shops."),
+);

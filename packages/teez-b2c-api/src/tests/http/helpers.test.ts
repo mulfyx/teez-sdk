@@ -1,5 +1,5 @@
+import * as v from "valibot";
 import { describe, expect, test } from "vitest";
-import * as z from "zod/mini";
 
 import { TeezValidationError } from "../../errors/teez-validation-error";
 import { getObjectSchemaKeys } from "../../schema/object-schema";
@@ -50,9 +50,9 @@ describe("http helpers", () => {
 	});
 
 	test("returns object schema keys", () => {
-		const schema = z.object({
-			id: z.number(),
-			name: z.string(),
+		const schema = v.object({
+			id: v.number(),
+			name: v.string(),
 		});
 
 		expect(getObjectSchemaKeys(schema)).toEqual(["id", "name"]);
@@ -105,8 +105,8 @@ describe("http helpers", () => {
 	});
 
 	test("parses schemas successfully", () => {
-		const schema = z.object({
-			id: z.number(),
+		const schema = v.object({
+			id: v.number(),
 		});
 
 		expect(parseSchema(schema, { id: 1 }, "failed")).toEqual({
@@ -115,8 +115,8 @@ describe("http helpers", () => {
 	});
 
 	test("throws normalized validation errors", () => {
-		const schema = z.object({
-			id: z.number(),
+		const schema = v.object({
+			id: v.number(),
 		});
 
 		expect(() => parseSchema(schema, { id: "bad" }, "custom message")).toThrow(
@@ -134,7 +134,7 @@ describe("http helpers", () => {
 
 			expect(error.message).toBe("custom message");
 			expect(error.issues).toHaveLength(1);
-			expect(error.issues[0]?.code).toBe("invalid_type");
+			expect(error.issues[0]?.code).toBe("number");
 			expect(error.issues[0]?.path).toEqual(["id"]);
 			expect(error.issues[0]?.message).toBeTruthy();
 			expect(error.data).toEqual({
@@ -144,8 +144,8 @@ describe("http helpers", () => {
 	});
 
 	test("adds operation-specific messages for input and response parsing", () => {
-		const schema = z.object({
-			id: z.number(),
+		const schema = v.object({
+			id: v.number(),
 		});
 
 		expect(() => parseInput(schema, { id: "bad" }, "demo.input")).toThrow(

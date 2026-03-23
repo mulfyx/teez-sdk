@@ -1,35 +1,32 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { doc } from "../../../schema/metadata";
-
-export const productsGetSortOptionsSortKeySchema = doc({
-	schema: z.union([
-		z.literal("byRelevance"),
-		z.literal("popularity"),
-		z.literal("highestRated"),
-		z.literal("new"),
-		z.literal("price"),
-		z.literal("priceDesc"),
+export const productsGetSortOptionsSortKeySchema = v.pipe(
+	v.union([
+		v.literal("byRelevance"),
+		v.literal("popularity"),
+		v.literal("highestRated"),
+		v.literal("new"),
+		v.literal("price"),
+		v.literal("priceDesc"),
 	]),
-	description: "Type union for product sort keys",
-});
-
-export const productsGetSortOptionsOptionSchema = doc({
-	schema: z.object({
-		key: doc({
-			schema: productsGetSortOptionsSortKeySchema,
-			description:
+	v.description("Type union for product sort keys"),
+);
+export const productsGetSortOptionsOptionSchema = v.pipe(
+	v.object({
+		key: v.pipe(
+			productsGetSortOptionsSortKeySchema,
+			v.description(
 				'Sort key - "popularity", "highestRated", "new", "price", or "priceDesc"',
-		}),
-		name: doc({
-			schema: z.string(),
-			description: "Localized display name of the sort option",
-		}),
+			),
+		),
+		name: v.pipe(
+			v.string(),
+			v.description("Localized display name of the sort option"),
+		),
 	}),
-	description: "Sort option returned by product listing endpoints.",
-});
-
-export const productsGetSortOptionsResponse200Schema = doc({
-	schema: z.array(productsGetSortOptionsOptionSchema),
-	description: "List of sort options supported by product listing endpoints.",
-});
+	v.description("Sort option returned by product listing endpoints."),
+);
+export const productsGetSortOptionsResponse200Schema = v.pipe(
+	v.array(productsGetSortOptionsOptionSchema),
+	v.description("List of sort options supported by product listing endpoints."),
+);

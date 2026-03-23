@@ -1,17 +1,15 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { doc } from "../../../schema/metadata";
-
-export const categoriesGetParentsRequestQuerySchema = doc({
-	schema: z.object({
-		categoryId: doc({
-			schema: z.array(z.number()),
-			description: "List of category IDs to find parents for",
-		}),
-		level: doc({
-			schema: z.nullish(z.number()),
-			description: "Hierarchy level to filter by",
-		}),
+export const categoriesGetParentsRequestQuerySchema = v.pipe(
+	v.object({
+		categoryId: v.pipe(
+			v.array(v.number()),
+			v.description("List of category IDs to find parents for"),
+		),
+		level: v.pipe(
+			v.nullish(v.number()),
+			v.description("Hierarchy level to filter by"),
+		),
 	}),
-	description: "Parameters for fetching parent categories.",
-});
+	v.description("Parameters for fetching parent categories."),
+);

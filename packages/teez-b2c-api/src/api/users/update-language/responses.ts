@@ -1,23 +1,17 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { doc } from "../../../schema/metadata";
 import { usersUpdateLanguageValueSchema } from "./request";
 
-export const usersUpdateLanguageResponse200Schema = doc({
-	schema: z.object({
-		language: doc({
-			schema: usersUpdateLanguageValueSchema,
-			description: "Updated language code",
-		}),
-		title: doc({
-			schema: z.string(),
-			description: "Response title",
-		}),
-		message: doc({
-			schema: z.string(),
-			description: "Response message",
-		}),
+export const usersUpdateLanguageResponse200Schema = v.pipe(
+	v.object({
+		language: v.pipe(
+			usersUpdateLanguageValueSchema,
+			v.description("Updated language code"),
+		),
+		title: v.pipe(v.string(), v.description("Response title")),
+		message: v.pipe(v.string(), v.description("Response message")),
 	}),
-	description:
+	v.description(
 		"Confirmation payload returned after the user's preferred language is updated.",
-});
+	),
+);

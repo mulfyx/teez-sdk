@@ -1,20 +1,19 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { doc } from "../../../schema/metadata";
-
-export const usersUpdateLanguageValueSchema = doc({
-	schema: z.enum(["ru", "kz"]),
-	description:
+export const usersUpdateLanguageValueSchema = v.pipe(
+	v.picklist(["ru", "kz"]),
+	v.description(
 		'Language code accepted by the update language endpoint: "ru" or "kz".',
-});
-
-export const usersUpdateLanguageRequestBodySchema = doc({
-	schema: z.object({
-		language: doc({
-			schema: usersUpdateLanguageValueSchema,
-			description: 'Language code: "ru" (Russian) or "kz" (Kazakh)',
-		}),
+	),
+);
+export const usersUpdateLanguageRequestBodySchema = v.pipe(
+	v.object({
+		language: v.pipe(
+			usersUpdateLanguageValueSchema,
+			v.description('Language code: "ru" (Russian) or "kz" (Kazakh)'),
+		),
 	}),
-	description:
+	v.description(
 		"Request body for updating the authenticated user's preferred language.",
-});
+	),
+);

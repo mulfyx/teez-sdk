@@ -1,5 +1,5 @@
+import * as v from "valibot";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
-import * as z from "zod/mini";
 
 import { defineHttpOperation } from "../http-operation/define";
 import { emptyResponse, response } from "../http-operation/response-helpers";
@@ -18,8 +18,8 @@ const pingOperation = defineHttpOperation({
 	},
 	responses: {
 		200: response({
-			schema: z.object({
-				ok: z.boolean(),
+			schema: v.object({
+				ok: v.boolean(),
 			}),
 		}),
 	},
@@ -34,15 +34,15 @@ const searchOperation = defineHttpOperation({
 		method: "GET",
 		path: "/search",
 		query: {
-			schema: z.object({
-				value: z.optional(z.string()),
+			schema: v.object({
+				value: v.optional(v.string()),
 			}),
 		},
 	},
 	responses: {
 		200: response({
-			schema: z.object({
-				ok: z.boolean(),
+			schema: v.object({
+				ok: v.boolean(),
 			}),
 		}),
 	},
@@ -57,15 +57,15 @@ const echoOperation = defineHttpOperation({
 		method: "POST",
 		path: "/echo",
 		body: {
-			schema: z.object({
-				value: z.string(),
+			schema: v.object({
+				value: v.string(),
 			}),
 		},
 	},
 	responses: {
 		200: response({
-			schema: z.object({
-				value: z.string(),
+			schema: v.object({
+				value: v.string(),
 			}),
 		}),
 	},
@@ -80,7 +80,7 @@ const rawBodyOperation = defineHttpOperation({
 		method: "POST",
 		path: "/raw",
 		body: {
-			schema: z.array(z.number()),
+			schema: v.array(v.number()),
 		},
 	},
 	responses: {
@@ -98,21 +98,21 @@ const secureItemOperation = defineHttpOperation({
 		method: "GET",
 		path: {
 			template: "/secure-items/{id}",
-			schema: z.object({
-				id: z.number(),
+			schema: v.object({
+				id: v.number(),
 			}),
 		},
 		headers: {
-			schema: z.object({
-				token: z.string(),
+			schema: v.object({
+				token: v.string(),
 			}),
 		},
 	},
 	responses: {
 		200: response({
-			schema: z.object({
-				id: z.number(),
-				ok: z.boolean(),
+			schema: v.object({
+				id: v.number(),
+				ok: v.boolean(),
 			}),
 		}),
 	},

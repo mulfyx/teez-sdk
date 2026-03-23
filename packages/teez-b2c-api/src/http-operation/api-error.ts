@@ -1,10 +1,10 @@
-import type { TeezApiError } from "../errors/teez-api-error";
+import { type TeezApiError } from "../errors/teez-api-error";
 import { TeezApiError as RuntimeTeezApiError } from "../errors/teez-api-error";
-import type {
-	HttpOperationErrorBody,
-	HttpOperationErrorStatus,
+import {
+	type HttpOperationErrorBody,
+	type HttpOperationErrorStatus,
 } from "./inference";
-import type { AnyHttpOperationDef } from "./types";
+import { type AnyHttpOperationDef } from "./types";
 
 export interface TypedTeezApiError<
 	TStatus extends number = number,

@@ -1,13 +1,11 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { doc } from "../../../schema/metadata";
-
-export const categoriesGetRequestPathSchema = doc({
-	schema: z.object({
-		categoryId: doc({
-			schema: z.number(),
-			description: "Unique identifier of the category",
-		}),
+export const categoriesGetRequestPathSchema = v.pipe(
+	v.object({
+		categoryId: v.pipe(
+			v.number(),
+			v.description("Unique identifier of the category"),
+		),
 	}),
-	description: "Parameters for fetching a specific category.",
-});
+	v.description("Parameters for fetching a specific category."),
+);

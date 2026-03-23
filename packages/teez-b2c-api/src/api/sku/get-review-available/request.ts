@@ -1,13 +1,8 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { doc } from "../../../schema/metadata";
-
-export const skuGetReviewAvailableRequestPathSchema = doc({
-	schema: z.object({
-		skuId: doc({
-			schema: z.number(),
-			description: "Unique identifier of the SKU",
-		}),
+export const skuGetReviewAvailableRequestPathSchema = v.pipe(
+	v.object({
+		skuId: v.pipe(v.number(), v.description("Unique identifier of the SKU")),
 	}),
-	description: "Parameters for checking review availability.",
-});
+	v.description("Parameters for checking review availability."),
+);

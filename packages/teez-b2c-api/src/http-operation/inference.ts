@@ -1,55 +1,55 @@
 import {
-	type ZodMiniType,
-	type input as ZodSchemaInput,
-	type output as ZodSchemaOutput,
-} from "zod/mini";
+	type InferInput as SchemaInput,
+	type InferOutput as SchemaOutput,
+} from "valibot";
 
+import { type AnySchema } from "../schema/types";
 import { type Simplify } from "../type-utils/simplify";
 import { type HttpSuccessStatusCode } from "./status";
 import {
 	type AnyHttpOperationDef,
 	type HttpOperationResponse,
-	type ZodObjectSchema,
+	type ObjectSchemaType,
 } from "./types";
 
 type EmptyObject = Record<never, never>;
 
 type PathSchemaOf<T extends AnyHttpOperationDef> =
 	T["request"]["path"] extends { readonly schema: infer TPathSchema }
-		? Extract<TPathSchema, ZodObjectSchema>
+		? Extract<TPathSchema, ObjectSchemaType>
 		: undefined;
 
 type QuerySchemaOf<T extends AnyHttpOperationDef> = T["request"] extends {
 	readonly query: { readonly schema: infer TQuerySchema };
 }
-	? Extract<TQuerySchema, ZodObjectSchema>
+	? Extract<TQuerySchema, ObjectSchemaType>
 	: undefined;
 
 type HeadersSchemaOf<T extends AnyHttpOperationDef> = T["request"] extends {
 	readonly headers: { readonly schema: infer THeadersSchema };
 }
-	? Extract<THeadersSchema, ZodObjectSchema>
+	? Extract<THeadersSchema, ObjectSchemaType>
 	: undefined;
 
 type BodySchemaOf<T extends AnyHttpOperationDef> = T["request"] extends {
 	readonly body: { readonly schema: infer TBodySchema };
 }
-	? Extract<TBodySchema, ZodMiniType>
+	? Extract<TBodySchema, AnySchema>
 	: undefined;
 
 type RequestSectionEntry<
 	TName extends string,
-	TSchema extends ZodMiniType | undefined,
-> = [TSchema] extends [ZodMiniType]
-	? Readonly<Record<TName, ZodSchemaInput<Extract<TSchema, ZodMiniType>>>>
+	TSchema extends AnySchema | undefined,
+> = [TSchema] extends [AnySchema]
+	? Readonly<Record<TName, SchemaInput<Extract<TSchema, AnySchema>>>>
 	: EmptyObject;
 
-type RequestSectionFlatShape<TSchema extends ZodMiniType | undefined> = [
+type RequestSectionFlatShape<TSchema extends AnySchema | undefined> = [
 	TSchema,
 ] extends [undefined]
 	? EmptyObject
-	: TSchema extends ZodObjectSchema
-		? ZodSchemaInput<TSchema>
+	: TSchema extends ObjectSchemaType
+		? SchemaInput<TSchema>
 		: never;
 
 type MergeWithoutOverlaps<TLeft, TRight> = [TLeft] extends [never]
@@ -77,8 +77,8 @@ type RequestInputOf<TRequest> = keyof TRequest extends never
 
 type ResponseSchemaData<TResponse extends HttpOperationResponse | undefined> =
 	TResponse extends { readonly schema: infer TResponseSchema }
-		? [Extract<TResponseSchema, ZodMiniType>] extends [ZodMiniType]
-			? ZodSchemaOutput<Extract<TResponseSchema, ZodMiniType>>
+		? [Extract<TResponseSchema, AnySchema>] extends [AnySchema]
+			? SchemaOutput<Extract<TResponseSchema, AnySchema>>
 			: undefined
 		: undefined;
 

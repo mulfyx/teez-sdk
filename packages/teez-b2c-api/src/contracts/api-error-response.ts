@@ -1,19 +1,19 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { doc } from "../schema/metadata";
-
-export const apiErrorResponseSchema = doc({
-	schema: z.object({
-		description: doc({
-			schema: z.string(),
-			description:
+export const apiErrorResponseSchema = v.pipe(
+	v.object({
+		description: v.pipe(
+			v.string(),
+			v.description(
 				"Short backend error description or machine-readable reason.",
-		}),
-		message: doc({
-			schema: z.string(),
-			description: "Localized human-readable error message.",
-		}),
+			),
+		),
+		message: v.pipe(
+			v.string(),
+			v.description("Localized human-readable error message."),
+		),
 	}),
-	description:
+	v.description(
 		"Default API error body returned by many non-2xx responses, including unauthorized and validation errors.",
-});
+	),
+);

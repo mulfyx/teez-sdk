@@ -1,15 +1,13 @@
-import { type ZodMiniType } from "zod/mini";
-
 import {
 	type HttpOperationFlatRequest,
 	type HttpOperationRequestSections,
 } from "../http-operation/inference";
-import { type AnyHttpOperationDef } from "../http-operation/types";
+import { type AnyHttpOperationDef, type AnySchema } from "../http-operation/types";
 import { getObjectSchemaKeys, isObjectSchema } from "../schema/object-schema";
 
 function pickFlatSection(
 	flatInput: Record<string, unknown>,
-	schema: ZodMiniType | undefined,
+	schema: AnySchema | undefined,
 ): Record<string, unknown> | undefined {
 	if (schema == undefined || !isObjectSchema(schema)) {
 		return undefined;

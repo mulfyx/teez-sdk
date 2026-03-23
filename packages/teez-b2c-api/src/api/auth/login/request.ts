@@ -1,14 +1,13 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { doc } from "../../../schema/metadata";
-
-export const authLoginRequestBodySchema = doc({
-	schema: z.object({
-		phone: doc({
-			schema: z.string(),
-			description:
+export const authLoginRequestBodySchema = v.pipe(
+	v.object({
+		phone: v.pipe(
+			v.string(),
+			v.description(
 				'Phone number with country code in E.164 format (e.g., "+77071234567")',
-		}),
+			),
+		),
 	}),
-	description: "Parameters for initiating phone login (sends OTP).",
-});
+	v.description("Parameters for initiating phone login (sends OTP)."),
+);

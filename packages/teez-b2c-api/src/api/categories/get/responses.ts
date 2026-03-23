@@ -1,52 +1,69 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { nullishToUndefined } from "../../../schema/codecs";
-import { doc, registerSchemaDoc } from "../../../schema/metadata";
+import { nullishToUndefined } from "../../../schema/nullish";
 
-export const categoriesGetItemSchema = doc({
-	schema: z.object({
-		id: doc({
-			schema: z.number(),
-			description: "Unique identifier of the category",
-		}),
-		name: doc({
-			schema: z.string(),
-			description: "Localized display name of the category",
-		}),
-		level: doc({
-			schema: z.number(),
-			description: "Depth level in the category tree",
-		}),
-		parentId: doc({
-			schema: z.number(),
-			description: "Identifier of the parent category",
-		}),
-		hasSubcategories: doc({
-			schema: z.boolean(),
-			description: "Indicates if there are nested subcategories",
-		}),
-		isAdult: doc({
-			schema: z.boolean(),
-			description: "Indicates if the category contains adult content",
-		}),
-		get subcategories() {
-			const subcategoriesSchema = nullishToUndefined(
-				z.array(categoriesGetItemSchema),
-			);
-
-			registerSchemaDoc(subcategoriesSchema, {
-				description: "List of nested subcategories.",
-			});
-
-			return subcategoriesSchema;
-		},
+export interface CategoriesGetItemInput {
+	id: number;
+	name: string;
+	level: number;
+	parentId: number;
+	hasSubcategories: boolean;
+	isAdult: boolean;
+	subcategories?: CategoriesGetItemInput[] | null | undefined;
+}
+export interface CategoriesGetItemOutput {
+	id: number;
+	name: string;
+	level: number;
+	parentId: number;
+	hasSubcategories: boolean;
+	isAdult: boolean;
+	subcategories?: CategoriesGetItemOutput[] | undefined;
+}
+function createCategoriesGetSubcategoriesSchema(): v.GenericSchema<
+	CategoriesGetItemInput[] | null | undefined,
+	CategoriesGetItemOutput[] | undefined
+> {
+	return v.pipe(
+		nullishToUndefined(v.array(v.lazy(() => categoriesGetItemSchema))),
+		v.description("List of nested subcategories."),
+	);
+}
+export const categoriesGetItemSchema: v.GenericSchema<
+	CategoriesGetItemInput,
+	CategoriesGetItemOutput
+> = v.pipe(
+	v.object({
+		id: v.pipe(v.number(), v.description("Unique identifier of the category")),
+		name: v.pipe(
+			v.string(),
+			v.description("Localized display name of the category"),
+		),
+		level: v.pipe(
+			v.number(),
+			v.description("Depth level in the category tree"),
+		),
+		parentId: v.pipe(
+			v.number(),
+			v.description("Identifier of the parent category"),
+		),
+		hasSubcategories: v.pipe(
+			v.boolean(),
+			v.description("Indicates if there are nested subcategories"),
+		),
+		isAdult: v.pipe(
+			v.boolean(),
+			v.description("Indicates if the category contains adult content"),
+		),
+		subcategories: createCategoriesGetSubcategoriesSchema(),
 	}),
-	description:
+	v.description(
 		"Category node returned by the category detail endpoint, including immediate subcategories.",
-});
-
-export const categoriesGetResponse200Schema = doc({
-	schema: categoriesGetItemSchema,
-	description:
+	),
+);
+export const categoriesGetResponse200Schema = v.pipe(
+	categoriesGetItemSchema,
+	v.description(
 		"Category detail response with the selected category and its immediate subcategories.",
-});
+	),
+);

@@ -1,13 +1,12 @@
-import { type ZodMiniType } from "zod/mini";
-
 import {
+	type AnySchema,
 	type HttpOperationEmptyResponse,
 	type HttpOperationEmptyResponseOptions,
 	type HttpOperationJsonResponse,
 	type HttpOperationJsonResponseOptions,
 } from "./types";
 
-export function response<const TSchema extends ZodMiniType>({
+export function response<const TSchema extends AnySchema>({
 	schema,
 	description,
 	contentType,

@@ -1,100 +1,72 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { nullishToUndefined } from "../../../schema/codecs";
-import { doc } from "../../../schema/metadata";
+import { nullishToUndefined } from "../../../schema/nullish";
 
-export const shopsGetContactInfoSchema = doc({
-	schema: z.object({
-		bin: doc({
-			schema: z.string(),
-			description: "Business Identification Number",
-		}),
-		daysSinceRegistration: doc({
-			schema: z.number(),
-			description: "Number of days since the shop was registered",
-		}),
-		legalType: doc({
-			schema: z.number(),
-			description: "Legal entity type code",
-		}),
+export const shopsGetContactInfoSchema = v.pipe(
+	v.object({
+		bin: v.pipe(v.string(), v.description("Business Identification Number")),
+		daysSinceRegistration: v.pipe(
+			v.number(),
+			v.description("Number of days since the shop was registered"),
+		),
+		legalType: v.pipe(v.number(), v.description("Legal entity type code")),
 	}),
-	description: "Merchant registration metadata returned for a shop.",
-});
-
-export const shopsGetTagSchema = doc({
-	schema: z.object({
-		description: doc({
-			schema: z.string(),
-			description: "Description of the tag",
-		}),
-		icon: doc({
-			schema: z.string(),
-			description: "URL to the raster icon for the tag",
-		}),
-		name: doc({
-			schema: z.string(),
-			description: "Display name of the tag",
-		}),
-		svg: doc({
-			schema: z.string(),
-			description: "URL to the SVG icon for the tag",
-		}),
-		code: doc({
-			schema: z.string(),
-			description: "Unique code for the tag",
-		}),
+	v.description("Merchant registration metadata returned for a shop."),
+);
+export const shopsGetTagSchema = v.pipe(
+	v.object({
+		description: v.pipe(v.string(), v.description("Description of the tag")),
+		icon: v.pipe(
+			v.string(),
+			v.description("URL to the raster icon for the tag"),
+		),
+		name: v.pipe(v.string(), v.description("Display name of the tag")),
+		svg: v.pipe(v.string(), v.description("URL to the SVG icon for the tag")),
+		code: v.pipe(v.string(), v.description("Unique code for the tag")),
 	}),
-	description: "Merchant quality tag returned by the shop endpoint.",
-});
-
-export const shopsGetResponse200Schema = doc({
-	schema: z.object({
-		id: doc({
-			schema: z.number(),
-			description: "Unique identifier of the shop",
-		}),
-		banner: doc({
-			schema: nullishToUndefined(z.string()),
-			description: "URL to the shop's banner image",
-		}),
-		description: doc({
-			schema: z.string(),
-			description: "Description of the shop",
-		}),
-		logo: doc({
-			schema: nullishToUndefined(z.string()),
-			description: "URL to the shop's logo",
-		}),
-		name: doc({
-			schema: z.string(),
-			description: "Name of the shop",
-		}),
-		qtyPurchasedInfo: doc({
-			schema: nullishToUndefined(z.string()),
-			description:
+	v.description("Merchant quality tag returned by the shop endpoint."),
+);
+export const shopsGetResponse200Schema = v.pipe(
+	v.object({
+		id: v.pipe(v.number(), v.description("Unique identifier of the shop")),
+		banner: v.pipe(
+			nullishToUndefined(v.string()),
+			v.description("URL to the shop's banner image"),
+		),
+		description: v.pipe(v.string(), v.description("Description of the shop")),
+		logo: v.pipe(
+			nullishToUndefined(v.string()),
+			v.description("URL to the shop's logo"),
+		),
+		name: v.pipe(v.string(), v.description("Name of the shop")),
+		qtyPurchasedInfo: v.pipe(
+			nullishToUndefined(v.string()),
+			v.description(
 				'Text about total orders/purchases (e.g., "11 \u0437\u0430\u043A\u0430\u0437\u043E\u0432", "930 \u0437\u0430\u043A\u0430\u0437\u043E\u0432")',
-		}),
-		rating: doc({
-			schema: nullishToUndefined(z.number()),
-			description: "Average rating of the shop",
-		}),
-		totalReviews: doc({
-			schema: nullishToUndefined(z.number()),
-			description: "Total number of reviews received",
-		}),
-		contactInfo: doc({
-			schema: shopsGetContactInfoSchema,
-			description: "Contact information for the shop",
-		}),
-		isMonobrand: doc({
-			schema: z.boolean(),
-			description: "Indicates if the shop represents a single brand",
-		}),
-		tag: doc({
-			schema: shopsGetTagSchema,
-			description: "Tag associated with the shop",
-		}),
+			),
+		),
+		rating: v.pipe(
+			nullishToUndefined(v.number()),
+			v.description("Average rating of the shop"),
+		),
+		totalReviews: v.pipe(
+			nullishToUndefined(v.number()),
+			v.description("Total number of reviews received"),
+		),
+		contactInfo: v.pipe(
+			shopsGetContactInfoSchema,
+			v.description("Contact information for the shop"),
+		),
+		isMonobrand: v.pipe(
+			v.boolean(),
+			v.description("Indicates if the shop represents a single brand"),
+		),
+		tag: v.pipe(
+			shopsGetTagSchema,
+			v.description("Tag associated with the shop"),
+		),
 	}),
-	description:
+	v.description(
 		"Shop detail response with branding, ratings, merchant metadata, and storefront tag information.",
-});
+	),
+);

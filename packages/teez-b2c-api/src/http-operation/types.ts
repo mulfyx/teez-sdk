@@ -1,6 +1,14 @@
-import { type ZodMiniObject, type ZodMiniType } from "zod/mini";
+import {
+	type ErrorMessage,
+	type ObjectEntries,
+	type ObjectIssue,
+	type ObjectSchema,
+} from "valibot";
 
+import { type AnySchema } from "../schema/types";
 import { type Simplify } from "../type-utils/simplify";
+
+export { type AnySchema } from "../schema/types";
 
 export type HttpOperationMethod = "DELETE" | "GET" | "PATCH" | "POST";
 
@@ -8,25 +16,28 @@ export type HttpOperationAuth = "none" | "optional" | "required";
 
 export type HttpOperationSafety = "read" | "write";
 
-export type ZodObjectSchema = ZodMiniObject<Record<string, ZodMiniType>>;
+export type ObjectSchemaType = ObjectSchema<
+	ObjectEntries,
+	ErrorMessage<ObjectIssue> | undefined
+>;
 
 export interface HttpOperationRequestPath {
 	readonly template: string;
-	readonly schema?: ZodObjectSchema;
+	readonly schema?: ObjectSchemaType;
 }
 
 export type HttpOperationRequestPathConfig = string | HttpOperationRequestPath;
 
 export interface HttpOperationRequestQuery {
-	readonly schema: ZodObjectSchema;
+	readonly schema: ObjectSchemaType;
 }
 
 export interface HttpOperationRequestHeaders {
-	readonly schema: ZodObjectSchema;
+	readonly schema: ObjectSchemaType;
 }
 
 export interface HttpOperationRequestBody {
-	readonly schema: ZodMiniType;
+	readonly schema: AnySchema;
 	readonly contentType?: string;
 }
 
@@ -64,7 +75,7 @@ export type NormalizeHttpOperationRequest<
 >;
 
 export interface HttpOperationJsonResponse<
-	TSchema extends ZodMiniType = ZodMiniType,
+	TSchema extends AnySchema = AnySchema,
 > {
 	readonly kind?: "json";
 	readonly schema: TSchema;
@@ -73,7 +84,7 @@ export interface HttpOperationJsonResponse<
 }
 
 export interface HttpOperationJsonResponseOptions<
-	TSchema extends ZodMiniType = ZodMiniType,
+	TSchema extends AnySchema = AnySchema,
 > {
 	readonly schema: TSchema;
 	readonly description?: string;

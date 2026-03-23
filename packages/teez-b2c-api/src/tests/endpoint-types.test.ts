@@ -26,15 +26,15 @@ import {
 	type productsGetReviewsOperation,
 	type ProductsGetReviewsSuccessResponse,
 } from "../api/products/get-reviews";
-import type { OperationApiError } from "../http-operation/api-error";
-import type {
-	HttpOperationErrorBody,
-	HttpOperationErrorStatus,
-	HttpOperationPreferredRequest,
-	HttpOperationRequestInput,
-	HttpOperationResponseByStatus,
-	HttpOperationResponseStatus,
-	HttpOperationSuccessResponse,
+import { type OperationApiError } from "../http-operation/api-error";
+import {
+	type HttpOperationErrorBody,
+	type HttpOperationErrorStatus,
+	type HttpOperationPreferredRequest,
+	type HttpOperationRequestInput,
+	type HttpOperationResponseByStatus,
+	type HttpOperationResponseStatus,
+	type HttpOperationSuccessResponse,
 } from "../http-operation/inference";
 
 test("derives endpoint aliases from operations only", () => {

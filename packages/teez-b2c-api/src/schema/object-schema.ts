@@ -1,13 +1,18 @@
-import { type ZodMiniObject, type ZodMiniType } from "zod/mini";
+import type * as v from "valibot";
 
-export type AnyZodObjectSchema = ZodMiniObject<Record<string, ZodMiniType>>;
+import { type AnySchema } from "./types";
+
+export type AnyObjectSchema = v.ObjectSchema<
+	v.ObjectEntries,
+	v.ErrorMessage<v.ObjectIssue> | undefined
+>;
 
 export function isObjectSchema(
-	schema: ZodMiniType,
-): schema is AnyZodObjectSchema {
-	return "shape" in schema;
+	schema: AnySchema,
+): schema is AnyObjectSchema {
+	return schema.type === "object" && "entries" in schema;
 }
 
-export function getObjectSchemaKeys(schema: AnyZodObjectSchema): string[] {
-	return Object.keys(schema.shape);
+export function getObjectSchemaKeys(schema: AnyObjectSchema): string[] {
+	return Object.keys(schema.entries);
 }

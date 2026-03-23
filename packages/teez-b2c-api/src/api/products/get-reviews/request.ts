@@ -1,27 +1,24 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { doc } from "../../../schema/metadata";
-
-export const productsGetReviewsRequestPathSchema = doc({
-	schema: z.object({
-		productId: doc({
-			schema: z.number(),
-			description: "Unique identifier of the product",
-		}),
+export const productsGetReviewsRequestPathSchema = v.pipe(
+	v.object({
+		productId: v.pipe(
+			v.number(),
+			v.description("Unique identifier of the product"),
+		),
 	}),
-	description: "Path parameters for fetching product reviews.",
-});
-
-export const productsGetReviewsRequestQuerySchema = doc({
-	schema: z.object({
-		pageNumber: doc({
-			schema: z.nullish(z.number()),
-			description: "Number of the page to retrieve",
-		}),
-		pageSize: doc({
-			schema: z.nullish(z.number()),
-			description: "Number of reviews per page",
-		}),
+	v.description("Path parameters for fetching product reviews."),
+);
+export const productsGetReviewsRequestQuerySchema = v.pipe(
+	v.object({
+		pageNumber: v.pipe(
+			v.nullish(v.number()),
+			v.description("Number of the page to retrieve"),
+		),
+		pageSize: v.pipe(
+			v.nullish(v.number()),
+			v.description("Number of reviews per page"),
+		),
 	}),
-	description: "Query parameters for fetching product reviews.",
-});
+	v.description("Query parameters for fetching product reviews."),
+);

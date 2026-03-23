@@ -1,5 +1,5 @@
+import * as v from "valibot";
 import { afterEach, describe, expect, test, vi } from "vitest";
-import * as z from "zod/mini";
 
 import { type ResolvedTeezClientConfig } from "../../config/types";
 import { type TeezApiError } from "../../errors/teez-api-error";
@@ -221,20 +221,20 @@ describe("HttpClient", () => {
 				method: "GET",
 				path: {
 					template: "/items/{id}",
-					schema: z.object({
-						id: z.number(),
+					schema: v.object({
+						id: v.number(),
 					}),
 				},
 				query: {
-					schema: z.object({
-						includeArchived: z.optional(z.boolean()),
+					schema: v.object({
+						includeArchived: v.optional(v.boolean()),
 					}),
 				},
 			},
 			responses: {
 				200: response({
-					schema: z.object({
-						id: z.number(),
+					schema: v.object({
+						id: v.number(),
 					}),
 				}),
 			},
@@ -281,8 +281,8 @@ describe("HttpClient", () => {
 				method: "POST",
 				path: "/favorites",
 				body: {
-					schema: z.object({
-						id: z.number(),
+					schema: v.object({
+						id: v.number(),
 					}),
 				},
 			},
@@ -320,9 +320,9 @@ describe("HttpClient", () => {
 				fetch: fetchSpy as unknown as typeof fetch,
 			}),
 		);
-		const unauthorizedSchema = z.object({
-			description: z.string(),
-			message: z.string(),
+		const unauthorizedSchema = v.object({
+			description: v.string(),
+			message: v.string(),
 		});
 		const operation = defineHttpOperation({
 			domain: "demo",
@@ -334,15 +334,15 @@ describe("HttpClient", () => {
 				method: "GET",
 				path: {
 					template: "/items/{id}/review-available",
-					schema: z.object({
-						id: z.number(),
+					schema: v.object({
+						id: v.number(),
 					}),
 				},
 			},
 			responses: {
 				200: response({
-					schema: z.object({
-						ok: z.boolean(),
+					schema: v.object({
+						ok: v.boolean(),
 					}),
 				}),
 				401: response({
@@ -401,8 +401,8 @@ describe("HttpClient", () => {
 			},
 			responses: {
 				200: response({
-					schema: z.object({
-						ok: z.boolean(),
+					schema: v.object({
+						ok: v.boolean(),
 					}),
 				}),
 			},
@@ -435,15 +435,15 @@ describe("HttpClient", () => {
 				method: "GET",
 				path: {
 					template: "/items/{id}",
-					schema: z.object({
-						id: z.number(),
+					schema: v.object({
+						id: v.number(),
 					}),
 				},
 			},
 			responses: {
 				200: response({
-					schema: z.object({
-						id: z.number(),
+					schema: v.object({
+						id: v.number(),
 					}),
 				}),
 			},
@@ -476,15 +476,15 @@ describe("HttpClient", () => {
 				method: "GET",
 				path: {
 					template: "/items/{id}",
-					schema: z.object({
-						id: z.number(),
+					schema: v.object({
+						id: v.number(),
 					}),
 				},
 			},
 			responses: {
 				200: response({
-					schema: z.object({
-						id: z.number(),
+					schema: v.object({
+						id: v.number(),
 					}),
 				}),
 			},
@@ -528,8 +528,8 @@ describe("HttpClient", () => {
 			},
 			responses: {
 				200: response({
-					schema: z.object({
-						ok: z.boolean(),
+					schema: v.object({
+						ok: v.boolean(),
 					}),
 				}),
 			},

@@ -1,40 +1,27 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { nullishToUndefined } from "../../../schema/codecs";
-import { doc } from "../../../schema/metadata";
+import { nullishToUndefined } from "../../../schema/nullish";
 
-export const promoListItemSchema = doc({
-	schema: z.object({
-		id: doc({
-			schema: z.number(),
-			description: "Unique identifier of the promotion",
-		}),
-		name: doc({
-			schema: z.string(),
-			description: "Localized name of the promotion",
-		}),
-		description: doc({
-			schema: nullishToUndefined(z.string()),
-			description: "Localized detailed description of the promotion",
-		}),
-		svgUrl: doc({
-			schema: nullishToUndefined(z.string()),
-			description: "URL to the SVG icon for the promotion",
-		}),
-		startDate: doc({
-			schema: z.string(),
-			description: "Start date of the promotion",
-		}),
-		endDate: doc({
-			schema: z.string(),
-			description: "End date of the promotion",
-		}),
+export const promoListItemSchema = v.pipe(
+	v.object({
+		id: v.pipe(v.number(), v.description("Unique identifier of the promotion")),
+		name: v.pipe(v.string(), v.description("Localized name of the promotion")),
+		description: v.pipe(
+			nullishToUndefined(v.string()),
+			v.description("Localized detailed description of the promotion"),
+		),
+		svgUrl: v.pipe(
+			nullishToUndefined(v.string()),
+			v.description("URL to the SVG icon for the promotion"),
+		),
+		startDate: v.pipe(v.string(), v.description("Start date of the promotion")),
+		endDate: v.pipe(v.string(), v.description("End date of the promotion")),
 	}),
-	description: "Promotion item returned by the active promotions endpoint.",
-});
-
-export const promoListResponse200Schema = doc({
-	schema: z.array(promoListItemSchema),
-	description:
+	v.description("Promotion item returned by the active promotions endpoint."),
+);
+export const promoListResponse200Schema = v.pipe(
+	v.array(promoListItemSchema),
+	v.description(
 		"List of active promotions currently available in the storefront. May be empty when no promotions are active.",
-});
+	),
+);

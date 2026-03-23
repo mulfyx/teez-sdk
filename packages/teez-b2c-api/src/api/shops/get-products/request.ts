@@ -1,59 +1,52 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { doc } from "../../../schema/metadata";
-
-export const shopsGetProductsRequestPathSchema = doc({
-	schema: z.object({
-		shopId: doc({
-			schema: z.number(),
-			description: "Unique identifier of the shop",
-		}),
+export const shopsGetProductsRequestPathSchema = v.pipe(
+	v.object({
+		shopId: v.pipe(v.number(), v.description("Unique identifier of the shop")),
 	}),
-	description: "Path parameters for fetching products from a shop.",
-});
-
-export const shopsGetProductsRequestQuerySortKeySchema = doc({
-	schema: z.union([
-		z.literal("byRelevance"),
-		z.literal("popularity"),
-		z.literal("highestRated"),
-		z.literal("new"),
-		z.literal("price"),
-		z.literal("priceDesc"),
+	v.description("Path parameters for fetching products from a shop."),
+);
+export const shopsGetProductsRequestQuerySortKeySchema = v.pipe(
+	v.union([
+		v.literal("byRelevance"),
+		v.literal("popularity"),
+		v.literal("highestRated"),
+		v.literal("new"),
+		v.literal("price"),
+		v.literal("priceDesc"),
 	]),
-	description: "Type union for product sort keys",
-});
-
-export const shopsGetProductsRequestQuerySchema = doc({
-	schema: z.object({
-		pageNumber: doc({
-			schema: z.nullish(z.number()),
-			description: "Number of the page to retrieve",
-		}),
-		pageSize: doc({
-			schema: z.nullish(z.number()),
-			description: "Number of items per page",
-		}),
-		sortBy: doc({
-			schema: z.nullish(shopsGetProductsRequestQuerySortKeySchema),
-			description: "Sorting option for the results",
-		}),
-		categoryId: doc({
-			schema: z.nullish(z.number()),
-			description: "Filter by category ID",
-		}),
-		brandIds: doc({
-			schema: z.nullish(z.array(z.number())),
-			description: "Filter by brand IDs",
-		}),
-		minPrice: doc({
-			schema: z.nullish(z.number()),
-			description: "Minimum price filter",
-		}),
-		maxPrice: doc({
-			schema: z.nullish(z.number()),
-			description: "Maximum price filter",
-		}),
+	v.description("Type union for product sort keys"),
+);
+export const shopsGetProductsRequestQuerySchema = v.pipe(
+	v.object({
+		pageNumber: v.pipe(
+			v.nullish(v.number()),
+			v.description("Number of the page to retrieve"),
+		),
+		pageSize: v.pipe(
+			v.nullish(v.number()),
+			v.description("Number of items per page"),
+		),
+		sortBy: v.pipe(
+			v.nullish(shopsGetProductsRequestQuerySortKeySchema),
+			v.description("Sorting option for the results"),
+		),
+		categoryId: v.pipe(
+			v.nullish(v.number()),
+			v.description("Filter by category ID"),
+		),
+		brandIds: v.pipe(
+			v.nullish(v.array(v.number())),
+			v.description("Filter by brand IDs"),
+		),
+		minPrice: v.pipe(
+			v.nullish(v.number()),
+			v.description("Minimum price filter"),
+		),
+		maxPrice: v.pipe(
+			v.nullish(v.number()),
+			v.description("Maximum price filter"),
+		),
 	}),
-	description: "Query parameters for fetching products from a shop.",
-});
+	v.description("Query parameters for fetching products from a shop."),
+);

@@ -1,5 +1,6 @@
+import { toJsonSchema } from "@valibot/to-json-schema";
+import * as v from "valibot";
 import { describe, expect, test } from "vitest";
-import * as z from "zod/mini";
 
 import { TeezApiError } from "../errors/teez-api-error";
 import { TeezError } from "../errors/teez-error";
@@ -16,55 +17,52 @@ import {
 import { defineHttpOperation } from "../http-operation/define";
 import { isHttpOperationFlattenable } from "../http-operation/flattenability";
 import { emptyResponse, response } from "../http-operation/response-helpers";
-import { nullishToUndefined } from "../schema/codecs";
-import { doc, getSchemaDoc } from "../schema/metadata";
+import { nullishToUndefined } from "../schema/nullish";
 
-describe("doc", () => {
-	test("returns the same schema and registers metadata", () => {
-		const schema = z.object({
-			name: z.string(),
+describe("valibot metadata", () => {
+	test("stores title, description, and examples directly on the schema", () => {
+		const schema = v.object({
+			name: v.string(),
 		});
-		const documentedSchema = doc({
+		const documentedSchema = v.pipe(
 			schema,
-			description: "Example schema",
-			examples: [
+			v.title("Example"),
+			v.description("Example schema"),
+			v.examples([
 				{
 					name: "teez",
 				},
-			],
-			title: "Example",
-		});
-		expect(documentedSchema).toBe(schema);
-		expect(getSchemaDoc(schema)).toEqual({
-			description: "Example schema",
-			examples: [
-				{
-					name: "teez",
-				},
-			],
-			title: "Example",
-		});
-		expect(z.toJSONSchema(schema).examples).toEqual([
+			]),
+		);
+		expect(documentedSchema).not.toBe(schema);
+		expect(v.getTitle(documentedSchema)).toBe("Example");
+		expect(v.getDescription(documentedSchema)).toBe("Example schema");
+		expect(v.getExamples(documentedSchema)).toEqual([
 			{
 				name: "teez",
 			},
 		]);
-		expect(z.toJSONSchema(schema).description).toBe("Example schema");
-		expect(z.toJSONSchema(schema).title).toBe("Example");
+		expect(toJsonSchema(documentedSchema).examples).toEqual([
+			{
+				name: "teez",
+			},
+		]);
+		expect(toJsonSchema(documentedSchema).description).toBe("Example schema");
+		expect(toJsonSchema(documentedSchema).title).toBe("Example");
 	});
 });
 describe("nullishToUndefined", () => {
 	test("normalizes nullish values to undefined while preserving concrete values", () => {
-		const schema = nullishToUndefined(z.string());
-		const parsedNull = schema.parse(JSON.parse("null") as null);
-		const parsedUndefined = schema.parse(undefined);
-		expect(schema.parse("teez")).toBe("teez");
+		const schema = nullishToUndefined(v.string());
+		const parsedNull = v.parse(schema, JSON.parse("null") as null);
+		const parsedUndefined = v.parse(schema, undefined);
+		expect(v.parse(schema, "teez")).toBe("teez");
 		expect(parsedNull).toBeUndefined();
 		expect(parsedUndefined).toBeUndefined();
-		expect(z.toJSONSchema(schema, { io: "input" })).toMatchObject({
+		expect(toJsonSchema(schema, { typeMode: "input" })).toMatchObject({
 			anyOf: [{ type: "string" }, { type: "null" }],
 		});
-		expect(z.toJSONSchema(schema, { io: "output" })).toMatchObject({
+		expect(toJsonSchema(schema, { typeMode: "output" })).toMatchObject({
 			type: "string",
 		});
 	});
@@ -81,20 +79,20 @@ describe("defineHttpOperation", () => {
 				method: "GET",
 				path: {
 					template: "/items/{id}",
-					schema: z.object({
-						id: z.number(),
+					schema: v.object({
+						id: v.number(),
 					}),
 				},
 				query: {
-					schema: z.object({
-						value: z.optional(z.string()),
+					schema: v.object({
+						value: v.optional(v.string()),
 					}),
 				},
 			},
 			responses: {
 				200: response({
-					schema: z.object({
-						ok: z.boolean(),
+					schema: v.object({
+						ok: v.boolean(),
 					}),
 				}),
 			},
@@ -120,8 +118,8 @@ describe("defineHttpOperation", () => {
 				method: "POST",
 				path: "/items",
 				body: {
-					schema: z.object({
-						value: z.string(),
+					schema: v.object({
+						value: v.string(),
 					}),
 				},
 			},
@@ -143,15 +141,15 @@ describe("defineHttpOperation", () => {
 				method: "POST",
 				path: "/items/validate",
 				body: {
-					schema: z.object({
-						value: z.string(),
+					schema: v.object({
+						value: v.string(),
 					}),
 				},
 			},
 			responses: {
 				200: response({
-					schema: z.object({
-						ok: z.boolean(),
+					schema: v.object({
+						ok: v.boolean(),
 					}),
 				}),
 			},
@@ -190,8 +188,8 @@ describe("defineHttpOperation", () => {
 					method: "GET",
 					path: {
 						template: "/items",
-						schema: z.object({
-							id: z.number(),
+						schema: v.object({
+							id: v.number(),
 						}),
 					},
 				},
@@ -233,8 +231,8 @@ describe("defineHttpOperation", () => {
 					method: "GET",
 					path: {
 						template: "/items/{id}",
-						schema: z.object({
-							itemId: z.number(),
+						schema: v.object({
+							itemId: v.number(),
 						}),
 					},
 				},
@@ -260,8 +258,8 @@ describe("defineHttpOperation", () => {
 				},
 				responses: {
 					401: response({
-						schema: z.object({
-							message: z.string(),
+						schema: v.object({
+							message: v.string(),
 						}),
 					}),
 				},
@@ -281,18 +279,18 @@ describe("defineHttpOperation", () => {
 				method: "PATCH",
 				path: {
 					template: "/items/{id}",
-					schema: z.object({
-						id: z.number(),
+					schema: v.object({
+						id: v.number(),
 					}),
 				},
 				query: {
-					schema: z.object({
-						page: z.optional(z.number()),
+					schema: v.object({
+						page: v.optional(v.number()),
 					}),
 				},
 				body: {
-					schema: z.object({
-						value: z.string(),
+					schema: v.object({
+						value: v.string(),
 					}),
 				},
 			},
@@ -310,13 +308,13 @@ describe("defineHttpOperation", () => {
 				method: "PATCH",
 				path: {
 					template: "/items/{id}",
-					schema: z.object({
-						id: z.number(),
+					schema: v.object({
+						id: v.number(),
 					}),
 				},
 				body: {
-					schema: z.object({
-						id: z.number(),
+					schema: v.object({
+						id: v.number(),
 					}),
 				},
 			},
@@ -334,7 +332,7 @@ describe("defineHttpOperation", () => {
 				method: "POST",
 				path: "/items",
 				body: {
-					schema: z.array(z.number()),
+					schema: v.array(v.number()),
 				},
 			},
 			responses: {
@@ -359,8 +357,8 @@ describe("defineHttpOperation", () => {
 				},
 				responses: {
 					204: response({
-						schema: z.object({
-							ok: z.boolean(),
+						schema: v.object({
+							ok: v.boolean(),
 						}),
 					}),
 				},
@@ -386,8 +384,8 @@ describe("defineHttpOperation", () => {
 					description: "Entity created successfully.",
 				}),
 				401: response({
-					schema: z.object({
-						message: z.string(),
+					schema: v.object({
+						message: v.string(),
 					}),
 					description: "Unauthorized request.",
 				}),
@@ -409,7 +407,7 @@ describe("errors", () => {
 		const url = new URL("https://example.com/items");
 		const issues: TeezValidationIssue[] = [
 			{
-				code: "invalid_type",
+				code: "number",
 				message: "Expected number",
 				path: ["id"],
 			},
@@ -498,20 +496,20 @@ describe("errors", () => {
 				method: "GET",
 				path: {
 					template: "/items/{id}/review-available",
-					schema: z.object({
-						id: z.number(),
+					schema: v.object({
+						id: v.number(),
 					}),
 				},
 			},
 			responses: {
 				200: response({
-					schema: z.object({
-						ok: z.boolean(),
+					schema: v.object({
+						ok: v.boolean(),
 					}),
 				}),
 				401: response({
-					schema: z.object({
-						message: z.string(),
+					schema: v.object({
+						message: v.string(),
 					}),
 				}),
 			},
@@ -543,20 +541,20 @@ describe("errors", () => {
 				method: "GET",
 				path: {
 					template: "/items/{id}/review-available",
-					schema: z.object({
-						id: z.number(),
+					schema: v.object({
+						id: v.number(),
 					}),
 				},
 			},
 			responses: {
 				200: response({
-					schema: z.object({
-						ok: z.boolean(),
+					schema: v.object({
+						ok: v.boolean(),
 					}),
 				}),
 				401: response({
-					schema: z.object({
-						message: z.string(),
+					schema: v.object({
+						message: v.string(),
 					}),
 				}),
 			},

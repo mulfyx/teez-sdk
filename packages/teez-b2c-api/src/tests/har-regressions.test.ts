@@ -1,5 +1,5 @@
+import { safeParse } from "valibot";
 import { describe, expect, test } from "vitest";
-import { safeParse } from "zod/mini";
 
 import { bannersListResponse200Schema } from "../api/banners/list/responses";
 import { collectionsGetResponse200Schema } from "../api/collections/get/responses";
@@ -23,10 +23,10 @@ describe("HAR regressions", () => {
 		expect(result.success).toBe(true);
 
 		if (!result.success) {
-			throw new Error(JSON.stringify(result.error.issues, undefined, 2));
+			throw new Error(JSON.stringify(result.issues, undefined, 2));
 		}
 
-		expect(result.data[0]?.action.type).toBe("promocode");
+		expect(result.output[0]?.action.type).toBe("promocode");
 	});
 
 	test('accepts collection type "ProductShelf" observed in HAR', () => {
@@ -43,9 +43,9 @@ describe("HAR regressions", () => {
 		expect(result.success).toBe(true);
 
 		if (!result.success) {
-			throw new Error(JSON.stringify(result.error.issues, undefined, 2));
+			throw new Error(JSON.stringify(result.issues, undefined, 2));
 		}
 
-		expect(result.data.type).toBe("ProductShelf");
+		expect(result.output.type).toBe("ProductShelf");
 	});
 });

@@ -1,9 +1,8 @@
-import * as z from "zod/mini";
+import * as v from "valibot";
 
-import { doc } from "../../../schema/metadata";
-
-export const favoritesRemoveRequestBodySchema = doc({
-	schema: z.array(z.number()),
-	description:
+export const favoritesRemoveRequestBodySchema = v.pipe(
+	v.array(v.number()),
+	v.description(
 		"Request body containing SKU identifiers to remove from the authenticated user's favorites list.",
-});
+	),
+);
