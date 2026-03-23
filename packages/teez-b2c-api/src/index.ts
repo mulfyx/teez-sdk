@@ -1,8 +1,31 @@
-export * from "./client";
-export * from "./config";
+export * from "./sdk/create-client";
+export * from "./sdk/runtime";
+export * from "./sdk/types";
 
-export * from "./common/constants";
-export * from "./common/types";
+export * from "./language";
+export * from "./config/defaults";
+export * from "./config/headers";
+export * from "./config/resolve";
+export * from "./config/types";
+
+export * from "./registry";
+
+export * from "./http-operation/api-error";
+export * from "./http-operation/define";
+export * from "./http-operation/flattenability";
+export * from "./http-operation/inference";
+export * from "./http-operation/response-helpers";
+export * from "./http-operation/status";
+export * from "./http-operation/types";
+
+export * from "./contracts/api-error-response";
+export * from "./contracts/filters/category";
+export * from "./contracts/filters/filter";
+export * from "./contracts/filters/range";
+export * from "./contracts/pagination";
+export * from "./schema/codecs";
+export * from "./schema/metadata";
+export * from "./schema/object-schema";
 
 export * from "./errors/teez-error";
 export * from "./errors/teez-api-error";
@@ -10,57 +33,15 @@ export * from "./errors/teez-network-error";
 export * from "./errors/teez-timeout-error";
 export * from "./errors/teez-validation-error";
 
-export * from "./api/auth/api";
-export * from "./api/auth/schemas";
-export * from "./api/auth/schema-types";
-export * from "./api/auth/types";
-
-export * from "./api/banners/api";
-export * from "./api/banners/schemas";
-export * from "./api/banners/schema-types";
-export * from "./api/banners/types";
-
-export * from "./api/categories/api";
-export * from "./api/categories/schemas";
-export * from "./api/categories/schema-types";
-export * from "./api/categories/types";
-
-export * from "./api/collections/api";
-export * from "./api/collections/schemas";
-export * from "./api/collections/schema-types";
-export * from "./api/collections/types";
-
-export * from "./api/favorites/api";
-export * from "./api/favorites/schemas";
-export * from "./api/favorites/schema-types";
-export * from "./api/favorites/types";
-
-export * from "./api/feature-flags/api";
-export * from "./api/feature-flags/schemas";
-export * from "./api/feature-flags/schema-types";
-export * from "./api/feature-flags/types";
-
-export * from "./api/products/api";
-export * from "./api/products/schemas";
-export * from "./api/products/schema-types";
-export * from "./api/products/types";
-
-export * from "./api/promo/api";
-export * from "./api/promo/schemas";
-export * from "./api/promo/schema-types";
-export * from "./api/promo/types";
-
-export * from "./api/shops/api";
-export * from "./api/shops/schemas";
-export * from "./api/shops/schema-types";
-export * from "./api/shops/types";
-
-export * from "./api/sku/api";
-export * from "./api/sku/schemas";
-export * from "./api/sku/schema-types";
-export * from "./api/sku/types";
-
-export * from "./api/users/api";
-export * from "./api/users/schemas";
-export * from "./api/users/schema-types";
-export * from "./api/users/types";
+export * from "./api/auth";
+export * from "./api/banners";
+export * from "./api/categories";
+export * from "./api/collections";
+export * from "./api/favorites";
+export * from "./api/feature-flags";
+export * from "./api/products";
+export * from "./api/promo";
+export * from "./api/promocodes";
+export * from "./api/shops";
+export * from "./api/sku";
+export * from "./api/users";

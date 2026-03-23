@@ -1,32 +1,28 @@
 import { TeezError } from "./teez-error";
 
-/**
- * Options for constructing a TeezNetworkError.
- */
 export interface TeezNetworkErrorOptions extends ErrorOptions {
-	/**
-	 * URL of the request that failed.
-	 */
+	method: string;
 	url: URL;
+	operationName?: string;
 }
 
-/**
- * Error thrown when a network request fails (e.g., DNS resolution, connection refused).
- */
 export class TeezNetworkError extends TeezError {
 	public override name = "TeezNetworkError";
 
-	/**
-	 * URL of the request that failed.
-	 */
+	public readonly method: string;
+
 	public readonly url: URL;
+
+	public readonly operationName?: string;
 
 	public constructor(
 		message: string,
-		{ url, ...errorOptions }: TeezNetworkErrorOptions,
+		{ method, url, operationName, ...errorOptions }: TeezNetworkErrorOptions,
 	) {
 		super(message, errorOptions);
 
+		this.method = method;
 		this.url = url;
+		this.operationName = operationName;
 	}
 }

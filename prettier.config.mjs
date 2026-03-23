@@ -7,12 +7,11 @@ const config = {
 	useTabs: true,
 	plugins: ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-pkg"],
 	importOrder: [
-		"<BUILT_IN_MODULES>",
+		"<BUILTIN_MODULES>",
 		"",
 		"<THIRD_PARTY_MODULES>",
 		"",
-		"^@/.*$",
-		"",
+		"^[./]",
 	],
 };
 

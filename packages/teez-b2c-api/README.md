@@ -1,216 +1,294 @@
 # @teez-sdk/teez-b2c-api
 
-<div align="center">
+Typed SDK for the Teez B2C API built around operation definitions, `zod/mini` schemas, runtime validation, and a registry that can be reused for SDK, MCP, and documentation generation.
 
-[![npm version](https://img.shields.io/npm/v/@teez-sdk/teez-b2c-api?style=flat-square&color=blue)](https://www.npmjs.com/package/@teez-sdk/teez-b2c-api)
-[![npm downloads](https://img.shields.io/npm/dm/@teez-sdk/teez-b2c-api?style=flat-square)](https://www.npmjs.com/package/@teez-sdk/teez-b2c-api)
-[![Bundle Size](https://img.shields.io/bundlephobia/minzip/@teez-sdk/teez-b2c-api?style=flat-square&label=minzipped)](https://bundlephobia.com/package/@teez-sdk/teez-b2c-api)
-[![Powered by Zod](https://img.shields.io/badge/Validation-Zod-3068b7?style=flat-square&logo=zod&logoColor=white)](https://zod.dev)
-
-</div>
-
-A typed TypeScript client for the Teez B2C API.
-
-## Features
-
-- **Fully Typed:** Written in TypeScript with complete type definitions.
-- **Runtime Validation:** Uses [Zod](https://zod.dev) to validate API responses.
-- **Modular:** API endpoints are organized into logical modules (Products, Banners, etc.).
-- **Error Handling:** Custom error classes for fine-grained control over API, network, and validation errors.
+Use `createTeezClient()` for the full client, or `createTeezClientFromOperations(...)` to assemble a smaller client from selected operation groups for better tree-shaking.
 
 ## Installation
 
 ```bash
 npm install @teez-sdk/teez-b2c-api
-# or
-yarn add @teez-sdk/teez-b2c-api
-# or
-pnpm add @teez-sdk/teez-b2c-api
-
 ```
 
-## Getting Started
+Runtime requirements:
 
-Initialize the client and make your first request:
+- Node.js 20+ when relying on the built-in global `fetch`
+- or any runtime where `fetch`, `Request`, `Response`, and `Headers` are available
+- or a custom `fetch` implementation passed via `createTeezClient({ fetch })`
 
-```typescript
-import { TeezClient } from "@teez-sdk/teez-b2c-api";
+## Quick Start
 
-// Initialize with default configuration
-const client = new TeezClient();
+```ts
+import { createTeezClient } from "@teez-sdk/teez-b2c-api";
 
-// Or with custom configuration
-const customClient = new TeezClient({
-	timeout: 5000,
-	language: "kk", // Request responses in Kazakh
+const client = createTeezClient({
+	language: "kz",
+	timeout: 5_000,
 });
 
-try {
-	// Fetch products
-	const products = await client.products.list({
-		pageSize: 10,
-		pageNumber: 1,
-	});
+const featureFlags = await client.featureFlags.list();
 
-	console.log(products);
-} catch (error) {
-	console.error("Failed to fetch products:", error);
-}
+const products = await client.products.list({
+	pageNumber: 1,
+	pageSize: 10,
+});
 ```
+
+Operations without an `input` section can be called without arguments:
+
+```ts
+await client.categories.list();
+await client.promo.list();
+await client.featureFlags.list();
+```
+
+Operations with input schemas always require an object, even when all fields are optional:
+
+```ts
+await client.products.getSortOptions({});
+await client.banners.list({});
+```
+
+Operations whose successful response uses `emptyResponse()` resolve with `undefined`:
+
+```ts
+await client.auth.login({
+	phone: "+77071234567",
+});
+
+await client.favorites.add.request({
+	body: [12345],
+});
+```
+
+## Auth Flow
+
+Use `auth.login` to send the OTP code, `auth.verify` to exchange it for tokens, then create an authenticated client with the returned `accessToken`:
+
+```ts
+import { createTeezClient } from "@teez-sdk/teez-b2c-api";
+
+const publicClient = createTeezClient();
+
+await publicClient.auth.login({
+	phone: "+77071234567",
+});
+
+const { accessToken, refreshToken } = await publicClient.auth.verify({
+	phone: "+77071234567",
+	otpCode: "1234",
+});
+
+const authClient = createTeezClient({
+	token: accessToken,
+});
+
+const profile = await authClient.auth.checkToken();
+```
+
+`refreshToken` is returned by the API, but this SDK does not currently provide a refresh-token operation. Persist it only if your application uses it outside the SDK.
+
+## Client Shapes and Tree-Shaking
+
+`createTeezClient()` gives you the complete SDK with every operation group attached.
+
+Create the full client:
+
+```ts
+import { createTeezClient } from "@teez-sdk/teez-b2c-api";
+
+const client = createTeezClient();
+```
+
+If your application only needs part of the API, prefer `createTeezClientFromOperations(...)`. It lets bundlers drop unused operation groups instead of pulling in the full registry:
+
+```ts
+import {
+	authOperations,
+	createTeezClientFromOperations,
+} from "@teez-sdk/teez-b2c-api";
+
+const authClient = createTeezClientFromOperations({
+	auth: authOperations,
+});
+
+await authClient.auth.login({
+	phone: "+77071234567",
+});
+```
+
+This is the recommended entry point when bundle size matters, for example in browser apps that only use a few Teez domains.
 
 ## Configuration
 
-The `TeezClient` accepts an optional configuration object:
-
-```typescript
+```ts
 interface TeezClientConfig {
-	/** Base URL for the API. Default: "https://b2c-api.teez.kz" */
 	baseUrl?: string;
-
-	/** JWT bearer token for authenticated requests. */
 	token?: string;
-
-	/** Application version. Default: "193" */
 	appVersion?: string;
-
-	/** Language for API responses. Default: "ru" */
-	language?: "ru" | "kk";
-
-	/** Request timeout in milliseconds. Default: 30000 */
+	language?: "ru" | "kz";
 	timeout?: number;
-
-	/** Custom headers to include in all requests. */
-	headers?: Record<string, string>;
+	headers?: HeadersInit;
+	fetch?: typeof globalThis.fetch;
 }
 ```
 
-### Examples
+Defaults:
 
-**Set a custom app version:**
+- `baseUrl`: `https://b2c-api.teez.kz`
+- `appVersion`: `"200"`
+- `language`: `"ru"`
+- `timeout`: `30_000`
 
-```typescript
-const client = new TeezClient({
-	appVersion: "200", // User-agent will be "android;kz.teez.customer;200"
-});
-```
+Notes:
 
-**Use a custom user-agent:**
+- `token` becomes an `Authorization: Bearer ...` header.
+- `appVersion` is used for both `User-Agent` and `X-App-Version`.
+- `headers` are merged on top of the SDK defaults.
+- `fetch` defaults to `globalThis.fetch`; pass your own implementation when the runtime does not provide one.
+- Kazakh is standardized as `"kz"` in request config and typed responses.
 
-```typescript
-const client = new TeezClient({
-	headers: {
-		"user-agent": "my-custom-client/1.0",
+If you need the fully separated request shape instead of the flattened convenience call, use `.request(...)`:
+
+```ts
+await client.products.list.request({
+	query: {
+		pageNumber: 1,
+		pageSize: 10,
 	},
 });
 ```
 
-## Usage Examples
+## Runtime Validation
 
-### Categories
+Every operation validates:
 
-```typescript
-import { TeezClient } from "@teez-sdk/teez-b2c-api";
+- input before the request is sent
+- success payloads after the response is received
+- error response bodies before they are attached to `TeezApiError.parsedBody`
 
-const client = new TeezClient();
+The package keeps its `zod/mini` schemas as internal validation details. Public type exports stay at the operation level:
 
-// Get all categories
-const categories = await client.categories.list();
-
-console.log(`Found ${categories.length} categories`);
-
-// Get a specific category
-const electronics = await client.categories.get({
-	categoryId: 3472,
-});
-
-console.log(`Category: ${electronics.name} (level ${electronics.level})`);
-
-// Get parent hierarchies for multiple categories
-const parents = await client.categories.getParents({
-	categoryId: [3472, 7665, 3431],
-	level: 1, // Optional: filter by hierarchy level
-});
-
-console.log(`Found ${parents.length} parent hierarchies`);
+```ts
+import {
+	productsListOperation,
+	type ProductsListRequest,
+	type ProductsListRequestParts,
+	type ProductsListSuccessResponse,
+} from "@teez-sdk/teez-b2c-api";
 ```
 
-### Products
+`FooRequest` follows the preferred client call shape, so flattenable operations use the top-level object passed to `client.foo.bar(...)`. `FooRequestParts` matches `client.foo.bar.request(...)`.
 
-```typescript
-// List products with pagination
-const products = await client.products.list({
-	pageSize: 20,
-	pageNumber: 1,
-});
+Generated schema-derived model types are intentionally not part of the package contract. If an application needs its own domain models, define them locally.
 
-// Get product reviews
-const reviews = await client.products.getReviews({
-	productId: 12345,
-	pageSize: 10,
-});
+## Operation Registry
 
-// Get similar products
-const similar = await client.sku.getSimilar({
-	skuId: 12345,
-	pageSize: 5,
-});
+The SDK exposes the grouped registry, a flat list, and name lookup helpers:
+
+```ts
+import {
+	getTeezOperation,
+	teezOperationList,
+	teezOperations,
+} from "@teez-sdk/teez-b2c-api";
+
+const operation = getTeezOperation("products.list");
+
+console.log(operation.auth);
+console.log(operation.safety);
+console.log(operation.summary);
+console.log(operation.description);
+console.log(teezOperationList.length);
+console.log(teezOperations.products.list === operation);
 ```
 
-### Authentication
+Operations are the main source of truth for:
 
-```typescript
-// Step 1: Send OTP to phone
-await client.auth.login({ phone: "+77071234567" });
-
-// Step 2: Verify OTP and get access token
-const { accessToken } = await client.auth.verify({
-	phone: "+77071234567",
-	otpCode: "2610",
-});
-
-// Step 3: Use token for authenticated requests
-const authenticatedClient = new TeezClient({ token: accessToken });
-```
-
-## Available APIs
-
-The client exposes the following API modules:
-
-- `client.auth` - Handle authentication, including login and OTP verification.
-- `client.banners` - Retrieve promotional banners.
-- `client.categories` - Browse and search product categories.
-- `client.collections` - Access curated product collections.
-- `client.favorites` - Manage user favorite products.
-- `client.featureFlags` - Check available feature flags.
-- `client.products` - Search products and view reviews.
-- `client.promo` - Access information about active promotions.
-- `client.shops` - Get information about shops and sellers.
-- `client.sku` - Retrieve detailed SKU information.
-- `client.users` - Manage user profiles and preferences.
+- HTTP method and request mapping
+- input and output schemas
+- auth requirements
+- read/write safety metadata
+- MCP and doc-generation metadata
 
 ## Error Handling
 
-The SDK throws specific error types to help you handle failures gracefully:
+The SDK throws dedicated error classes:
 
-- `TeezApiError`: The server returned a non-2xx status code. Contains status, status text, and response body.
-- `TeezNetworkError`: Network failure (e.g., DNS resolution, offline).
-- `TeezTimeoutError`: The request exceeded the configured timeout.
-- `TeezValidationError`: The API response did not match the expected schema (Zod validation failed).
+- `TeezApiError` for non-2xx responses
+- `TeezNetworkError` for transport failures
+- `TeezTimeoutError` for aborted requests due to timeout
+- `TeezValidationError` for input, output, or error-body schema mismatches
 
-```typescript
-import { TeezApiError, TeezTimeoutError } from "@teez-sdk/teez-b2c-api";
+`TeezApiError` keeps transport metadata and may also include a typed `parsedBody` when the matching error response in `responses` defines a schema.
+
+```ts
+import {
+	getOperationApiError,
+	skuGetReviewAvailableOperation,
+	TeezApiError,
+	TeezTimeoutError,
+} from "@teez-sdk/teez-b2c-api";
 
 try {
-	await client.products.list();
+	await client.sku.getReviewAvailable({
+		skuId: 12345,
+	});
 } catch (error) {
 	if (error instanceof TeezTimeoutError) {
 		console.error("Request timed out");
 	} else if (error instanceof TeezApiError) {
-		console.error(`API Error: ${error.status} - ${error.message}`);
-	} else {
-		console.error("Unknown error:", error);
+		console.error(error.status, error.message);
+
+		const apiError = getOperationApiError(
+			error,
+			skuGetReviewAvailableOperation,
+		);
+
+		if (apiError != undefined) {
+			console.error(apiError.parsedBody.message);
+		}
 	}
 }
+```
+
+## Auth Notes
+
+Live probes without a token confirmed these operations require authentication:
+
+- `auth.checkToken`
+- `favorites.add`
+- `favorites.getIds`
+- `favorites.remove`
+- `promocodes.validate`
+- `sku.getReviewAvailable`
+- `users.registerDevice`
+- `users.updateLanguage`
+
+Public read-only operations such as `banners.list`, `categories.*`, `collections.*`, `featureFlags.list`, `products.*`, `promo.list`, `shops.*`, `sku.get`, `sku.getCollections`, and `sku.getSimilar` were successfully exercised without a token.
+
+## Package Exports
+
+The package exports:
+
+- `createTeezClient`, `createTeezClientFromOperations`, `createRuntime`
+- `teezOperations`, `teezOperationList`, `teezOperationsByName`, `getTeezOperation`
+- operation definitions for every endpoint
+- type aliases from `types.ts`
+- shared contracts and filter schemas such as `apiErrorResponseSchema`, `filterSchema`, `rangeFilterSchema`, and `categoryFilterSchema`
+
+## Development
+
+Run these commands from `packages/teez-b2c-api`. From the repository root, append `-w @teez-sdk/teez-b2c-api`.
+
+```bash
+npm run generate:types
+npm run typecheck
+npm run typecheck:test
+npm run test
+npm run lint
+npm run test:coverage
+npm run build
 ```
 
 ## License

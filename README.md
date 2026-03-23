@@ -9,13 +9,15 @@
 
 </div>
 
-This monorepo contains SDKs and tools for interacting with the Teez platform APIs. It is organized as a workspace to manage multiple packages efficiently.
+This monorepo currently publishes a single package: `@teez-sdk/teez-b2c-api`.
 
 ## Packages
 
-| Package                                             | Description                 | Version |
-| :-------------------------------------------------- | :-------------------------- | :------ |
-| [`@teez-sdk/teez-b2c-api`](./packages/teez-b2c-api) | Client for the Teez B2C API | 3.0.0   |
+| Package                                             | Description                                                           |
+| :-------------------------------------------------- | :-------------------------------------------------------------------- |
+| [`@teez-sdk/teez-b2c-api`](./packages/teez-b2c-api) | Typed Teez B2C API SDK with runtime validation and operation registry |
+
+See the package README for usage examples and SDK-specific API notes.
 
 ## Development
 
@@ -34,21 +36,21 @@ Install dependencies for all packages from the root directory:
 npm install
 ```
 
-### Building Packages
+### Common Commands
 
-To build a specific package (e.g., `teez-b2c-api`):
+Run these commands from the repository root:
 
 ```bash
+npm install
+npm run typecheck -w @teez-sdk/teez-b2c-api
+npm run test -w @teez-sdk/teez-b2c-api
 npm run build -w @teez-sdk/teez-b2c-api
-```
-
-### Linting & Formatting
-
-To run linting across a specific package:
-
-```bash
 npm run lint -w @teez-sdk/teez-b2c-api
 ```
+
+### Workspace Notes
+
+The root package currently acts as a workspace container, so most day-to-day scripts are run against a package with `npm run <script> -w <workspace-name>`.
 
 ## Contributing
 

@@ -106,12 +106,4 @@ export default defineConfig([
 			],
 		},
 	},
-	{
-		files: ["**/src/**/schema-types.ts"],
-		rules: {
-			"@typescript-eslint/no-duplicate-type-constituents": "off",
-			"@typescript-eslint/no-invalid-void-type": "off",
-			"@typescript-eslint/no-redundant-type-constituents": "off",
-		},
-	},
 ]);
