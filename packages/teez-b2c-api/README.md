@@ -28,7 +28,12 @@ const client = createTeezClient({
 
 const featureFlags = await client.featureFlags.list();
 
-const products = await client.products.list({
+const suggestions = await client.products.autocomplete({
+	search: "sam",
+});
+
+const searchResults = await client.products.list({
+	query: suggestions[0]?.name ?? "samsung",
 	pageNumber: 1,
 	pageSize: 10,
 });
