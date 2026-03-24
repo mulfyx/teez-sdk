@@ -10,7 +10,7 @@ import {
 	type AuthCheckTokenResponseByStatus,
 	type AuthCheckTokenResponseStatus,
 	type AuthCheckTokenSuccessResponse,
-} from "../api/auth/check-token";
+} from "../src/api/auth/check-token";
 import {
 	authLoginOperation,
 	type AuthLoginApiError,
@@ -21,12 +21,12 @@ import {
 	type AuthLoginResponseByStatus,
 	type AuthLoginResponseStatus,
 	type AuthLoginSuccessResponse,
-} from "../api/auth/login";
+} from "../src/api/auth/login";
 import {
 	type productsGetReviewsOperation,
 	type ProductsGetReviewsSuccessResponse,
-} from "../api/products/get-reviews";
-import { type OperationApiError } from "../http-operation/api-error";
+} from "../src/api/products/get-reviews";
+import { type OperationApiError } from "../src/http-operation/api-error";
 import {
 	type HttpOperationErrorBody,
 	type HttpOperationErrorStatus,
@@ -35,7 +35,7 @@ import {
 	type HttpOperationResponseByStatus,
 	type HttpOperationResponseStatus,
 	type HttpOperationSuccessResponse,
-} from "../http-operation/inference";
+} from "../src/http-operation/inference";
 
 test("derives endpoint aliases from operations only", () => {
 	expect(authLoginOperation.name).toBe("auth.login");

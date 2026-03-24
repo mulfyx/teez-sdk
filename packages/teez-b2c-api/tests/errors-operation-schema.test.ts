@@ -1,22 +1,25 @@
 import * as v from "valibot";
 import { describe, expect, test } from "vitest";
 
-import { TeezApiError } from "../errors/teez-api-error";
-import { TeezError } from "../errors/teez-error";
-import { TeezNetworkError } from "../errors/teez-network-error";
-import { TeezTimeoutError } from "../errors/teez-timeout-error";
+import { TeezApiError } from "../src/errors/teez-api-error";
+import { TeezError } from "../src/errors/teez-error";
+import { TeezNetworkError } from "../src/errors/teez-network-error";
+import { TeezTimeoutError } from "../src/errors/teez-timeout-error";
 import {
 	TeezValidationError,
 	type TeezValidationIssue,
-} from "../errors/teez-validation-error";
+} from "../src/errors/teez-validation-error";
 import {
 	getOperationApiError,
 	isOperationApiError,
-} from "../http-operation/api-error";
-import { defineHttpOperation } from "../http-operation/define";
-import { isHttpOperationFlattenable } from "../http-operation/flattenability";
-import { emptyResponse, response } from "../http-operation/response-helpers";
-import { nullishToUndefined } from "../schema/nullish";
+} from "../src/http-operation/api-error";
+import { defineHttpOperation } from "../src/http-operation/define";
+import { isHttpOperationFlattenable } from "../src/http-operation/flattenability";
+import {
+	emptyResponse,
+	response,
+} from "../src/http-operation/response-helpers";
+import { nullishToUndefined } from "../src/schema/nullish";
 
 describe("valibot metadata", () => {
 	test("stores title, description, and examples directly on the schema", () => {

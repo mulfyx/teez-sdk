@@ -1,8 +1,8 @@
 import { safeParse } from "valibot";
 import { describe, expect, test } from "vitest";
 
-import { bannersListResponse200Schema } from "../api/banners/list/responses";
-import { collectionsGetResponse200Schema } from "../api/collections/get/responses";
+import { bannersListResponse200Schema } from "../src/api/banners/list/responses";
+import { collectionsGetResponse200Schema } from "../src/api/collections/get/responses";
 
 describe("HAR regressions", () => {
 	test("accepts promocode banner actions observed in HAR", () => {

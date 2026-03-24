@@ -5,11 +5,11 @@ import {
 	defaultBaseUrl,
 	defaultLanguage,
 	defaultTimeoutMs,
-} from "../config/defaults";
-import { buildHeaders, buildUserAgent } from "../config/headers";
-import { defaultConfig, resolveConfig } from "../config/resolve";
-import { supportedLanguages } from "../language";
-import { mergeHeaders } from "../transport/headers";
+} from "../src/config/defaults";
+import { buildHeaders, buildUserAgent } from "../src/config/headers";
+import { defaultConfig, resolveConfig } from "../src/config/resolve";
+import { supportedLanguages } from "../src/language";
+import { mergeHeaders } from "../src/transport/headers";
 
 function toArray<T>(value: T | T[]): T[] {
 	return Array.isArray(value) ? value : [value];
@@ -71,7 +71,7 @@ describe("config", () => {
 		vi.stubGlobal("fetch", undefined);
 
 		const { defaultConfig: defaultConfigWithoutFetch } =
-			await import("../config/resolve");
+			await import("../src/config/resolve");
 
 		expect(defaultConfigWithoutFetch.fetch).toBeUndefined();
 	});

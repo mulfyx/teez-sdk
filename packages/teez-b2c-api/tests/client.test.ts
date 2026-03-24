@@ -1,10 +1,13 @@
 import * as v from "valibot";
 import { describe, expect, expectTypeOf, test, vi } from "vitest";
 
-import { defineHttpOperation } from "../http-operation/define";
-import { emptyResponse, response } from "../http-operation/response-helpers";
-import { createTeezClientFromOperations } from "../sdk/create-client";
-import { createRuntime } from "../sdk/runtime";
+import { defineHttpOperation } from "../src/http-operation/define";
+import {
+	emptyResponse,
+	response,
+} from "../src/http-operation/response-helpers";
+import { createTeezClientFromOperations } from "../src/sdk/create-client";
+import { createRuntime } from "../src/sdk/runtime";
 
 const pingOperation = defineHttpOperation({
 	domain: "demo",

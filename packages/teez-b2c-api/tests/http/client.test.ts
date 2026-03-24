@@ -1,15 +1,18 @@
 import * as v from "valibot";
 import { afterEach, describe, expect, test, vi } from "vitest";
 
-import { type ResolvedTeezClientConfig } from "../../config/types";
-import { type TeezApiError } from "../../errors/teez-api-error";
-import { TeezError } from "../../errors/teez-error";
-import { type TeezNetworkError } from "../../errors/teez-network-error";
-import { type TeezTimeoutError } from "../../errors/teez-timeout-error";
-import { TeezValidationError } from "../../errors/teez-validation-error";
-import { defineHttpOperation } from "../../http-operation/define";
-import { emptyResponse, response } from "../../http-operation/response-helpers";
-import { HttpClient } from "../../transport/http-client";
+import { type ResolvedTeezClientConfig } from "../../src/config/types";
+import { type TeezApiError } from "../../src/errors/teez-api-error";
+import { TeezError } from "../../src/errors/teez-error";
+import { type TeezNetworkError } from "../../src/errors/teez-network-error";
+import { type TeezTimeoutError } from "../../src/errors/teez-timeout-error";
+import { TeezValidationError } from "../../src/errors/teez-validation-error";
+import { defineHttpOperation } from "../../src/http-operation/define";
+import {
+	emptyResponse,
+	response,
+} from "../../src/http-operation/response-helpers";
+import { HttpClient } from "../../src/transport/http-client";
 
 function createResolvedConfig(
 	overrides: Partial<ResolvedTeezClientConfig> = {},

@@ -5,8 +5,8 @@ import {
 	teezOperationList,
 	teezOperations,
 	teezOperationsByName,
-} from "../registry";
-import { createTeezClient } from "../sdk/create-client";
+} from "../src/registry";
+import { createTeezClient } from "../src/sdk/create-client";
 
 describe("operations registry", () => {
 	test("keeps grouped and flattened registries in sync", () => {

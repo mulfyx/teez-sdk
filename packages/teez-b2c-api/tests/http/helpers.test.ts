@@ -1,17 +1,17 @@
 import * as v from "valibot";
 import { describe, expect, test } from "vitest";
 
-import { TeezValidationError } from "../../errors/teez-validation-error";
-import { getObjectSchemaKeys } from "../../schema/object-schema";
+import { TeezValidationError } from "../../src/errors/teez-validation-error";
+import { getObjectSchemaKeys } from "../../src/schema/object-schema";
 import {
 	formatOperationMessage,
 	parseInput,
 	parseResponse,
 	parseSchema,
-} from "../../transport/parsing";
-import { interpolatePath } from "../../transport/path";
-import { buildUrl } from "../../transport/query";
-import { readResponseBody } from "../../transport/response-body";
+} from "../../src/transport/parsing";
+import { interpolatePath } from "../../src/transport/path";
+import { buildUrl } from "../../src/transport/query";
+import { readResponseBody } from "../../src/transport/response-body";
 
 describe("http helpers", () => {
 	test("buildUrl serializes scalar and array query params", () => {

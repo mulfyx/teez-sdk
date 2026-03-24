@@ -3,7 +3,7 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
 	test: {
 		environment: "node",
-		include: ["src/tests/**/*.test.ts"],
+		include: ["tests/**/*.test.ts"],
 		coverage: {
 			include: [
 				"src/language.ts",
@@ -16,7 +16,7 @@ export default defineConfig({
 				"src/sdk/{create-client,flat-request,operation-entry,runtime}.ts",
 				"src/transport/{headers,http-client,parsing,path,query,response-body}.ts",
 			],
-			exclude: ["src/tests/**/*.test.ts"],
+			exclude: ["tests/**/*.test.ts"],
 			reporter: ["text", "json-summary"],
 			thresholds: {
 				branches: 100,
