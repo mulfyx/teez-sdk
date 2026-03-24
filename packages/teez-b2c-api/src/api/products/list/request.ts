@@ -14,6 +14,10 @@ export const productsListSortKeySchema = v.pipe(
 
 export const productsListRequestQuerySchema = v.pipe(
 	v.object({
+		query: v.pipe(
+			v.nullish(v.string()),
+			v.description("Search query text used to filter products"),
+		),
 		seed: v.pipe(
 			v.nullish(v.number()),
 			v.description("Random seed for consistent pagination"),
