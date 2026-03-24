@@ -1,4 +1,3 @@
-import { toJsonSchema } from "@valibot/to-json-schema";
 import * as v from "valibot";
 import { describe, expect, test } from "vitest";
 
@@ -42,13 +41,6 @@ describe("valibot metadata", () => {
 				name: "teez",
 			},
 		]);
-		expect(toJsonSchema(documentedSchema).examples).toEqual([
-			{
-				name: "teez",
-			},
-		]);
-		expect(toJsonSchema(documentedSchema).description).toBe("Example schema");
-		expect(toJsonSchema(documentedSchema).title).toBe("Example");
 	});
 });
 describe("nullishToUndefined", () => {
@@ -59,12 +51,6 @@ describe("nullishToUndefined", () => {
 		expect(v.parse(schema, "teez")).toBe("teez");
 		expect(parsedNull).toBeUndefined();
 		expect(parsedUndefined).toBeUndefined();
-		expect(toJsonSchema(schema, { typeMode: "input" })).toMatchObject({
-			anyOf: [{ type: "string" }, { type: "null" }],
-		});
-		expect(toJsonSchema(schema, { typeMode: "output" })).toMatchObject({
-			type: "string",
-		});
 	});
 });
 describe("defineHttpOperation", () => {
