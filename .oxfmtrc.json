@@ -1,0 +1,16 @@
+{
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
+	"semi": true,
+	"useTabs": true,
+	"printWidth": 80,
+	"sortImports": {
+		"groups": [
+			"builtin",
+			"external",
+			["parent", "sibling", "index"],
+			"unknown",
+		],
+		"newlinesBetween": true,
+	},
+	"sortPackageJson": true,
+}

@@ -1,0 +1,7 @@
+{
+	"extends": "@tsconfig/strictest/tsconfig",
+	"compilerOptions": {
+		"exactOptionalPropertyTypes": false
+	},
+	"exclude": ["node_modules"]
+}

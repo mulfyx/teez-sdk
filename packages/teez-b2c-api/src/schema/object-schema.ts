@@ -7,9 +7,7 @@ export type AnyObjectSchema = v.ObjectSchema<
 	v.ErrorMessage<v.ObjectIssue> | undefined
 >;
 
-export function isObjectSchema(
-	schema: AnySchema,
-): schema is AnyObjectSchema {
+export function isObjectSchema(schema: AnySchema): schema is AnyObjectSchema {
 	return schema.type === "object" && "entries" in schema;
 }
 

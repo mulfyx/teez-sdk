@@ -2,7 +2,10 @@ import {
 	type HttpOperationFlatRequest,
 	type HttpOperationRequestSections,
 } from "../http-operation/inference";
-import { type AnyHttpOperationDef, type AnySchema } from "../http-operation/types";
+import {
+	type AnyHttpOperationDef,
+	type AnySchema,
+} from "../http-operation/types";
 import { getObjectSchemaKeys, isObjectSchema } from "../schema/object-schema";
 
 function pickFlatSection(

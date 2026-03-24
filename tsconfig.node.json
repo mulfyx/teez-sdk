@@ -1,0 +1,3 @@
+{
+	"extends": ["./tsconfig.base.json", "@tsconfig/node22/tsconfig"]
+}

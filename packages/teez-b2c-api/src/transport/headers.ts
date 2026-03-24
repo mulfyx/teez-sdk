@@ -7,9 +7,10 @@ export function mergeHeaders(
 	const result = new Headers(base);
 
 	if (overrides != undefined) {
-		for (const [key, value] of new Headers(overrides)) {
+		// oxlint-disable-next-line unicorn/no-array-for-each -- Headers iteration without dom.iterable
+		new Headers(overrides).forEach((value, key) => {
 			result.set(key, value);
-		}
+		});
 	}
 
 	return result;

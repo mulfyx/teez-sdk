@@ -1,9 +1,6 @@
 {
-	"extends": "../../tsconfig.json",
+	"extends": "../../tsconfig.web.json",
 	"compilerOptions": {
-		"exactOptionalPropertyTypes": false,
-		"module": "preserve",
-		"moduleResolution": "bundler",
 		"tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo"
 	},
 	"include": ["src"]

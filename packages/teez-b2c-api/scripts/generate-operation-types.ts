@@ -30,7 +30,7 @@ interface GeneratedTypesFile {
 	typesPath: string;
 }
 
-const projectRoot = path.resolve(import.meta.dirname, "..", "..");
+const projectRoot = path.resolve(import.meta.dirname, "..");
 const apiRoot = path.join(projectRoot, "src", "api");
 const httpOperationApiErrorPath = path.join(
 	projectRoot,
