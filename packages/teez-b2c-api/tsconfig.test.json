@@ -3,5 +3,6 @@
 	"compilerOptions": {
 		"tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo.test"
 	},
-	"include": ["src/tests/**/*.ts"]
+	"include": ["src/tests/**/*.ts"],
+	"exclude": []
 }
