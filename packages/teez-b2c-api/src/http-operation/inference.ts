@@ -14,6 +14,18 @@ import {
 
 type EmptyObject = Record<never, never>;
 
+type RequiredKeysOf<T extends object> = keyof {
+	[TKey in keyof T as Omit<T, TKey> extends T ? never : TKey]: unknown;
+};
+
+type HasRequiredKeys<T> = [T] extends [readonly unknown[]]
+	? true
+	: [T] extends [object]
+		? [RequiredKeysOf<Extract<T, object>>] extends [never]
+			? false
+			: true
+		: true;
+
 type PathSchemaOf<T extends AnyHttpOperationDef> =
 	T["request"]["path"] extends { readonly schema: infer TPathSchema }
 		? Extract<TPathSchema, ObjectSchemaType>
@@ -41,7 +53,9 @@ type RequestSectionEntry<
 	TName extends string,
 	TSchema extends AnySchema | undefined,
 > = [TSchema] extends [AnySchema]
-	? Readonly<Record<TName, SchemaInput<Extract<TSchema, AnySchema>>>>
+	? HasRequiredKeys<SchemaInput<Extract<TSchema, AnySchema>>> extends true
+		? Readonly<Record<TName, SchemaInput<Extract<TSchema, AnySchema>>>>
+		: Readonly<Partial<Record<TName, SchemaInput<Extract<TSchema, AnySchema>>>>>
 	: EmptyObject;
 
 type RequestSectionFlatShape<TSchema extends AnySchema | undefined> = [
@@ -75,6 +89,12 @@ type RequestInputOf<TRequest> = keyof TRequest extends never
 	? undefined
 	: TRequest;
 
+type RequestArgumentsOf<TRequest> = keyof TRequest extends never
+	? []
+	: HasRequiredKeys<TRequest> extends true
+		? [request: TRequest]
+		: [request?: TRequest];
+
 type ResponseSchemaData<TResponse extends HttpOperationResponse | undefined> =
 	TResponse extends { readonly schema: infer TResponseSchema }
 		? [Extract<TResponseSchema, AnySchema>] extends [AnySchema]
@@ -106,11 +126,8 @@ export type HttpOperationRequestSections<T extends AnyHttpOperationDef> =
 export type HttpOperationRequestInput<T extends AnyHttpOperationDef> =
 	RequestInputOf<HttpOperationRequestSections<T>>;
 
-export type HttpOperationRequestArguments<T extends AnyHttpOperationDef> = [
-	HttpOperationRequestInput<T>,
-] extends [undefined]
-	? []
-	: [request: HttpOperationRequestSections<T>];
+export type HttpOperationRequestArguments<T extends AnyHttpOperationDef> =
+	RequestArgumentsOf<HttpOperationRequestSections<T>>;
 
 export type HttpOperationFlatRequest<T extends AnyHttpOperationDef> =
 	FlatRequestOf<T>;
@@ -131,9 +148,7 @@ export type HttpOperationFlatArguments<T extends AnyHttpOperationDef> = [
 	HttpOperationFlatInput<T>,
 ] extends [never]
 	? never
-	: [HttpOperationFlatInput<T>] extends [undefined]
-		? []
-		: [request: HttpOperationFlatRequest<T>];
+	: RequestArgumentsOf<HttpOperationFlatRequest<T>>;
 
 export type HttpOperationSuccessResponse<T extends AnyHttpOperationDef> =
 	HttpOperationResponseByStatus<T, HttpOperationSuccessStatus<T>>;

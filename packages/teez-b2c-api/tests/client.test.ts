@@ -6,7 +6,10 @@ import {
 	emptyResponse,
 	response,
 } from "../src/http-operation/response-helpers";
-import { createTeezClientFromOperations } from "../src/sdk/create-client";
+import {
+	createTeezClient,
+	createTeezClientFromOperations,
+} from "../src/sdk/create-client";
 import { createRuntime } from "../src/sdk/runtime";
 
 const pingOperation = defineHttpOperation({
@@ -190,6 +193,9 @@ describe("client runtime", () => {
 		await expect(client.demo.search({})).resolves.toEqual({
 			ok: true,
 		});
+		await expect(client.demo.search()).resolves.toEqual({
+			ok: true,
+		});
 		await expect(
 			client.demo.echo({
 				value: "hello",
@@ -211,11 +217,12 @@ describe("client runtime", () => {
 			id: 1,
 			ok: true,
 		});
-		expect(fetchSpy.mock.calls).toHaveLength(6);
+		expect(fetchSpy.mock.calls).toHaveLength(7);
 		const [
 			pingCall,
 			searchCall,
 			emptySearchCall,
+			missingSearchCall,
 			echoCall,
 			rawCall,
 			secureCall,
@@ -224,6 +231,7 @@ describe("client runtime", () => {
 			pingCall == undefined ||
 			searchCall == undefined ||
 			emptySearchCall == undefined ||
+			missingSearchCall == undefined ||
 			echoCall == undefined ||
 			rawCall == undefined ||
 			secureCall == undefined
@@ -235,6 +243,7 @@ describe("client runtime", () => {
 			"https://example.com/search?value=search",
 		);
 		expect(String(emptySearchCall[0])).toBe("https://example.com/search");
+		expect(String(missingSearchCall[0])).toBe("https://example.com/search");
 		expect(String(echoCall[0])).toBe("https://example.com/echo");
 		expect(String(rawCall[0])).toBe("https://example.com/raw");
 		expect(String(secureCall[0])).toBe("https://example.com/secure-items/1");
@@ -256,8 +265,17 @@ describe("client runtime", () => {
 		expectTypeOf(client.demo.ping).parameters.toEqualTypeOf<[]>();
 		expectTypeOf(client.demo.search).parameters.toEqualTypeOf<
 			[
-				input: {
+				input?: {
 					value?: string | undefined;
+				},
+			]
+		>();
+		expectTypeOf(client.demo.search.request).parameters.toEqualTypeOf<
+			[
+				request?: {
+					readonly query?: {
+						value?: string | undefined;
+					};
 				},
 			]
 		>();
@@ -276,5 +294,72 @@ describe("client runtime", () => {
 				},
 			]
 		>();
+	});
+	test("allows optional-only real API methods to be called without an empty object", async () => {
+		const fetchSpy = vi.fn((input: unknown) => {
+			const url = String(input);
+
+			if (url.endsWith("/api/product/sort-options")) {
+				return Promise.resolve(
+					Response.json([
+						{
+							key: "price",
+							name: "Price",
+						},
+					]),
+				);
+			}
+
+			if (url.endsWith("/api/v3/banners")) {
+				return Promise.resolve(
+					Response.json([
+						{
+							image: {
+								type: "network",
+								url: "https://example.com/banner.png",
+							},
+							action: {
+								type: "url",
+								value: "https://example.com",
+								analyticsKey: undefined,
+							},
+						},
+					]),
+				);
+			}
+
+			throw new Error(`Unexpected URL: ${url}`);
+		});
+		const client = createTeezClient({
+			baseUrl: "https://example.com",
+			fetch: fetchSpy as unknown as typeof fetch,
+		});
+
+		await expect(client.products.getSortOptions()).resolves.toEqual([
+			{
+				key: "price",
+				name: "Price",
+			},
+		]);
+		await expect(client.banners.list()).resolves.toEqual([
+			{
+				image: {
+					type: "network",
+					url: "https://example.com/banner.png",
+				},
+				action: {
+					type: "url",
+					value: "https://example.com",
+					analyticsKey: undefined,
+				},
+			},
+		]);
+		expect(fetchSpy).toHaveBeenCalledTimes(2);
+		expect(String(fetchSpy.mock.calls[0]?.[0])).toBe(
+			"https://example.com/api/product/sort-options",
+		);
+		expect(String(fetchSpy.mock.calls[1]?.[0])).toBe(
+			"https://example.com/api/v3/banners",
+		);
 	});
 });

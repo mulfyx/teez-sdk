@@ -29,9 +29,10 @@ function pickFlatSection(
 
 export function toRequestSections<T extends AnyHttpOperationDef>(
 	operation: T,
-	flatRequest: HttpOperationFlatRequest<T>,
+	flatRequest: HttpOperationFlatRequest<T> | undefined,
 ): HttpOperationRequestSections<T> {
-	const source = flatRequest as Record<string, unknown>;
+	const source =
+		flatRequest == undefined ? {} : (flatRequest as Record<string, unknown>);
 	const requestSections: Record<string, unknown> = {};
 
 	const path = pickFlatSection(source, operation.request.path.schema);

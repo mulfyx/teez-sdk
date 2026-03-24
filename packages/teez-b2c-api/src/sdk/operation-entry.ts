@@ -38,11 +38,13 @@ function createOperationEntry<T extends AnyHttpOperationDef>(
 	const flatMethod = ((...args: HttpOperationFlatArguments<T>) => {
 		const [flatRequest] = args;
 
-		if (flatRequest == undefined) {
+		const requestSections = toRequestSections(operation, flatRequest);
+
+		if (Object.keys(requestSections).length === 0) {
 			return requestMethod(...([] as HttpOperationRequestArguments<T>));
 		}
 
-		return requestMethod(toRequestSections(operation, flatRequest));
+		return requestMethod(requestSections);
 	}) as HttpOperationEntry<T>;
 
 	Object.defineProperty(flatMethod, "request", {

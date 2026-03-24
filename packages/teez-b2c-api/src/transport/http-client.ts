@@ -9,6 +9,8 @@ import {
 	type HttpOperationSuccessResponse,
 } from "../http-operation/inference";
 import { type AnyHttpOperationDef } from "../http-operation/types";
+import { isObjectSchema } from "../schema/object-schema";
+import { type AnySchema } from "../schema/types";
 import { mergeHeaders } from "./headers";
 import {
 	formatOperationMessage,
@@ -27,6 +29,21 @@ import {
 
 interface HttpRequestContext {
 	readonly operationName?: string;
+}
+
+function getSectionInput(
+	schema: AnySchema | undefined,
+	data: unknown,
+): unknown {
+	if (data != undefined) {
+		return data;
+	}
+
+	if (schema != undefined && isObjectSchema(schema)) {
+		return {};
+	}
+
+	return undefined;
 }
 
 export class HttpClient {
@@ -155,7 +172,7 @@ export class HttpClient {
 				? undefined
 				: parseInput(
 						operation.request.path.schema,
-						pathSection,
+						getSectionInput(operation.request.path.schema, pathSection),
 						operation.name,
 					);
 
@@ -164,7 +181,7 @@ export class HttpClient {
 				? undefined
 				: parseInput(
 						operation.request.query.schema,
-						querySection,
+						getSectionInput(operation.request.query.schema, querySection),
 						operation.name,
 					);
 
@@ -173,7 +190,7 @@ export class HttpClient {
 				? undefined
 				: parseInput(
 						operation.request.headers.schema,
-						headersSection,
+						getSectionInput(operation.request.headers.schema, headersSection),
 						operation.name,
 					);
 
@@ -182,7 +199,7 @@ export class HttpClient {
 				? undefined
 				: parseInput(
 						operation.request.body.schema,
-						bodySection,
+						getSectionInput(operation.request.body.schema, bodySection),
 						operation.name,
 					);
 
