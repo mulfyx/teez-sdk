@@ -34,6 +34,14 @@ describe("operations registry", () => {
 				"Returns a paginated product listing with filters, product cards, and pagination metadata.",
 		});
 
+		expect(getTeezOperation("products.autocomplete")).toMatchObject({
+			auth: "none",
+			safety: "read",
+			summary: "Retrieve product search suggestions.",
+			description:
+				"Returns the search suggestions shown while the user types in the storefront search box.",
+		});
+
 		expect(getTeezOperation("favorites.getIds")).toMatchObject({
 			auth: "required",
 			safety: "read",
@@ -61,6 +69,7 @@ describe("full client", () => {
 		expect(typeof client.auth.login).toBe("function");
 		expect(typeof client.favorites.add).toBe("object");
 		expect(typeof client.favorites.add.request).toBe("function");
+		expect(typeof client.products.autocomplete).toBe("function");
 		expect(typeof client.products.list).toBe("function");
 		expect(typeof client.promocodes.validate).toBe("function");
 	});

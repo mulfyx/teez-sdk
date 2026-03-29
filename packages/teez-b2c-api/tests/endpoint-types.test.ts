@@ -23,6 +23,10 @@ import {
 	type AuthLoginSuccessResponse,
 } from "../src/api/auth/login";
 import {
+	type productsAutocompleteOperation,
+	type ProductsAutocompleteSuccessResponse,
+} from "../src/api/products/autocomplete";
+import {
 	type productsGetReviewsOperation,
 	type ProductsGetReviewsSuccessResponse,
 } from "../src/api/products/get-reviews";
@@ -139,4 +143,13 @@ test("derives endpoint aliases from operations only", () => {
 			createdAt: string;
 		}[];
 	}>();
+	expectTypeOf<ProductsAutocompleteSuccessResponse>().toEqualTypeOf<
+		HttpOperationSuccessResponse<typeof productsAutocompleteOperation>
+	>();
+	expectTypeOf<ProductsAutocompleteSuccessResponse>().toEqualTypeOf<
+		{
+			id: number;
+			name: string;
+		}[]
+	>();
 });
