@@ -1,22 +1,33 @@
 {
 	"name": "@teez-sdk/teez-b2c-api",
 	"version": "4.0.0",
-	"type": "module",
 	"description": "TypeScript SDK for Teez B2C API",
+	"keywords": [
+		"api",
+		"b2c",
+		"sdk",
+		"teez",
+		"typescript"
+	],
+	"homepage": "https://github.com/mulfyx/teez-sdk/tree/main/packages/teez-b2c-api#readme",
+	"bugs": {
+		"url": "https://github.com/mulfyx/teez-sdk/issues"
+	},
+	"license": "MIT",
+	"author": "mulfyx",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/mulfyx/teez-sdk.git",
 		"directory": "packages/teez-b2c-api"
 	},
-	"homepage": "https://github.com/mulfyx/teez-sdk/tree/main/packages/teez-b2c-api#readme",
-	"bugs": {
-		"url": "https://github.com/mulfyx/teez-sdk/issues"
-	},
-	"author": "mulfyx",
-	"license": "MIT",
+	"files": [
+		"dist"
+	],
+	"type": "module",
+	"sideEffects": false,
 	"main": "./dist/index.cjs",
-	"types": "./dist/index.d.cts",
 	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.cts",
 	"exports": {
 		".": {
 			"require": "./dist/index.cjs",
@@ -24,16 +35,6 @@
 		},
 		"./package.json": "./package.json"
 	},
-	"files": [
-		"dist"
-	],
-	"keywords": [
-		"teez",
-		"sdk",
-		"api",
-		"b2c",
-		"typescript"
-	],
 	"scripts": {
 		"build": "npm run typecheck && tsdown",
 		"format": "oxfmt --check \"./src/**/*.{ts,tsx}\" \"./tests/**/*.ts\" \"./scripts/**/*.ts\"",
@@ -61,5 +62,7 @@
 		"tsx": "^4.20.6",
 		"vitest": "^4.1.0"
 	},
-	"sideEffects": false
+	"engines": {
+		"node": ">=20.9.0"
+	}
 }

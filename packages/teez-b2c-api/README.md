@@ -12,7 +12,7 @@ npm install @teez-sdk/teez-b2c-api
 
 Runtime requirements:
 
-- Node.js 20+ when relying on the built-in global `fetch`
+- Node.js 20.9+ when relying on the built-in global `fetch`
 - or any runtime where `fetch`, `Request`, `Response`, and `Headers` are available
 - or a custom `fetch` implementation passed via `createTeezClient({ fetch })`
 
