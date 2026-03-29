@@ -37,10 +37,10 @@ export function validatePathSchema(
 
 	const schemaKeys = getObjectSchemaKeys(pathSchema);
 
-	// oxlint-disable-next-line unicorn/no-array-sort
+	// oxlint-disable-next-line unicorn/no-array-sort -- preserve toSorted semantics
 	const sortedPathParameterNames = [...pathParameterNames].sort();
 
-	// oxlint-disable-next-line unicorn/no-array-sort
+	// oxlint-disable-next-line unicorn/no-array-sort -- preserve toSorted semantics
 	const sortedSchemaKeys = [...schemaKeys].sort();
 
 	if (
