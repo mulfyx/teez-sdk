@@ -36,8 +36,12 @@ export function validatePathSchema(
 	}
 
 	const schemaKeys = getObjectSchemaKeys(pathSchema);
-	const sortedPathParameterNames = pathParameterNames.toSorted();
-	const sortedSchemaKeys = schemaKeys.toSorted();
+
+	// oxlint-disable-next-line unicorn/no-array-sort
+	const sortedPathParameterNames = [...pathParameterNames].sort();
+
+	// oxlint-disable-next-line unicorn/no-array-sort
+	const sortedSchemaKeys = [...schemaKeys].sort();
 
 	if (
 		sortedPathParameterNames.length !== sortedSchemaKeys.length ||
