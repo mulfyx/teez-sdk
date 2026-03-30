@@ -1,7 +1,9 @@
 {
-	"extends": "./tsconfig.json",
+	"extends": "../../tsconfig.web.json",
 	"compilerOptions": {
-		"tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo.test"
+		"noEmit": true,
+		"incremental": true,
+		"tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo.test",
 	},
-	"include": ["tests/**/*.ts"]
+	"include": ["tests/**/*.ts"],
 }

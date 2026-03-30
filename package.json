@@ -14,6 +14,10 @@
 	"workspaces": [
 		"packages/*"
 	],
+	"scripts": {
+		"typecheck": "npm run typecheck --workspaces --if-present",
+		"typecheck:test": "npm run typecheck:test --workspaces --if-present"
+	},
 	"devDependencies": {
 		"@tsconfig/node20": "^20.1.9",
 		"@tsconfig/strictest": "^2.0.8",

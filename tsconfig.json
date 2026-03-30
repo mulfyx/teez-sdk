@@ -1,4 +1,4 @@
 {
-	"extends": "./tsconfig.node.json",
-	"files": []
+	"files": [],
+	"references": [{ "path": "./packages/teez-b2c-api/tsconfig.solution.json" }],
 }

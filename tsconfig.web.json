@@ -4,7 +4,7 @@
 		"module": "preserve",
 		"moduleResolution": "bundler",
 		"types": [],
-		"lib": ["es2024", "dom"],
-		"target": "es2022"
-	}
+		"lib": ["dom", "es2024"],
+		"target": "es2022",
+	},
 }

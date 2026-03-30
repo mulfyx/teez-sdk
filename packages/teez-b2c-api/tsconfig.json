@@ -1,7 +1,9 @@
 {
 	"extends": "../../tsconfig.web.json",
 	"compilerOptions": {
-		"tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo"
+		"noEmit": true,
+		"incremental": true,
+		"tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo.src",
 	},
-	"include": ["src"]
+	"include": ["src"],
 }

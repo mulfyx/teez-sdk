@@ -1,8 +1,13 @@
 {
-	"extends": ["../../../tsconfig.node.json", "../../../tsconfig.web.json"],
+	"extends": "../../../tsconfig.node.json",
 	"compilerOptions": {
+		"module": "preserve",
+		"moduleResolution": "bundler",
 		"types": ["node"],
-		"tsBuildInfoFile": "../node_modules/.cache/.tsbuildinfo.scripts"
+		"noEmit": true,
+		"lib": ["es2024"],
+		"incremental": true,
+		"tsBuildInfoFile": "../node_modules/.cache/.tsbuildinfo.scripts",
 	},
-	"include": ["./**/*.ts"]
+	"include": ["./**/*.ts"],
 }
