@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/github/license/mulfyx/teez-sdk?style=flat-square&color=yellow)](./LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-6.x-blue?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-%3E=20-green?style=flat-square&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-%3E=20.9-green?style=flat-square&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 [![Code Quality: Oxc](https://img.shields.io/badge/code_quality-Oxc-9BE4E0?style=flat-square)](https://oxc.rs/)
 
 </div>
@@ -25,7 +25,7 @@ This project uses [npm workspaces](https://docs.npmjs.com/cli/v7/using-npm/works
 
 ### Prerequisites
 
-- Node.js (v20 or higher recommended)
+- Node.js (v20.9 or higher recommended)
 - npm
 
 ### Setup
