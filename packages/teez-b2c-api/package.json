@@ -30,8 +30,8 @@
 	"types": "./dist/index.d.cts",
 	"exports": {
 		".": {
-			"require": "./dist/index.cjs",
-			"import": "./dist/index.mjs"
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs"
 		},
 		"./package.json": "./package.json"
 	},
@@ -40,7 +40,7 @@
 		"format": "oxfmt --check \"./src/**/*.{ts,tsx}\" \"./tests/**/*.ts\" \"./scripts/**/*.ts\"",
 		"format:fix": "oxfmt --write \"./src/**/*.{ts,tsx}\" \"./tests/**/*.ts\" \"./scripts/**/*.ts\"",
 		"generate:types": "npm run generate:types:raw && npm run lint:fix",
-		"generate:types:raw": "node --experimental-strip-types ./scripts/generate-operation-types.ts",
+		"generate:types:raw": "node --import=tsx ./scripts/generate-operation-types.ts",
 		"lint": "npm run oxlint && npm run format",
 		"lint:fix": "npm run oxlint:fix && npm run format:fix",
 		"oxlint": "oxlint -c ../../.oxlintrc.json ./src ./tests ./scripts",
@@ -57,10 +57,10 @@
 		"valibot": "^1.3.1"
 	},
 	"devDependencies": {
-		"@vitest/coverage-v8": "^4.1.0",
-		"tsdown": "^0.18.3",
-		"tsx": "^4.20.6",
-		"vitest": "^4.1.0"
+		"@vitest/coverage-v8": "^4.1.2",
+		"tsdown": "^0.21.7",
+		"tsx": "^4.21.0",
+		"vitest": "^4.1.2"
 	},
 	"engines": {
 		"node": ">=20.9.0"

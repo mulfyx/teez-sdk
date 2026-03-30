@@ -492,7 +492,8 @@ function discoverOperationPaths(rootDir: string): string[] {
 		}
 	}
 
-	return paths.toSorted((left, right) => left.localeCompare(right));
+	// oxlint-disable-next-line unicorn/no-array-sort -- preserve toSorted semantics
+	return [...paths].sort((left, right) => left.localeCompare(right));
 }
 
 function main(): void {
